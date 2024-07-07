@@ -1,0 +1,93 @@
+﻿@page "/users"
+
+@inject IViewUserListUseCase ViewUserListUseCase
+@inject IDialogService DialogService
+
+@if (Users is not null && Users.Any())
+{
+    <MudContainer Fixed="true">
+        <MudButton Size="@Size.Small"
+                   Variant="@Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.PersonAdd"
+                   Color="@Color.Primary" @onclick="OpenDialogAsync">Add a user</MudButton>
+        <br />
+        <br />
+        <MudDataGrid T="User" Items="@Users"
+                     Virtualize="true"
+                     SortMode="SortMode.Multiple"
+                     Filterable="true" QuickFilter="@_quickFilter">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Users</MudText>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start" Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.FirstName" Title="FirstName" />
+                <PropertyColumn Property="x => x.LastName" Title="LastName" />
+                <PropertyColumn Property="x => x.Email" Title="Email" />
+                <PropertyColumn Property="x => x.company.Name" Title="Company" />
+                <PropertyColumn Property="x => x.role.Name" Title="Role" />
+                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/>
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary">Edit</MudButton>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="User" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+}
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+</style>
+@code {
+    private List<User>? Users = new List<User>();
+
+    private string _searchString;
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<User, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{x.role?.Name} {x.company?.Name} {x.Email}".Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var dialog = DialogService.Show<AddUserComponent>("Create a new user", options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+        
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await ViewUserListUseCase.ExecuteAsync();
+    }
+}

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Subscriptions\" />
+    <Folder Include="Data\" />
+    <Folder Include="CustomerService\" />
+    <Folder Include="Messages\" />
+    <Folder Include="Customers\" />
+    <Folder Include="MyAccount\" />
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CodeBeam.MudBlazor.Extensions" Version="6.9.2" />
+    <PackageReference Include="MudBlazor.Extensions" Version="1.7.89" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HopSkills.CoreBusiness\HopSkills.CoreBusiness.csproj" />
+  </ItemGroup>
+
+</Project>

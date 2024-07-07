@@ -1,0 +1,76 @@
+﻿@page "/training"
+@inject IViewTrainingListUseCase ViewTrainingListUseCase
+
+
+@if (Trainings is not null && Trainings.Any())
+{
+    <MudContainer Fixed="true">
+        <MudButton Size="@Size.Small"
+                   Variant="@Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   Color="@Color.Primary">Add a Traning program</MudButton>
+        <br />
+        <br />
+        <MudDataGrid T="Training" Items="@Trainings"
+                     Virtualize="true"
+                     SortMode="SortMode.Multiple"
+                     Filterable="true" QuickFilter="@_quickFilter">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Users</MudText>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start" Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Title" Title="Title" />
+                <PropertyColumn Property="x => x.theme.Title" Title="Theme" />
+                <PropertyColumn Property="x => x.Status" Title="Status" />
+                <PropertyColumn Property="x => x.Difficulty.Title" Title="Difficulty" />
+                <PropertyColumn Property="x => x.TotalLast" Title="Time" />
+                <PropertyColumn Property="x => x.IsCertification" Title="Certification" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudIconButton Icon="@Icons.Material.Outlined.Edit"
+                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
+                            <MudIconButton Icon="@Icons.Material.Outlined.Archive"
+                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
+                            <MudIconButton Icon="@Icons.Material.Outlined.Publish"
+                                Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"/>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="Training" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+}
+
+
+@code {
+    private List<Training>? Trainings = new List<Training>();
+
+    private string _searchString;
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<Training, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        Trainings = await ViewTrainingListUseCase.ExecuteAsync();
+    }
+}
