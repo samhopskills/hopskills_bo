@@ -25,7 +25,7 @@ namespace HopSkills.CoreBusiness
         public string Phone { get; set; }
 
         [Required]
-        public Company company { get; set; }
+        public int companyId { get; set; }
 
         public Role role { get; set; }
         public DateTime CreationDate { get; set; }

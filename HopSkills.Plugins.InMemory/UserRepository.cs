@@ -80,22 +80,7 @@ namespace HopSkills.Plugins.InMemory
                 Address = $"{random.Next(1, 1000)} {RandomString(8)} Street",
                 Email = $"{RandomString(10)}@gmail.com",
                 Phone = RandomPhoneNumber(),
-                company = new Company
-                {
-                    Address = $"{random.Next(1, 1000)} {RandomString(8)} Avenue",
-                    Phone = RandomPhoneNumber(),
-                    Name = RandomString(12),
-                    Email = $"{RandomString(10)}@company.com",
-                    Country = "CA",
-                    Image = "image_url",
-                    AttachedLicence = new Subscription
-                    {
-                        Description = "Licence",
-                        Title = "Standard",
-                        NumberOfUsers = random.Next(1, 100),
-                        Image = "image_url"
-                    }
-                },
+                companyId = 10,
                 role = new Role
                 {
                     Name = "Admin",

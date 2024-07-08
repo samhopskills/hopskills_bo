@@ -26,6 +26,12 @@
                     <MudTextField Label="Address"
                                   HelperText="Max. 25 characters"
                                   @bind-Value="user.Address" For="@(() => user.Address)" />
+                            <MudSelect T="string" @bind-Value="CompanySelected" Label="Companies" AnchorOrigin="Origin.BottomCenter">
+                                @foreach (var item in companies)
+                                {
+                                    <MudSelectItem Value="item.Name" />
+                                }
+                            </MudSelect>
                         </MudItem>
                     </MudGrid>
                 </MudCardContent>
@@ -48,10 +54,75 @@
 @code {
     [SupplyParameterFromForm]
     UserViewModel user { get; set; } = new UserViewModel();
+    List<Customer> companies = new List<Customer>() { new Customer
+                {
+                    CompanyId=10,
+                    Address = $"Avenue",
+                    Phone = "0654895647",
+                    Name = "RandomString(12)",
+                    Email = "@company.com",
+                    Country = "CA",
+                    Image = "image_url",
+                    AttachedLicence = new Subscription
+                    {
+                        Description = "Licence",
+                        Title = "Standard",
+                        NumberOfUsers = 2,
+                        Image = "image_url"
+                    }
+                },new Customer
+                {
+                    CompanyId=10,
+                    Address = $"Avenue",
+                    Phone = "0654895647",
+                    Name = "RandomString(11)",
+                    Email = "@company.com",
+                    Country = "CA",
+                    Image = "image_url",
+                    AttachedLicence = new Subscription
+                    {
+                        Description = "Licence",
+                        Title = "Standard",
+                        NumberOfUsers = 2,
+                        Image = "image_url"
+                    }
+                },new Customer
+                {
+                    CompanyId=10,
+                    Address = $"Avenue",
+                    Phone = "0654895647",
+                    Name = "RandomString(113)",
+                    Email = "@company.com",
+                    Country = "CA",
+                    Image = "image_url",
+                    AttachedLicence = new Subscription
+                    {
+                        Description = "Licence",
+                        Title = "Standard",
+                        NumberOfUsers = 2,
+                        Image = "image_url"
+                    }
+                },new Customer
+                {
+                    CompanyId=10,
+                    Address = $"Avenue",
+                    Phone = "0654895647",
+                    Name = "RandomString(1zdqdz2)",
+                    Email = "@company.com",
+                    Country = "CA",
+                    Image = "image_url",
+                    AttachedLicence = new Subscription
+                    {
+                        Description = "Licence",
+                        Title = "Standard",
+                        NumberOfUsers = 2,
+                        Image = "image_url"
+                    }
+                } };
     bool success;
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
-
+    private string CompanySelected { get; set; }
     private void Submit() => MudDialog.Close(DialogResult.Ok(true));
 
     private void Cancel() => MudDialog.Cancel();
@@ -67,7 +138,7 @@
             Email = user.Email,
             Phone = user.Phone,
             role = new Role{ Name="Employee", UseCases = new List<UseCase>()},
-            company = new Company{Name = "UltimateDumy"},
+            companyId = companies.FirstOrDefault(c => c.Name==CompanySelected).CompanyId,
             CreationDate = DateTime.Now,
             LastUpdated = DateTime.Now
         };
