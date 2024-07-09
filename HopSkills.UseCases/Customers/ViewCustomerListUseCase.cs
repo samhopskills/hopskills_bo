@@ -1,5 +1,5 @@
 ﻿using HopSkills.CoreBusiness;
-using HopSkills.UseCases.Company.Interfaces;
+using HopSkills.UseCases.Customers.Interfaces;
 using HopSkills.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;

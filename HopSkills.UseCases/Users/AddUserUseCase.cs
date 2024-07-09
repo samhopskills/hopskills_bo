@@ -27,7 +27,7 @@ namespace HopSkills.UseCases.Users
             await _userRepository.AddUserAsync(user);
         }
 
-        public async Task<List<Customer>> GetCustomersAsync(int userId)
+        public async Task<List<Customer>> GetCustomersAsync()
         {
             return await _customerRepository.GetAllAsync();
         }

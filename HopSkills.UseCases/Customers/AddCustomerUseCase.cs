@@ -1,5 +1,5 @@
 ﻿using HopSkills.CoreBusiness;
-using HopSkills.UseCases.Company.Interfaces;
+using HopSkills.UseCases.Customers.Interfaces;
 using HopSkills.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HopSkills.UseCases.Company
+namespace HopSkills.UseCases.Customers
 {
     public class AddCustomerUseCase : IAddCustomerUseCase
     {
@@ -18,7 +18,7 @@ namespace HopSkills.UseCases.Company
             _customerRepository = customerRepository;
         }
 
-        public async Task CreateCustomer(Customer customer)
+        public async Task ExecuteAsync(Customer customer)
         {
             await _customerRepository.CreateAsync(customer);
         }

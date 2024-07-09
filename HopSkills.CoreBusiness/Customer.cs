@@ -15,7 +15,8 @@ namespace HopSkills.CoreBusiness
         public string Country { get; set; }
         [Required]
         public string Address { get; set; }
-        public Subscription AttachedLicence { get; set; }
+        [Required]
+        public string AttachedLicence { get; set; }
         [Url]
         public string Image { get; set; }
         public DateTime CreationDate { get; set; }

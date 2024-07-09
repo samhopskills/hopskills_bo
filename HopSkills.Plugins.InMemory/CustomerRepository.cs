@@ -68,5 +68,19 @@ namespace HopSkills.Plugins.InMemory
 
             return Task.CompletedTask;
         }
+
+        public Task EditAsync(Customer customer)
+        {
+            var customerToUpdate = customers.FirstOrDefault(c => c.CompanyId == customer.CompanyId);
+            if (customerToUpdate != null)
+            {
+                customerToUpdate.Address = customer.Address;
+                customerToUpdate.Email = customer.Email;
+                customerToUpdate.Name = customer.Name;
+                customerToUpdate.Phone = customer.Phone;
+                customerToUpdate.AttachedLicence = customer.AttachedLicence;
+            }
+            return Task.CompletedTask;
+        }
     }
 }

@@ -26,7 +26,9 @@
                     <MudTextField Label="Address"
                                   HelperText="Max. 25 characters"
                                   @bind-Value="user.Address" For="@(() => user.Address)" />
-                            <MudSelect T="string" @bind-Value="CompanySelected" Label="Companies" AnchorOrigin="Origin.BottomCenter">
+                            <MudSelect T="string" 
+                                @bind-Value="CompanySelected" Label="Companies" 
+                                AnchorOrigin="Origin.BottomCenter">
                                 @foreach (var item in companies)
                                 {
                                     <MudSelectItem Value="item.Name" />
@@ -54,78 +56,20 @@
 @code {
     [SupplyParameterFromForm]
     UserViewModel user { get; set; } = new UserViewModel();
-    List<Customer> companies = new List<Customer>() { new Customer
-                {
-                    CompanyId=10,
-                    Address = $"Avenue",
-                    Phone = "0654895647",
-                    Name = "RandomString(12)",
-                    Email = "@company.com",
-                    Country = "CA",
-                    Image = "image_url",
-                    AttachedLicence = new Subscription
-                    {
-                        Description = "Licence",
-                        Title = "Standard",
-                        NumberOfUsers = 2,
-                        Image = "image_url"
-                    }
-                },new Customer
-                {
-                    CompanyId=10,
-                    Address = $"Avenue",
-                    Phone = "0654895647",
-                    Name = "RandomString(11)",
-                    Email = "@company.com",
-                    Country = "CA",
-                    Image = "image_url",
-                    AttachedLicence = new Subscription
-                    {
-                        Description = "Licence",
-                        Title = "Standard",
-                        NumberOfUsers = 2,
-                        Image = "image_url"
-                    }
-                },new Customer
-                {
-                    CompanyId=10,
-                    Address = $"Avenue",
-                    Phone = "0654895647",
-                    Name = "RandomString(113)",
-                    Email = "@company.com",
-                    Country = "CA",
-                    Image = "image_url",
-                    AttachedLicence = new Subscription
-                    {
-                        Description = "Licence",
-                        Title = "Standard",
-                        NumberOfUsers = 2,
-                        Image = "image_url"
-                    }
-                },new Customer
-                {
-                    CompanyId=10,
-                    Address = $"Avenue",
-                    Phone = "0654895647",
-                    Name = "RandomString(1zdqdz2)",
-                    Email = "@company.com",
-                    Country = "CA",
-                    Image = "image_url",
-                    AttachedLicence = new Subscription
-                    {
-                        Description = "Licence",
-                        Title = "Standard",
-                        NumberOfUsers = 2,
-                        Image = "image_url"
-                    }
-                } };
+    List<Customer> companies = new List<Customer>();
     bool success;
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
     private string CompanySelected { get; set; }
+
     private void Submit() => MudDialog.Close(DialogResult.Ok(true));
 
     private void Cancel() => MudDialog.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        companies = await addUserUseCase.GetCustomersAsync();
+    }
     private async void OnValidSubmit(EditContext context)
     {
         success = true;

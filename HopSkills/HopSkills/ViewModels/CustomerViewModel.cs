@@ -10,9 +10,11 @@ namespace HopSkills.ViewModels
         public string Phone { get; set; }
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public string Country { get; set; }
         [Required]
         public string Address { get; set; }
+        //[Required]
+        public string Subscription { get; set; }
     }
 }

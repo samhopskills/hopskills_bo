@@ -1,9 +1,9 @@
 using HopSkills.Components;
 using HopSkills.Plugins.InMemory;
-using HopSkills.UseCases.Company.Interfaces;
+using HopSkills.UseCases.Customers;
+using HopSkills.UseCases.Customers.Interfaces;
 using HopSkills.UseCases.Content;
 using HopSkills.UseCases.Content.Interface;
-using HopSkills.UseCases.Customers;
 using HopSkills.UseCases.PluginInterfaces;
 using HopSkills.UseCases.Users;
 using HopSkills.UseCases.Users.Interfaces;
@@ -22,6 +22,8 @@ builder.Services.AddTransient<IViewTeamListUseCase, ViewTeamListUseCase>();
 builder.Services.AddTransient<IViewTrainingListUseCase, ViewTrainingListUseCase>();
 builder.Services.AddTransient<IAddUserUseCase, AddUserUseCase>();
 builder.Services.AddTransient<IViewCustomerListUseCase, ViewCustomerListUseCase>();
+builder.Services.AddTransient<IAddCustomerUseCase, AddCustomerUseCase>();
+builder.Services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

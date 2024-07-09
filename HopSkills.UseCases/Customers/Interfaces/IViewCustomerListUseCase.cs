@@ -1,6 +1,6 @@
 ﻿using HopSkills.CoreBusiness;
 
-namespace HopSkills.UseCases.Company.Interfaces
+namespace HopSkills.UseCases.Customers.Interfaces
 {
     public interface IViewCustomerListUseCase
     {

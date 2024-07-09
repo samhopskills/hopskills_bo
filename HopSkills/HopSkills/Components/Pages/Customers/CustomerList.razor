@@ -10,13 +10,17 @@
         <MudButton Size="@Size.Small"
                    Variant="@Variant.Filled"
                    StartIcon="@Icons.Material.Filled.PersonAdd"
-                   Color="@Color.Primary" @onclick="OpenDialogAsync">Add a new customer</MudButton>
+                   Color="@Color.Primary" @onclick="OpenCreateDialogAsync">Add a new customer</MudButton>
         <br />
         <br />
-        <MudDataGrid T="Customer" Items="@Customers"
+        <MudDataGrid ReadOnly="false" T="Customer" Items="@Customers"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
-                     Filterable="true" QuickFilter="@_quickFilter">
+                     Filterable="true" StartedEditingItem="@StartedEditingItem" 
+                     CommittedItemChanges="@CommittedItemChanges"
+                     EditMode="@(DataGridEditMode.Form)"
+                     CanceledEditingItem="@CanceledEditingItem"
+                     QuickFilter="@_quickFilter">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Customers</MudText>
                 <MudSpacer />
@@ -32,18 +36,20 @@
                 <PropertyColumn Property="x => x.Address" Title="Address" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.Country" Title="Country" />
-                <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.CreationDate" Title="Creation Date" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
-                            <MudButton Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary">Edit</MudButton>
+                            <MudIconButton Size="@Size.Small" Color="@Color.Primary" Icon="@Icons.Material.Outlined.Edit"
+                                           OnClick="@context.Actions.StartEditingItemAsync" Variant="@Variant.Filled" />
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete"
+                                           Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary" />
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
             <PagerContent>
-                <MudDataGridPager T="User" />
+                <MudDataGridPager T="Customer" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -57,7 +63,7 @@
 
 @code {
     List<Customer>? Customers = new List<Customer>();
-
+    private bool _readOnly;
     private string _searchString;
     // quick filter - filter globally across multiple columns with the same input
     private Func<Customer, bool> _quickFilter => x =>
@@ -76,12 +82,43 @@
 
         return false;
     };
+    private List<string> _events = new();
+    void StartedEditingItem(Customer item)
+    {
+        _events.Insert(0, $"Event = StartedEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
 
-    private async Task OpenDialogAsync()
+    void CanceledEditingItem(Customer item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    void CommittedItemChanges(Customer item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    private async Task OpenCreateDialogAsync()
     {
         var options = new DialogOptions { BackgroundClass = "my-custom-class" };
 
         var dialog = DialogService.Show<AddCustomerComponent>("Create a new customer", options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private async Task OpenEditDialogAsync(Customer passCustomer)
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+        var parameter = new DialogParameters<Customer>()
+        {
+            {x => x, passCustomer},
+        };
+
+        var dialog = DialogService.Show<EditCustomerComponent>("Edit customer", parameter, options);
 
         var result = await dialog.Result;
 

@@ -1,5 +1,5 @@
-﻿@inject IAddCustomerUseCase addCustomerUseCase
-<EditForm Model="customer" FormName="formCustomer" OnValidSubmit="OnValidSubmit">
+﻿@inject IEditCustomerUseCase editCustomerUseCase
+<EditForm Model="passCustomer" FormName="formCustomer" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudGrid>
         <MudItem>
@@ -9,45 +9,39 @@
                         <MudItem>
                             <MudTextField Label="Name"
                                           HelperText="Max. 10 characters" Variant="Variant.Outlined"
-                                          @bind-Value="customer.Name" For="@(() => customer.Name)" />
+                                          @bind-Value="passCustomer.Name" For="@(() => passCustomer.Name)" />
                             <MudTextField Label="Email"
                                           HelperText="Max. 20 characters" Variant="Variant.Outlined"
-                                          @bind-Value="customer.Email" For="@(() => customer.Email)" />
+                                          @bind-Value="passCustomer.Email" For="@(() => passCustomer.Email)" />
                             <MudTextField Label="Address"
                                           HelperText="Max. 25 characters" Variant="Variant.Outlined"
-                                          @bind-Value="customer.Address" For="@(() => customer.Address)" />
+                                          @bind-Value="passCustomer.Address" For="@(() => passCustomer.Address)" />
                         </MudItem>
                         <MudItem>
                             <MudTextField Label="Phone"
                                           HelperText="Max. 10 characters" Variant="Variant.Outlined"
-                                          @bind-Value="customer.Phone" For="@(() => customer.Phone)" />
-                            <MudSelect T="string" Placeholder="Select country" 
-                                @bind-Value="CountrySelected"
-                                       Label="Countries" Variant="Variant.Outlined" 
-                                       AnchorOrigin="Origin.BottomCenter">
-                                @foreach (var item in countries)
-                                {
-                                    <MudSelectItem Value="item.name">
-                                        <img src="@item.flagUrl" height="14" class="mr-1" />@item.name
-                                    </MudSelectItem>
-                                }
-                                </MudSelect>
+                                          @bind-Value="passCustomer.Phone" For="@(() => passCustomer.Phone)" />
                             <br />
                             <br />
-                            <MudSelect T="string" Placeholder="Select a subscription" 
-                                @bind-Value="SubscriptionSelected"
+                            <MudSelect T="string" Placeholder="Select a subscription"
+                                       @bind-Value="SubscriptionSelected"
                                        Label="With render fragements" Variant="Variant.Outlined">
                                 @foreach (var item in subscriptions)
                                 {
-                                    <MudSelectItem Value="item">@item
+                                    <MudSelectItem Value="item">
+                                        @item
                                         @if (item.Equals("Standard"))
                                         {
                                             <MudRating ReadOnly="true" SelectedValue="1" MaxValue="1" />
                                         }
                                         else if (item.Equals("Medium"))
-                                            {<MudRating ReadOnly="true" SelectedValue="2" MaxValue="2" />}
-                                    else
-                                            {<MudRating ReadOnly="true" SelectedValue="3" MaxValue="3" />}
+                                        {
+                                            <MudRating ReadOnly="true" SelectedValue="2" MaxValue="2" />
+                                        }
+                                        else
+                                        {
+                                            <MudRating ReadOnly="true" SelectedValue="3" MaxValue="3" />
+                                        }
                                     </MudSelectItem>
                                 }
                             </MudSelect>
@@ -57,13 +51,13 @@
                 <MudCardActions>
                     <MudGrid Justify="Justify.FlexEnd">
                         <MudItem>
-                            <MudButton ButtonType="ButtonType.Submit" 
-                            OnClick="Cancel" Variant="Variant.Filled"
+                            <MudButton ButtonType="ButtonType.Submit"
+                                       OnClick="Cancel" Variant="Variant.Filled"
                                        Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
                         </MudItem>
                         <MudItem>
-                            <MudButton ButtonType="ButtonType.Submit"  
-                            Variant="Variant.Filled"
+                            <MudButton ButtonType="ButtonType.Submit"
+                                       Variant="Variant.Filled"
                                        Color="Color.Primary" Class="ml-auto">Add</MudButton>
                         </MudItem>
                     </MudGrid>
@@ -72,61 +66,52 @@
         </MudItem>
     </MudGrid>
 </EditForm>
-    @code {
-        [SupplyParameterFromForm]
-    CustomerViewModel customer { get; set; } = new CustomerViewModel();
+@code {
     bool success;
-    private string? CountrySelected { get; set; }
     private string? SubscriptionSelected { get; set; }
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
-    
-    private void Submit() {
+    [Parameter]
+    public Customer passCustomer { get; set; } = new Customer();
+
+    private void Submit()
+    {
         Console.WriteLine("Submit button clicked");
         MudDialog.Close(DialogResult.Ok(true));
     }
-    private void Cancel() { 
+    private void Cancel()
+    {
         Console.WriteLine("Cancel button clicked");
-        MudDialog.Cancel(); 
+        MudDialog.Cancel();
     }
     private List<string> subscriptions { get; set; } = new List<string>{
         "Standard",
         "Medium",
         "Premium"
     };
-    public class Country
-    {
-        public string name { get; set; }
-        public string flagUrl { get; set; }
-    }
-    private List<Country> countries = new List<Country>{
-        new Country{name ="France", flagUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg"},
-        new Country{name = "Canada", flagUrl ="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg"},
-    };
 
     protected override Task OnInitializedAsync()
     {
         return base.OnInitializedAsync();
     }
+
     private async void OnValidSubmit(EditContext context)
     {
         Console.WriteLine(SubscriptionSelected);
-        Console.WriteLine(CountrySelected);
 
         success = true;
         StateHasChanged();
         var custom = new Customer
             {
-                Name = customer.Name,
-                Email = customer.Email,
-                Address = customer.Address,
-                Country = CountrySelected,
-                Phone = customer.Phone,
+                Name = passCustomer.Name,
+                Email = passCustomer.Email,
+                Address = passCustomer.Address,
+                Phone = passCustomer.Phone,
                 CreationDate = DateTime.Now,
-                AttachedLicence =  SubscriptionSelected
+                AttachedLicence = SubscriptionSelected != null ? SubscriptionSelected : passCustomer.AttachedLicence
             };
         Console.WriteLine(custom.Country);
-        await addCustomerUseCase.ExecuteAsync(custom);
+        await editCustomerUseCase.ExecuteAsync(custom);
         Submit();
     }
 }
