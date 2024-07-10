@@ -1,4 +1,5 @@
 ﻿@page "/customers"
+@using HopSkills.UseCases.Customers.Interfaces
 @inject IViewCustomerListUseCase ViewCustomerListUseCase
 
 
@@ -103,22 +104,6 @@
         var options = new DialogOptions { BackgroundClass = "my-custom-class" };
 
         var dialog = DialogService.Show<AddCustomerComponent>("Create a new customer", options);
-
-        var result = await dialog.Result;
-
-        if (!result.Canceled)
-            await OnInitializedAsync();
-    }
-
-    private async Task OpenEditDialogAsync(Customer passCustomer)
-    {
-        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
-        var parameter = new DialogParameters<Customer>()
-        {
-            {x => x, passCustomer},
-        };
-
-        var dialog = DialogService.Show<EditCustomerComponent>("Edit customer", parameter, options);
 
         var result = await dialog.Result;
 
