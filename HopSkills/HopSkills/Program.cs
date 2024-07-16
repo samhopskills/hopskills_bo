@@ -15,14 +15,18 @@ builder.Services.AddMudServices();
 
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ITeamRepository, TeamRepository>();
+builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 builder.Services.AddSingleton<ITrainingRepository, TrainingRepository>();
 builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<IViewUserListUseCase, ViewUserListUseCase>();
 builder.Services.AddTransient<IViewTeamListUseCase, ViewTeamListUseCase>();
+builder.Services.AddTransient<IViewRoleListUseCase, ViewRoleListUseCase>();
 builder.Services.AddTransient<IViewTrainingListUseCase, ViewTrainingListUseCase>();
 builder.Services.AddTransient<IAddUserUseCase, AddUserUseCase>();
 builder.Services.AddTransient<IViewCustomerListUseCase, ViewCustomerListUseCase>();
 builder.Services.AddTransient<IAddCustomerUseCase, AddCustomerUseCase>();
+builder.Services.AddTransient<IAddTeamUseCase, AddTeamUseCase>();
+builder.Services.AddTransient<IAddRoleUseCase, AddRoleUseCase>();
 builder.Services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
 
 // Add services to the container.

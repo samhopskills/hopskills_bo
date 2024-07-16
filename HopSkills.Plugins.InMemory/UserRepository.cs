@@ -1,4 +1,5 @@
 ﻿using HopSkills.CoreBusiness;
+using Nextended.Core.Extensions;
 
 namespace HopSkills.Plugins.InMemory
 {
@@ -18,17 +19,21 @@ namespace HopSkills.Plugins.InMemory
 
         public Task AddUserAsync(User user)
         {
-            var maxId = _users.Max(u => u.UserId);
+            var maxId = 0;
+            if(_users.Any())
+                maxId = _users.Max(u => u.UserId);
             user.UserId = maxId + 1;
-
             _users.Add(user);
 
             return Task.CompletedTask;
         }
 
-        public Task DeleteUserAsync(User user)
+        public Task DeleteUserAsync(List<User> users)
         {
-            _users.Remove(user);
+            foreach(var user in users)
+            {
+                _users.Remove(user);
+            }
             return Task.CompletedTask;
         }
 
@@ -45,7 +50,7 @@ namespace HopSkills.Plugins.InMemory
             return _users.FirstOrDefault(u => u.UserId == userId);
         }
 
-        public Task UpdateUser(User user)
+        public Task UpdateUserAsync(User user)
         {
             var use = _users.FirstOrDefault(u => u.UserId == user.UserId);
             if (use is not null)
@@ -53,6 +58,7 @@ namespace HopSkills.Plugins.InMemory
                 use.FirstName = user.FirstName;
                 use.LastName = user.LastName;
                 use.role = user.role;
+                use.LastUpdated = DateTime.UtcNow;
             }
             return Task.CompletedTask;
         }

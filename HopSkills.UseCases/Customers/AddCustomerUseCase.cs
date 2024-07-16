@@ -13,10 +13,7 @@ namespace HopSkills.UseCases.Customers
     {
         private readonly ICustomerRepository _customerRepository;
 
-        public AddCustomerUseCase(ICustomerRepository customerRepository)
-        {
-            _customerRepository = customerRepository;
-        }
+        public AddCustomerUseCase(ICustomerRepository customerRepository) => _customerRepository = customerRepository;
 
         public async Task ExecuteAsync(Customer customer)
         {

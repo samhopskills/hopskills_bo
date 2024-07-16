@@ -24,17 +24,33 @@ namespace HopSkills.Plugins.InMemory
 
         public Task AddTeamAsync(Team team)
         {
-            var maxId = _teams.Max(u => u.TeamId);
+            var maxId = 0;
+            if(_teams.Any())
+                maxId = _teams.Max(u => u.TeamId);
+
             team.TeamId = maxId + 1;
 
             _teams.Add(team);
-
             return Task.CompletedTask;
         }
 
-        public Task DeleteUserAsync(Team team)
+        public Task UpdateTeamAsync(Team team)
         {
-            _teams.Remove(team);
+            var tem = _teams.FirstOrDefault(u => u.TeamId == team.TeamId);
+            if (tem is not null)
+            {
+                tem.Name = team.Name;
+                tem.UpdateDate = DateTime.UtcNow;
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteTeamAsync(List<Team> teams)
+        {
+            foreach (var team in teams)
+            {
+                _teams.Remove(team);
+            }
             return Task.CompletedTask;
         }
 
@@ -105,5 +121,7 @@ namespace HopSkills.Plugins.InMemory
             }
             return users;
         }
+
+       
     }
 }

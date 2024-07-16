@@ -13,5 +13,7 @@ namespace HopSkills.CoreBusiness
         public bool IsActive { get; set; }
         public int CompanyId { get; set; }
         public int NumberOfUser { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }

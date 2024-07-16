@@ -14,14 +14,21 @@ namespace HopSkills.UseCases.Users
 
         private readonly IUserRepository _userRepository;
 
-        public ViewUserListUseCase(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        public ViewUserListUseCase(IUserRepository userRepository) => _userRepository = userRepository;
 
         public async Task<List<User>> ExecuteAsync()
         {
             return await _userRepository.GetUsers();
+        }
+
+        public async Task DeleteAsync(List<User> users)
+        {
+            await _userRepository.DeleteUserAsync(users);
+        }
+
+        public async Task UpdateAsync(User user)
+        {
+            await _userRepository.UpdateUserAsync(user);
         }
     }
 }

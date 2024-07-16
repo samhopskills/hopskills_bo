@@ -1,42 +1,61 @@
 ﻿@page "/teams"
 
 @inject IViewTeamListUseCase ViewTeamListUseCase
+@inject IDialogService DialogService
 
-@if (Teams is not null && Teams.Any())
-{
+
     <MudContainer Fixed="true">
-        <MudButton Size="@Size.Small"
-                   Variant="@Variant.Filled"
-                   StartIcon="@Icons.Material.Filled.GroupAdd"
-                   Color="@Color.Primary">Add a team</MudButton>
-        <br />
-        <br />
         <MudDataGrid T="Team" Items="@Teams"
-                     FixedHeader="true"
+                     MultiSelection="true"
+                     Virtualize="true"
                      SortMode="SortMode.Multiple"
-                     Filterable="true" QuickFilter="@_quickFilter">
+                     Filterable="true" ReadOnly="false"
+                     StartedEditingItem="@StartedEditingItem"
+                     CommittedItemChanges="@CommittedItemChanges"
+                     EditMode="@(DataGridEditMode.Form)"
+                     CanceledEditingItem="@CanceledEditingItem"
+                     QuickFilter="@_quickFilter"
+                     RowClick="@RowClicked"
+                     RowContextMenuClick="RowRightClicked"
+                     SelectedItemsChanged="@SelectedItemsChanged">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Teams</MudText>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField @bind-Value="_searchString" Placeholder="Search"
-                              Adornment="Adornment.Start" Immediate="true"
-                              AdornmentIcon="@Icons.Material.Filled.Search"
-                              IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudGrid Spacing="10">
+                    <MudItem>
+                        <MudButton Size="@Size.Small"
+                                   Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.GroupAdd"
+                                   Color="@Color.Primary" @onclick="OpenDialogAsync">Add</MudButton>
+                    </MudItem>
+                    <MudItem>
+                        <MudButton Size="@Size.Small"
+                                   Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.GroupRemove"
+                                   Color="@Color.Error" Disabled="@disabledDelete"
+                                   OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                    </MudItem>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                                  Adornment="Adornment.Start" Immediate="true"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  IconSize="Size.Medium" Class="mt-10"></MudTextField>
+                </MudGrid>
             </ToolBarContent>
             <Columns>
+                <SelectColumn T="Team" />
                 <PropertyColumn Property="x => x.Name" Title="Name" />
-                <PropertyColumn Property="x => x.NumberOfUser" Title="Number of people" />
-                <PropertyColumn Property="x => x.IsActive" Title="Active" />
-                <TemplateColumn CellClass="d-flex justify-end">
+                <PropertyColumn Editable="false" Property="x => x.NumberOfUser" Title="Number of people" />
+                <PropertyColumn Property="x => x.IsActive" Title="Active"/>
+                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/>
+                <TemplateColumn Filterable="false">
                     <CellTemplate>
                         <MudStack Row>
-                            <MudIconButton Icon="@Icons.Material.Outlined.SupervisedUserCircle"
-                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
+                            @* <MudIconButton Icon="@Icons.Material.Outlined.SupervisedUserCircle"
+                                           Size="@Size.Small" Variant="@Variant.Text" 
+                                           Color="@Color.Primary" /> *@
                             <MudIconButton Icon="@Icons.Material.Outlined.Edit"
-                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
-                            <MudIconButton Icon="@Icons.Material.Outlined.Cancel"
-                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
+                                       OnClick="@context.Actions.StartEditingItemAsync"
+                                           Size="@Size.Small" Variant="@Variant.Text" 
+                                           Color="@Color.Primary" />
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
@@ -46,13 +65,14 @@
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
-}
 
 
 @code {
-    private List<Team>? Teams = new List<Team>();
-
+    private List<Team>? Teams;
+    private bool disabledDelete;
     private string _searchString;
+    private List<Team> selectedTeams = new List<Team>();
+
     // quick filter - filter globally across multiple columns with the same input
     private Func<Team, bool> _quickFilter => x =>
     {
@@ -67,7 +87,77 @@
 
     protected override async Task OnInitializedAsync()
     {
+        disabledDelete = true;
+        Teams = new List<Team>();
         Teams = await ViewTeamListUseCase.ExecuteAsync();
+    }
+
+    private List<string> _events = new();
+    void StartedEditingItem(Team item)
+    {
+    }
+
+    void CanceledEditingItem(Team item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(Team item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+        await ViewTeamListUseCase.UpdateAsync(item);
+        await OnInitializedAsync();
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<Team> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<Team> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<Team> items)
+    {
+        selectedTeams = items.ToList();
+        disabledDelete = !(selectedTeams.Count > 0);
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var dialog = await DialogService.ShowAsync<AddTeamComponent>("Create a new team", options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+
+    }
+
+    private async Task DeleteServerAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var parameters = new DialogParameters<Dialog> {
+            { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<Dialog>("Delete records", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await ViewTeamListUseCase.DeleteAsync(selectedTeams);
+            await OnInitializedAsync();
+        }
+
     }
 }
 
