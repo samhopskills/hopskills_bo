@@ -7,6 +7,11 @@
 
 
 <MudLayout>
+    <AuthorizeView>
+        <NotAuthorized>
+            <HopSkills.Components.Account.Pages.Login />
+        </NotAuthorized>
+        <Authorized>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.AllInclusive" 
         Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
@@ -21,6 +26,8 @@
         <br />
         @Body
     </MudMainContent>
+        </Authorized>
+    </AuthorizeView>
 </MudLayout>
 
 @code {
