@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\boy-with-rocket-light.png",
+      "PackagePath": "staticwebassets\\Images\\boy-with-rocket-light.png"
+    },
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\girl-with-laptop-light.png",
+      "PackagePath": "staticwebassets\\Images\\girl-with-laptop-light.png"
+    },
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\loginBg.svg",
+      "PackagePath": "staticwebassets\\Images\\loginBg.svg"
+    },
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HopSkills.BackOffice.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.HopSkills.BackOffice.props",
+      "PackagePath": "build\\HopSkills.BackOffice.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.HopSkills.BackOffice.props",
+      "PackagePath": "buildMultiTargeting\\HopSkills.BackOffice.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.HopSkills.BackOffice.props",
+      "PackagePath": "buildTransitive\\HopSkills.BackOffice.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

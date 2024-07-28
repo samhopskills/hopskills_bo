@@ -1,0 +1,160 @@
+﻿@using System.ComponentModel.DataAnnotations
+@* @inject IAddRoleUseCase addRoleUseCase *@
+@inject RoleManager<IdentityRole> RoleManager
+@inject IRoleStore<IdentityRole> RoleStore
+@inject ILogger<AddRole> Logger
+
+<MudCard>
+    <MudCardHeader Class="object-center">
+        <CardHeaderContent>
+            <MudGrid>
+                <MudItem>
+                    <MudText Typo="Typo.h6">Add New Role</MudText>
+                    <MudText Typo="Typo.subtitle1">Set role permissions</MudText>
+
+                </MudItem>
+            </MudGrid>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <EditForm Model="Input" FormName="formRole" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <MudTextField Placeholder="Enter a role name"
+                          HelperText="Max. 20 characters"
+                          Variant="Variant.Outlined"
+                          @bind-Value="Input.Name" For="@(() => Input.Name)" />
+            @* <MudText>Role Permissions</MudText>
+            <MudDivider/>
+            <MudExpansionPanels>
+            <MudExpansionPanel Text="Administrator Access">
+            @_panelContent
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="User Management">
+            Panel One Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Training Management">
+            Panel Two Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Quiz Management">
+            Panel Three Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Team Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Role Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Licence Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Subscription Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Company Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Account Management">
+            Panel Four Content
+            </MudExpansionPanel>
+            </MudExpansionPanels> *@
+
+        </EditForm>
+    </MudCardContent>
+    <MudCardActions>
+        <MudGrid Justify="Justify.FlexEnd">
+            <MudItem>
+                <MudButton ButtonType="ButtonType.Submit" OnClick="Cancel"
+                           Variant="Variant.Filled"
+                           Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
+            </MudItem>
+            <MudItem>
+                <MudButton ButtonType="ButtonType.Submit"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary" Class="ml-auto">Add</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudCardActions>
+</MudCard>
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+    // [SupplyParameterFromForm]
+    // RoleViewModel role { get; set; } = new RoleViewModel();
+    bool success;
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async void OnValidSubmit(EditContext context)
+    {
+        var role = CreateRole();
+
+        success = true;
+        StateHasChanged();
+        await RoleStore.SetRoleNameAsync(role, Input.Name, CancellationToken.None);
+        var result = await RoleManager.CreateAsync(role);
+
+        if (!result.Succeeded)
+        {
+            identityErrors = result.Errors;
+            return;
+        }
+
+        Logger.LogInformation("Role created.");
+        
+        Submit();
+    }
+
+    private IdentityRole CreateRole()
+    {
+        try
+        {
+            return Activator.CreateInstance<IdentityRole>();
+        }
+        catch
+        {
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityRole)}'. " +
+                $"Ensure that '{nameof(IdentityRole)}' is not an abstract class and has a parameterless constructor.");
+        }
+    }
+
+    private RenderFragment _panelContent;
+
+    private async Task OnExpandedChanged(bool newVal)
+    {
+        if (newVal)
+        {
+            await Task.Delay(600);
+            _panelContent = _bigAsyncContent;
+        }
+        else
+        {
+            // Reset after a while to prevent sudden collapse.
+            Task.Delay(350).ContinueWith(t => _panelContent = null).CatchAndLog();
+        }
+    }
+
+    private RenderFragment _bigAsyncContent = __builder =>
+    {
+        <div>The expansion of the</div>
+        <div>inner panel is done after</div>
+        <div>ExpandedChanged</div>
+        <div>has completed to allow for</div>
+        <div>smooth opening of async data</div>
+        <div>of initially unknown height.</div>
+    };
+
+    private sealed class InputModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Name")]
+        public string Name { get; set; } = "";
+    }
+}
+

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\Debug\\net8.0\\compressed\\6n9carebxx.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HopSkills.BackOffice.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.HopSkills.BackOffice.Client.props",
+      "PackagePath": "build\\HopSkills.BackOffice.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.HopSkills.BackOffice.Client.props",
+      "PackagePath": "buildMultiTargeting\\HopSkills.BackOffice.Client.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.HopSkills.BackOffice.Client.props",
+      "PackagePath": "buildTransitive\\HopSkills.BackOffice.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

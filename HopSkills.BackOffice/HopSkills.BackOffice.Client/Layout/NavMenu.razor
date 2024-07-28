@@ -1,0 +1,85 @@
+﻿@implements IDisposable
+
+@inject NavigationManager navigationManager
+
+@attribute [Authorize]
+
+<MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
+    @* <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
+    <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
+    <MudNavLink Href="auth" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Lock">Auth Required</MudNavLink> *@
+    <AuthorizeView>
+        <Authorized>
+            <MudNavLink Icon="@Icons.Material.Filled.SpaceDashboard" Href="/dashboards" Match="NavLinkMatch.All">
+                Dashboards
+            </MudNavLink>
+            <MudNavGroup Icon="@Icons.Material.Filled.Key" Title="Licences" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.Key" Href="users" Match="NavLinkMatch.Prefix">Gestion des licences</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.AttachMoney" Href="/security" Match="NavLinkMatch.Prefix">Gestion des abonnements</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Icon="@Icons.Material.Filled.Create" Title="Création de contenu" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.Games" Href="/users" Match="NavLinkMatch.Prefix">Jeux</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.ModelTraining" Href="/training" Match="NavLinkMatch.Prefix">Formation</MudNavLink>
+            </MudNavGroup>
+            <MudNavLink Icon="@Icons.Material.Filled.DataExploration" Href="/weather" Match="NavLinkMatch.Prefix">Analyse des données</MudNavLink>
+            <MudNavGroup Icon="@Icons.Material.Filled.SupportAgent" Title="Support" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.CallToAction" Href="/users" Match="NavLinkMatch.Prefix">Tickets</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.MenuBook" Href="/security" Match="NavLinkMatch.Prefix">Tutoriel</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Icon="@Icons.Material.Filled.ListAlt" Title="Messagerie" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.NotificationImportant" Href="/users" Match="NavLinkMatch.Prefix">Notifications</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Message" Href="/security" Match="NavLinkMatch.Prefix">Discussions</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Icon="@Icons.Material.Filled.Groups" Title="Utilisateurs" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.Group" Href="users" Match="NavLinkMatch.Prefix">Utilisateurs</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.GroupWork" Href="teams" Match="NavLinkMatch.Prefix">Groupes</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.TypeSpecimen" Href="/Manage/Roles" Match="NavLinkMatch.Prefix">Rôles</MudNavLink>
+            </MudNavGroup>
+            <MudNavLink Icon="@Icons.Material.Filled.SupervisedUserCircle" Href="/customers" Match="NavLinkMatch.Prefix">Clients</MudNavLink>
+            <MudNavGroup Icon="@Icons.Material.Filled.ManageAccounts" Title="Mon compte" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.CreditScore" Href="users" Match="NavLinkMatch.Prefix">Mes abonnements</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.TextSnippet" Href="/security" Match="NavLinkMatch.Prefix">Mes factures</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.ShortText" Href="/security" Match="NavLinkMatch.Prefix">Information de facturation</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Icon="@Icons.Material.Filled.Settings" Title="Paramètre" Expanded="false">
+                <MudNavLink Icon="@Icons.Material.Filled.SettingsBrightness" Href="/users" Match="NavLinkMatch.Prefix">Thèmes</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.DisplaySettings" Href="/security" Match="NavLinkMatch.Prefix">Difficulté</MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Category" Href="/security" Match="NavLinkMatch.Prefix">Catégorie de tutoriel</MudNavLink>
+            </MudNavGroup>
+            <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink>
+            <form action="Account/Logout" method="post">
+                <AntiforgeryToken />
+                <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                <button type="submit" class="mud-nav-link mud-ripple">
+                    <MudIcon Icon="@Icons.Material.Filled.Logout" Color="Color.Info" Class="mr-3"></MudIcon> Logout
+                </button>
+            </form>
+        </Authorized>
+    </AuthorizeView>
+</MudNavMenu>
+
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = navigationManager.ToBaseRelativePath(navigationManager.Uri);
+        navigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = navigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        navigationManager.LocationChanged -= OnLocationChanged;
+    }
+    
+}
+
+

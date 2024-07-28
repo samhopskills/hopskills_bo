@@ -1,0 +1,114 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.MudDebugAnalyzer = 
+build_property.MudAllowedAttributePattern = 
+build_property.MudIllegalParameters = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = HopSkills.BackOffice.Client
+build_property.RootNamespace = HopSkills.BackOffice.Client
+build_property.ProjectDir = C:\Users\samyd\source\repos\HopSkillsBo\HopSkills.BackOffice\HopSkills.BackOffice.Client\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\samyd\source\repos\HopSkillsBo\HopSkills.BackOffice\HopSkills.BackOffice.Client
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddCustomerComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkQ3VzdG9tZXJDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddRoleComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkUm9sZUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddTeamComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkVGVhbUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddUserComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkVXNlckNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/Dialog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/EditCustomerComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcRWRpdEN1c3RvbWVyQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Auth.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/GameList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcR2FtZUxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/TrainingList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcVHJhaW5pbmdMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Customers/CustomerList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJzXEN1c3RvbWVyTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Dashboards/Dashboards.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkc1xEYXNoYm9hcmRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Users/RoleList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcUm9sZUxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Users/TeamList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVGVhbUxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Users/UserList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVXNlckxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/RedirectToLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = UmVkaXJlY3RUb0xvZ2luLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Um91dGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/samyd/source/repos/HopSkillsBo/HopSkills.BackOffice/HopSkills.BackOffice.Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

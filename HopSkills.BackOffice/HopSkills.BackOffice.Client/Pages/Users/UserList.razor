@@ -1,0 +1,176 @@
+﻿@page "/users"
+
+@inject IViewUserListUseCase ViewUserListUseCase
+@inject IDialogService DialogService
+
+@attribute [Authorize]
+
+    <MudContainer Fixed="true">
+        <MudSpacer />
+        <MudSpacer />
+        <MudDataGrid T="User" Items="@Users"
+                     MultiSelection="true"
+                     Virtualize="true"
+                     SortMode="SortMode.Multiple"
+                     Filterable="true" ReadOnly="false"
+                     StartedEditingItem="@StartedEditingItem"
+                     CommittedItemChanges="@CommittedItemChanges"
+                     EditMode="@(DataGridEditMode.Form)"
+                     CanceledEditingItem="@CanceledEditingItem"
+                     QuickFilter="@_quickFilter"
+                     RowClick="@RowClicked" 
+                     RowContextMenuClick="RowRightClicked" 
+                     SelectedItemsChanged="@SelectedItemsChanged">
+            <ToolBarContent >
+                <MudGrid Spacing="10">
+                    <MudItem>
+            <MudButton Size="@Size.Small"
+                       Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.PersonAdd"
+                       Color="@Color.Primary" @onclick="OpenDialogAsync">Add</MudButton>
+                </MudItem>
+                <MudItem>
+            <MudButton Size="@Size.Small"
+                       Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.PersonRemove"
+                       Color="@Color.Error" Disabled="@disabledDelete"
+                       OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                </MudItem>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start" Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Class="mt-10"></MudTextField>
+            </MudGrid>
+            
+            </ToolBarContent>
+            <Columns>
+                <SelectColumn T="User" />
+                <PropertyColumn Property="x => x.FirstName" Title="FirstName" />
+                <PropertyColumn Property="x => x.LastName" Title="LastName" />
+                <PropertyColumn Property="x => x.Email" Title="Email" />
+                <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
+                <PropertyColumn Property="x => x.role.Name" Title="Role" />
+                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/>
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudStack Row>
+                            <MudIconButton Size="@Size.Small" Color="@Color.Primary" Icon="@Icons.Material.Outlined.Edit"
+                                           OnClick="@context.Actions.StartEditingItemAsync"
+                                           Variant="@Variant.Text"></MudIconButton>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="User" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+
+
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+</style>
+@code {
+    private List<User>? Users;
+    private List<User> selectedUsers = new List<User>();
+    private bool disabledDelete;
+    private string _searchString;
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<User, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{x.role?.Name} {x.Email}".Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        disabledDelete = true;
+        Users = new List<User>();
+        Users = await ViewUserListUseCase.ExecuteAsync();
+    }
+
+    private List<string> _events = new();
+    void StartedEditingItem(User item)
+    {
+    }
+
+    void CanceledEditingItem(User item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(User item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+        await ViewUserListUseCase.UpdateAsync(item);
+        await OnInitializedAsync();
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<User> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<User> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<User> items)
+    {
+        selectedUsers=items.ToList();
+        disabledDelete = !(selectedUsers.Count > 0);
+
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var dialog = await DialogService.ShowAsync<AddUserComponent>("Create a new user", options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private async Task DeleteServerAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var parameters = new DialogParameters<Dialog> {
+            { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<Dialog>("Delete Users", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await ViewUserListUseCase.DeleteAsync(selectedUsers);
+            await OnInitializedAsync();
+        }
+
+    }
+    
+}

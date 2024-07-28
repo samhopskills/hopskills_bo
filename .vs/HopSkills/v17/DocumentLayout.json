@@ -1,0 +1,172 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{624DE806-BEC1-414C-81D5-F9203B5AB2B3}|HopSkills.UseCases\\HopSkills.UseCases.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills.usecases\\content\\viewgamelistusecase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{624DE806-BEC1-414C-81D5-F9203B5AB2B3}|HopSkills.UseCases\\HopSkills.UseCases.csproj|solutionrelative:hopskills.usecases\\content\\viewgamelistusecase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{656E1B64-5044-4945-BC1B-09C790B77476}|HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills.corebusiness\\hopskills.corebusiness.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{656E1B64-5044-4945-BC1B-09C790B77476}|HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj|solutionrelative:hopskills.corebusiness\\hopskills.corebusiness.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|c:\\users\\samyd\\source\\repos\\hopskills_bo\\hopskills\\hopskills\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{991A8A05-5F92-4BF9-9B64-9D99B2CD7178}|HopSkills\\HopSkills\\HopSkills.csproj|solutionrelative:hopskills\\hopskills\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\appsettings.json",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\appsettings.json",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\appsettings.json",
+              "RelativeToolTip": "HopSkills\\HopSkills\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-25T13:26:39.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ViewGameListUseCase.cs",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.UseCases\\Content\\ViewGameListUseCase.cs",
+              "RelativeDocumentMoniker": "HopSkills.UseCases\\Content\\ViewGameListUseCase.cs",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.UseCases\\Content\\ViewGameListUseCase.cs",
+              "RelativeToolTip": "HopSkills.UseCases\\Content\\ViewGameListUseCase.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T12:48:01.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HopSkills.CoreBusiness",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj",
+              "RelativeDocumentMoniker": "HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj",
+              "RelativeToolTip": "HopSkills.CoreBusiness\\HopSkills.CoreBusiness.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-07-25T12:13:16.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAACYAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-24T17:29:39.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Program.cs",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Program.cs",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Program.cs",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Program.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACIAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-23T14:33:40.226Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-23T09:25:10.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Components\\_Imports.razor",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\_Imports.razor",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Components\\_Imports.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-23T08:25:42.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Routes.razor",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Routes.razor",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\Routes.razor",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Components\\Routes.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-23T08:23:20.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\App.razor",
+              "RelativeDocumentMoniker": "HopSkills\\HopSkills\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills\\HopSkills\\Components\\App.razor",
+              "RelativeToolTip": "HopSkills\\HopSkills\\Components\\App.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-23T08:23:14.588Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

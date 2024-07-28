@@ -1,0 +1,182 @@
+﻿@page "/Manage/Roles"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using HopSkills.BackOffice.Data
+
+@inject IDialogService DialogService
+@inject RoleManager<IdentityRole> RoleManager
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<br />
+<br />
+<br />
+<MudContainer Fixed="true">
+    <MudSpacer />
+    <MudSpacer />
+    <MudDataGrid T="IdentityRole" Items="@Roles"
+                 MultiSelection="true"
+                 Virtualize="true"
+                 SortMode="SortMode.Multiple"
+                 Filterable="true" ReadOnly="false"
+                 StartedEditingItem="@StartedEditingItem"
+                 CommittedItemChanges="@CommittedItemChanges"
+                 EditMode="@(DataGridEditMode.Form)"
+                 CanceledEditingItem="@CanceledEditingItem"
+                 QuickFilter="@_quickFilter"
+                 RowClick="@RowClicked"
+                 RowContextMenuClick="RowRightClicked"
+                 SelectedItemsChanged="@SelectedItemsChanged">
+        <ToolBarContent>
+            <MudGrid Spacing="10">
+                <MudItem>
+                    <MudButton Size="@Size.Small"
+                               Variant="@Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Accessibility"
+                               Color="@Color.Primary"
+                               OnClick="OpenDialogAsync">Add</MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudButton Size="@Size.Small"
+                               Variant="@Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Remove"
+                               Color="@Color.Error" Disabled="@disabledDelete"
+                               OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                </MudItem>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start" Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Class="mt-10"></MudTextField>
+            </MudGrid>
+
+        </ToolBarContent>
+        <Columns>
+            <SelectColumn T="IdentityRole" />
+            <PropertyColumn Property="x => x.Name" Title="Name" />
+            @* <PropertyColumn Property="x => x.CreationDate" Title="CreationDate" /> *@
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudIconButton Size="@Size.Small" Color="@Color.Primary" Icon="@Icons.Material.Outlined.Edit"
+                                       OnClick="@context.Actions.StartEditingItemAsync"
+                                       Variant="@Variant.Text"></MudIconButton>
+                        @*  <MudIconButton Icon="@Icons.Material.Outlined.Delete"
+                        Size="@Size.Small" Variant="@Variant.Text" Color="@Color.Primary" /> *@
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="IdentityRole" />
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
+
+
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+</style>
+@code {
+    private List<IdentityRole>? Roles;
+    private List<IdentityRole> selectedRoles = new List<IdentityRole>();
+    private bool disabledDelete;
+    private string _searchString;
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<IdentityRole, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        disabledDelete = true;
+        Roles = RoleManager.Roles.ToList();
+        // Roles = await ViewRoleListUseCase.ExecuteAsync();
+    }
+
+    private List<string> _events = new();
+    void StartedEditingItem(IdentityRole item)
+    {
+    }
+
+    void CanceledEditingItem(IdentityRole item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(IdentityRole item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+        // await ViewRoleListUseCase.UpdateAsync(item);
+        await OnInitializedAsync();
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<IdentityRole> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<IdentityRole> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<IdentityRole> items)
+    {
+        selectedRoles = items.ToList();
+        disabledDelete = !(selectedRoles.Count > 0);
+
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions
+            {
+                BackgroundClass = "my-custom-class",
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
+                NoHeader = true,
+                BackdropClick = true
+            };
+
+        var dialog = await DialogService.ShowAsync<AddRole>(string.Empty, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+
+    }
+
+    private async Task DeleteServerAsync()
+    {
+        // var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        // var parameters = new DialogParameters<Dialog> {
+        //     { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+        //     { x => x.ButtonText, "Delete" },
+        //     { x => x.Color, Color.Error }
+        // };
+
+        // var dialog = await DialogService.ShowAsync<Dialog>("Delete Roles", parameters, options);
+        // var result = await dialog.Result;
+
+        // if (!result.Canceled)
+        // {
+        //     // await ViewRoleListUseCase.DeleteAsync(selectedRoles);
+        //     await OnInitializedAsync();
+        // }
+
+    }
+
+}
