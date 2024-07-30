@@ -1,62 +1,74 @@
 ﻿@inject IAddUserUseCase addUserUseCase
-<EditForm Model="user" FormName="formUser" OnValidSubmit="OnValidSubmit">
-<DataAnnotationsValidator />
-<ValidationSummary></ValidationSummary>
-    <MudGrid>
-        <MudItem>
-            <MudCard>
-                <MudCardContent>
-                    <MudGrid Spacing="6">
-                        <MudItem>
-                            <MudTextField Label="First Name"
-                                  HelperText="Max. 10 characters"
-                                  @bind-Value="user.FirstName" For="@(() => user.FirstName)" />
-                            <MudTextField Label="Email"
-                                          HelperText="Max. 20 characters"
-                                          @bind-Value="user.Email" For="@(() => user.Email)" />
-                            <MudTextField Label="Phone" 
-                                          HelperText="Max. 10 characters"
-                                          @bind-Value="user.Phone" For="@(() => user.Phone)" />
-                        </MudItem>
-                        <MudItem>
-                    <MudTextField  Label="Last Name"
-                                  HelperText="Max. 15 characters"
-                                  @bind-Value="user.LastName" For="@(() => user.LastName)" />
-                    
-                    <MudTextField Label="Address"
-                                  HelperText="Max. 25 characters"
-                                  @bind-Value="user.Address" For="@(() => user.Address)" />
-                            <MudSelect T="string" 
-                                @bind-Value="CompanySelected" Label="Companies" 
-                                AnchorOrigin="Origin.BottomCenter">
-                                @foreach (var item in companies)
-                                {
-                                    <MudSelectItem Value="item.Name" />
-                                }
-                            </MudSelect>
-                        </MudItem>
-                    </MudGrid>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudGrid Justify="Justify.FlexEnd">
-                        <MudItem>
-                    <MudButton ButtonType="ButtonType.Submit" OnClick="Cancel" Variant="Variant.Filled"
-                               Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
-                        </MudItem>
-                        <MudItem>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" 
-                Color="Color.Primary" Class="ml-auto">Add</MudButton>
-                        </MudItem>
-                    </MudGrid>
-            </MudCardActions>
-            </MudCard>
+@inject IConfiguration Config
+@inject HttpClient Http
+<MudGrid>
+    <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
+        <MudItem class="w-100 d-flex justify-content-center">
+            <MudImage Width="700" Src="Images/girl-with-laptop-light.png" />
         </MudItem>
-    </MudGrid>
-</EditForm>
+    </div>
+    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-12 p-6">
+        <MudItem class="w-px-400 mx-auto mt-12 pt-5">
+            <MudText Typo="Typo.h4" class="mb-1">Adventure starts here 🚀</MudText>
+            <EditForm Model="Input" FormName="formUser" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <MudGrid>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardContent>
+                                <MudGrid Spacing="8">
+                                    <MudItem md="6">
+                                        <MudTextField Variant="Variant.Outlined" For="@(() => Input.FirstName)"
+                                                      @bind-Value="Input.FirstName"
+                                                      Label="Firstname" Placeholder="John"
+                                                      UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
+                                        <MudTextField Variant="Variant.Outlined" For="@(() => Input.LastName)"
+                                                      @bind-Value="Input.LastName"
+                                                      Label="LastName" Placeholder="Doe"
+                                                      UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
+                                    </MudItem>
+                                    <MudItem md="6">
+                                        <MudTextField Variant="Variant.Outlined" For="@(() => Input.Email)" @bind-Value="Input.Email"
+                                                      Label="Email" Placeholder="name@example.com"
+                                                      UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
+                                        <MudTextField Variant="Variant.Outlined" For="@(() => Input.Password)" @bind-Value="Input.Password"
+                                                      Label="Password" InputType="InputType.Password" Placeholder="password"
+                                                      UserAttributes="@(new() { { "autocomplete", "new-password" }, { "aria-required", "true" } } )" />
+
+                                        <MudTextField Variant="Variant.Outlined" For="@(() => Input.ConfirmPassword)" @bind-Value="Input.ConfirmPassword"
+                                                      Label="Confirm Password" InputType="InputType.Password" Placeholder="confirm password"
+                                                      UserAttributes="@(new() { { "autocomplete", "new-password" }, { "aria-required", "true" } } )" />
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudGrid Justify="Justify.FlexEnd">
+                                    <MudItem>
+                                        <MudButton ButtonType="ButtonType.Submit"
+                                                   OnClick="Cancel" Variant="Variant.Filled"
+                                                   Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
+                                    </MudItem>
+                                    <MudItem>
+                                        <MudButton ButtonType="ButtonType.Submit"
+                                                   Variant="Variant.Filled"
+                                                   Color="Color.Primary" Class="ml-auto">Add</MudButton>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
+    </MudItem>
+</div>
+</MudGrid>
+
 @code {
     [SupplyParameterFromForm]
-    UserViewModel user { get; set; } = new UserViewModel();
+    UserViewModel Input { get; set; } = new UserViewModel();
     List<Customer> companies = new List<Customer>();
+    private string? serviceEndpoint;
+
     bool success;
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
@@ -68,25 +80,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        companies = await addUserUseCase.GetCustomersAsync();
+        serviceEndpoint = $"https://localhost:7079/api/User/Create";
+        // companies = await addUserUseCase.GetCustomersAsync();
     }
     private async void OnValidSubmit(EditContext context)
     {
         success = true;
         StateHasChanged();
-        var use = new User
-        {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Address = user.Address,
-            Email = user.Email,
-            Phone = user.Phone,
-            role = new Role{ Name="Employee"},
-            companyId = companies.FirstOrDefault(c => c.Name==CompanySelected).CompanyId,
-            CreationDate = DateTime.Now,
-            LastUpdated = DateTime.Now
-        };
-        await addUserUseCase.ExecuteAsync(use);
+        await Http.PostAsJsonAsync(serviceEndpoint, Input);
+        // await addUserUseCase.ExecuteAsync(use);
         Submit();
     }
 }

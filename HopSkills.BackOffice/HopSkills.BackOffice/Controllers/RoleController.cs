@@ -16,7 +16,7 @@ namespace HopSkills.BackOffice.Controllers
         public RoleController(IRoleService roleService) => _roleService = roleService;
 
         // GET: api/<ValuesController>
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetRoles")]
         public async Task<IActionResult> GetRoles()
         {
@@ -32,11 +32,11 @@ namespace HopSkills.BackOffice.Controllers
             return "value";
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("addRoles")]
-        public async Task<ActionResult> AddRole([FromBody] string roleName)
+        public async Task<ActionResult> AddRole([FromBody] RoleDto role)
         {
-            var result = await _roleService.AddRoleAsync(roleName);
+            var result = await _roleService.AddRoleAsync(role.Name);
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);

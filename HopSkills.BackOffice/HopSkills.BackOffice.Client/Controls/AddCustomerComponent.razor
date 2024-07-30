@@ -1,4 +1,7 @@
 ﻿@inject IAddCustomerUseCase addCustomerUseCase
+
+@inject IConfiguration Config
+@inject HttpClient Http
 <EditForm Model="customer" FormName="formCustomer" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudGrid>
@@ -73,6 +76,8 @@
     </MudGrid>
 </EditForm>
     @code {
+    private string? serviceEndpoint;
+
         [SupplyParameterFromForm]
     CustomerViewModel customer { get; set; } = new CustomerViewModel();
     bool success;
@@ -106,13 +111,13 @@
 
     protected override Task OnInitializedAsync()
     {
+        serviceEndpoint = $"https://localhost:7079/addRoles";
         return base.OnInitializedAsync();
     }
     private async void OnValidSubmit(EditContext context)
     {
         Console.WriteLine(SubscriptionSelected);
         Console.WriteLine(CountrySelected);
-
         success = true;
         StateHasChanged();
         var custom = new Customer

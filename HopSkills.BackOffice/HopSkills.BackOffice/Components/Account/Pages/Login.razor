@@ -7,41 +7,39 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 
-
-<div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
+<MudGrid>
+    <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
     <MudItem class="w-100 d-flex justify-content-center">
         <MudImage Width="700" Src="Images/boy-with-rocket-light.png" />
     </MudItem>
-</div>
-    <MudDivider Vertical="true" FlexItem="true" />
+    </div>
     <div style="background-color:white" class="d-flex col-12 col-lg-5 col-xl-4 align-items-center p-sm-12 p-6">
-        <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
-            <DataAnnotationsValidator />
-            <MudGrid>
-        <div class="w-px-400 mx-auto mt-12 pt-5" xs="12" sm="7">
-                <MudItem>
-            <MudCard>
-                <MudCardContent>
+        <MudItem class="w-px-400 mx-auto mt-12 pt-5">
             <MudText Typo="Typo.h4" GutterBottom="true">Welcome to HopSkills! 👋</MudText>
         <StatusMessage Message="@errorMessage" />
-       
+        <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+            <DataAnnotationsValidator />
             <MudText GutterBottom="true" Typo="Typo.body1">Please sign-in to your account and start the adventure</MudText>
+            <MudGrid>
+                <MudItem md="6">
                         <MudStaticTextField Variant="Variant.Outlined"  For="@(() => Input.Email)" @bind-Value="Input.Email"
                                             Label="Email" Placeholder="name@example.com" 
                         UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
+                </MudItem>
+                <MudItem md="6">
                         <MudStaticTextField Variant="Variant.Outlined" For="@(() => Input.Password)" @bind-Value="Input.Password"
                                             Label="Password" InputType="InputType.Password" Placeholder="password" 
                         UserAttributes="@(new() { { "autocomplete", "current-password" }, { "aria-required", "true" } } )" />
+                </MudItem>
+                <MudItem md="6">
                     <MudStaticCheckBox For="@(() => Input.RememberMe)" @bind-Value="Input.RememberMe">Remember me</MudStaticCheckBox>
-                    </MudCardContent>
-                    <MudCardActions>
+                </MudItem>
+                <MudItem md="6">
                     <MudStaticButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" FormAction="FormAction.Submit">Log in</MudStaticButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-            </div>
-                </MudGrid>
+                </MudItem>
+            </MudGrid>
         </EditForm>
+
         <MudGrid Class="mt-4">
             <MudItem md="6">
                     <MudLink Href="Account/ForgotPassword">Forgot your password?</MudLink><br />
@@ -55,7 +53,9 @@
                 <MudLink Href="Account/ResendEmailConfirmation">Resend email confirmation</MudLink>
             </MudItem>
         </MudGrid>
+    </MudItem>
     </div>
+</MudGrid>
 
 @code {
     private string? errorMessage;

@@ -51,9 +51,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 //    .AddDefaultTokenProviders();
 
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddControllers().AddNewtonsoftJson(); 
+builder.Services.AddControllersWithViews();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -69,6 +68,7 @@ builder.Services.AddTransient<IViewTeamListUseCase, ViewTeamListUseCase>();
 builder.Services.AddTransient<IViewRoleListUseCase, ViewRoleListUseCase>();
 builder.Services.AddTransient<IViewTrainingListUseCase, ViewTrainingListUseCase>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>

@@ -1,66 +1,26 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @inject IAddRoleUseCase addRoleUseCase
-@inject IAccountManagement Acct
- <MudCard>
-    <MudCardHeader Class="object-center">
-                    <CardHeaderContent>
-                        <MudGrid>
-                            <MudItem>
-                    <MudText Typo="Typo.h6">Add New Role</MudText>
-                    <MudText Typo="Typo.subtitle1">Set role permissions</MudText>
-
-                            </MudItem>
-                        </MudGrid>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-        <EditForm Model="Input" FormName="formRole" OnValidSubmit="OnValidSubmit">
+@inject IConfiguration Config
+@inject HttpClient Http
+<EditForm Model="Input" FormName="formRole" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
-                            <MudTextField Placeholder="Enter a role name"
-                                          HelperText="Max. 20 characters"
-                                          Variant="Variant.Outlined"
-                          @bind-Value="Input.Name" For="@(() => Input.Name)" />
-                            @* <MudText>Role Permissions</MudText>
-                            <MudDivider/>
-                            <MudExpansionPanels>
-                                <MudExpansionPanel Text="Administrator Access">
-                                    @_panelContent
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="User Management">
-                                    Panel One Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Training Management">
-                                    Panel Two Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Quiz Management">
-                                    Panel Three Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Team Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Role Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Licence Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Subscription Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Company Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                                <MudExpansionPanel Text="Account Management">
-                                    Panel Four Content
-                                </MudExpansionPanel>
-                            </MudExpansionPanels> *@
-                        
-  </EditForm>   </MudCardContent>
+    <MudGrid>
+        <MudItem>
+            <MudCard>
+                <MudCardContent>
+                    <MudGrid Spacing="16">
+                        <MudItem>
+                            <MudTextField Label="Name"
+                                          HelperText="Max. 10 characters" Variant="Variant.Outlined"
+                                          @bind-Value="Input.Name" For="@(() => Input.Name)" />
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
                 <MudCardActions>
                     <MudGrid Justify="Justify.FlexEnd">
                         <MudItem>
-                            <MudButton ButtonType="ButtonType.Submit" OnClick="Cancel"
-                                       Variant="Variant.Filled"
+                            <MudButton ButtonType="ButtonType.Submit"
+                                       OnClick="Cancel" Variant="Variant.Filled"
                                        Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
                         </MudItem>
                         <MudItem>
@@ -71,9 +31,14 @@
                     </MudGrid>
                 </MudCardActions>
             </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
 @code {
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private RoleViewModel Input { get; set; } = new();
+    private string? serviceEndpoint;
+
     // [SupplyParameterFromForm]
     // RoleViewModel role { get; set; } = new RoleViewModel();
     bool success;
@@ -84,17 +49,26 @@
 
     private void Cancel() => MudDialog.Cancel();
 
+    protected override async Task OnInitializedAsync()
+    {
+        serviceEndpoint = $"https://localhost:7079/api/Role/addRoles";
+        // Roles = await ViewRoleListUseCase.ExecuteAsync();
+    }
+
     private async void OnValidSubmit(EditContext context)
     {
         success = true;
         StateHasChanged();
+        if(!string.IsNullOrEmpty(Input.Name))
+        {
+            await Http.PostAsJsonAsync(serviceEndpoint, Input);
+        }
         // var rol = new Role
         //     {
         //         Name = Input.Name
 
         //     };
         // await addRoleUseCase.ExecuteAsync(rol);
-        var response = await Acct.AddRole(Input.Name);
         Submit();
     }
 

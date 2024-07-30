@@ -1,14 +1,14 @@
 ﻿@page "/users"
 
 @inject IViewUserListUseCase ViewUserListUseCase
+@inject IConfiguration Config
+@inject HttpClient Http
 @inject IDialogService DialogService
-
-@attribute [Authorize]
 
     <MudContainer Fixed="true">
         <MudSpacer />
         <MudSpacer />
-        <MudDataGrid T="User" Items="@Users"
+    <MudDataGrid T="UserViewModel" Items="@Users"
                      MultiSelection="true"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
@@ -45,13 +45,13 @@
             
             </ToolBarContent>
             <Columns>
-                <SelectColumn T="User" />
-                <PropertyColumn Property="x => x.FirstName" Title="FirstName" />
-                <PropertyColumn Property="x => x.LastName" Title="LastName" />
+            <SelectColumn T="UserViewModel" />
+            <PropertyColumn Property="x => x.UserName" Title="UserName" />
+                @* <PropertyColumn Property="x => x.LastName" Title="LastName" /> *@
                 <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
+               @*  <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
                 <PropertyColumn Property="x => x.role.Name" Title="Role" />
-                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/>
+                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
@@ -76,12 +76,14 @@
     }
 </style>
 @code {
-    private List<User>? Users;
-    private List<User> selectedUsers = new List<User>();
+    private List<UserViewModel>? Users;
+    private List<UserViewModel> selectedUsers = new List<UserViewModel>();
     private bool disabledDelete;
     private string _searchString;
+    private string? serviceEndpoint;
+
     // quick filter - filter globally across multiple columns with the same input
-    private Func<User, bool> _quickFilter => x =>
+    private Func<UserViewModel, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
@@ -92,7 +94,7 @@
         if (x.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
-        if ($"{x.role?.Name} {x.Email}".Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if ($"{x.UserName} {x.Email}".Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;
@@ -101,38 +103,42 @@
     protected override async Task OnInitializedAsync()
     {
         disabledDelete = true;
-        Users = new List<User>();
-        Users = await ViewUserListUseCase.ExecuteAsync();
+        Users = new List<UserViewModel>();
+        serviceEndpoint = $"https://localhost:7079/api/User/GetAll";
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+        {
+            Users = await Http.GetFromJsonAsync<List<UserViewModel>>(serviceEndpoint);
+        }
     }
 
     private List<string> _events = new();
-    void StartedEditingItem(User item)
+    void StartedEditingItem(UserViewModel item)
     {
     }
 
-    void CanceledEditingItem(User item)
+    void CanceledEditingItem(UserViewModel item)
     {
         _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
     }
 
-    async void CommittedItemChanges(User item)
+    async void CommittedItemChanges(UserViewModel item)
     {
         _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
-        await ViewUserListUseCase.UpdateAsync(item);
+        // await ViewUserListUseCase.UpdateAsync(item);
         await OnInitializedAsync();
     }
 
-    void RowClicked(DataGridRowClickEventArgs<User> args)
+    void RowClicked(DataGridRowClickEventArgs<UserViewModel> args)
     {
         _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
-    void RowRightClicked(DataGridRowClickEventArgs<User> args)
+    void RowRightClicked(DataGridRowClickEventArgs<UserViewModel> args)
     {
         _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
-    void SelectedItemsChanged(HashSet<User> items)
+    void SelectedItemsChanged(HashSet<UserViewModel> items)
     {
         selectedUsers=items.ToList();
         disabledDelete = !(selectedUsers.Count > 0);
@@ -142,9 +148,10 @@
 
     private async Task OpenDialogAsync()
     {
-        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+        var options = new DialogOptions { BackgroundClass = "my-custom-class", 
+        NoHeader = true, CloseButton = true, MaxWidth = MaxWidth.ExtraLarge, BackdropClick = true };
 
-        var dialog = await DialogService.ShowAsync<AddUserComponent>("Create a new user", options);
+        var dialog = await DialogService.ShowAsync<AddUserComponent>(string.Empty, options);
 
         var result = await dialog.Result;
 
@@ -167,7 +174,7 @@
 
         if (!result.Canceled)
         {
-            await ViewUserListUseCase.DeleteAsync(selectedUsers);
+            // await ViewUserListUseCase.DeleteAsync(selectedUsers);
             await OnInitializedAsync();
         }
 
