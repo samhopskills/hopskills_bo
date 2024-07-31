@@ -95,7 +95,7 @@
         serviceEndpoint = $"https://localhost:7079/api/Role/GetRoles";
         if (!string.IsNullOrEmpty(serviceEndpoint))
         {
-            Roles =  await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpoint);
+            Roles = await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpoint);
         }
     }
 

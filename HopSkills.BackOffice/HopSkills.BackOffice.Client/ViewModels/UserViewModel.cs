@@ -28,5 +28,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         [Required]
         //[PasswordPropertyText]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public Guid RoleId { get; set; }
     }
 }

@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills\\HopSkills\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\HopSkills.bundle.scp.css",
+      "PackagePath": "staticwebassets\\HopSkills.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills\\HopSkills\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills\\HopSkills\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills\\HopSkills\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills\\HopSkills\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.HopSkills.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.HopSkills.props",
+      "PackagePath": "build\\HopSkills.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.HopSkills.props",
+      "PackagePath": "buildMultiTargeting\\HopSkills.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.HopSkills.props",
+      "PackagePath": "buildTransitive\\HopSkills.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

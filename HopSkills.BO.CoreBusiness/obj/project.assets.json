@@ -8,24 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\samyd\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BO.CoreBusiness\\HopSkills.BO.CoreBusiness.csproj",
+      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.CoreBusiness\\HopSkills.BO.CoreBusiness.csproj",
       "projectName": "HopSkills.BO.CoreBusiness",
-      "projectPath": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BO.CoreBusiness\\HopSkills.BO.CoreBusiness.csproj",
-      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\samyd\\source\\repos\\HopSkillsBo\\HopSkills.BO.CoreBusiness\\obj\\",
+      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.CoreBusiness\\HopSkills.BO.CoreBusiness.csproj",
+      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.CoreBusiness\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

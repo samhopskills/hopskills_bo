@@ -1,0 +1,12 @@
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\bin\Debug\net8.0\HopSkills.CoreBusiness.deps.json
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\bin\Debug\net8.0\HopSkills.CoreBusiness.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\bin\Debug\net8.0\HopSkills.CoreBusiness.pdb
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.AssemblyInfoInputs.cache
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.AssemblyInfo.cs
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.csproj.CoreCompileInputs.cache
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.sourcelink.json
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\refint\HopSkills.CoreBusiness.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\HopSkills.CoreBusiness.pdb
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.CoreBusiness\obj\Debug\net8.0\ref\HopSkills.CoreBusiness.dll

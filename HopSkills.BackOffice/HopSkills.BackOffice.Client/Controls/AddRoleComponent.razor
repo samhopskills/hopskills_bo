@@ -1,7 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @inject IAddRoleUseCase addRoleUseCase
 @inject IConfiguration Config
-@inject HttpClient Http
 <EditForm Model="Input" FormName="formRole" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudGrid>
@@ -38,7 +37,7 @@
     [SupplyParameterFromForm]
     private RoleViewModel Input { get; set; } = new();
     private string? serviceEndpoint;
-
+    private HttpClient Http = new HttpClient();
     // [SupplyParameterFromForm]
     // RoleViewModel role { get; set; } = new RoleViewModel();
     bool success;
@@ -63,12 +62,6 @@
         {
             await Http.PostAsJsonAsync(serviceEndpoint, Input);
         }
-        // var rol = new Role
-        //     {
-        //         Name = Input.Name
-
-        //     };
-        // await addRoleUseCase.ExecuteAsync(rol);
         Submit();
     }
 

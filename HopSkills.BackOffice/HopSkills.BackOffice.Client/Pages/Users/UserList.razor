@@ -1,8 +1,6 @@
 ﻿@page "/users"
-
 @inject IViewUserListUseCase ViewUserListUseCase
 @inject IConfiguration Config
-@inject HttpClient Http
 @inject IDialogService DialogService
 
     <MudContainer Fixed="true">
@@ -55,7 +53,9 @@
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudStack Row>
-                            <MudIconButton Size="@Size.Small" Color="@Color.Primary" Icon="@Icons.Material.Outlined.Edit"
+                            <MudIconButton Size="@Size.Small" 
+                            Color="@Color.Primary" 
+                            Icon="@Icons.Material.Outlined.Edit"
                                            OnClick="@context.Actions.StartEditingItemAsync"
                                            Variant="@Variant.Text"></MudIconButton>
                         </MudStack>
@@ -81,7 +81,7 @@
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
-
+    private HttpClient Http = new HttpClient();
     // quick filter - filter globally across multiple columns with the same input
     private Func<UserViewModel, bool> _quickFilter => x =>
     {
@@ -149,7 +149,7 @@
     private async Task OpenDialogAsync()
     {
         var options = new DialogOptions { BackgroundClass = "my-custom-class", 
-        NoHeader = true, CloseButton = true, MaxWidth = MaxWidth.ExtraLarge, BackdropClick = true };
+         CloseButton = true, MaxWidth = MaxWidth.ExtraLarge, BackdropClick = true };
 
         var dialog = await DialogService.ShowAsync<AddUserComponent>(string.Empty, options);
 

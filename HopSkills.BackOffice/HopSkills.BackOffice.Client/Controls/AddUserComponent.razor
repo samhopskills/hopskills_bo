@@ -26,6 +26,17 @@
                                                       @bind-Value="Input.LastName"
                                                       Label="LastName" Placeholder="Doe"
                                                       UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
+                                        <MudSelect T="RoleViewModel" OnOpen="OnLoadAsync"   Placeholder="Select a role"
+                                                   @bind-Value="RoleSelected"
+                                                   Label="Roles" Variant="Variant.Outlined"
+                                                   AnchorOrigin="Origin.BottomCenter">
+                                                @foreach (var item in roles)
+                                                {
+                                                    <MudSelectItem Value="item">
+                                                        @item.Name
+                                                    </MudSelectItem>
+                                                }
+                                        </MudSelect>
                                     </MudItem>
                                     <MudItem md="6">
                                         <MudTextField Variant="Variant.Outlined" For="@(() => Input.Email)" @bind-Value="Input.Email"
@@ -67,7 +78,10 @@
     [SupplyParameterFromForm]
     UserViewModel Input { get; set; } = new UserViewModel();
     List<Customer> companies = new List<Customer>();
+    List<RoleViewModel>? roles = new List<RoleViewModel>();
+    private RoleViewModel? RoleSelected { get; set; }
     private string? serviceEndpoint;
+    private string? serviceEndpointRole;
 
     bool success;
     [CascadingParameter]
@@ -78,16 +92,33 @@
 
     private void Cancel() => MudDialog.Cancel();
 
+
+    private async void OnLoadAsync()
+    {
+        if(!roles.Any())
+        {
+            serviceEndpointRole = $"https://localhost:7079/api/Role/GetRoles";
+            if (!string.IsNullOrEmpty(serviceEndpoint))
+            {
+                roles = await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpointRole);
+            }
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
         serviceEndpoint = $"https://localhost:7079/api/User/Create";
-        // companies = await addUserUseCase.GetCustomersAsync();
+        // OnLoadAsync();
     }
     private async void OnValidSubmit(EditContext context)
     {
         success = true;
         StateHasChanged();
-        await Http.PostAsJsonAsync(serviceEndpoint, Input);
+        if(RoleSelected != null)
+        {
+            Input.RoleId = RoleSelected.Id;
+            await Http.PostAsJsonAsync(serviceEndpoint, Input);
+        }
         // await addUserUseCase.ExecuteAsync(use);
         Submit();
     }
