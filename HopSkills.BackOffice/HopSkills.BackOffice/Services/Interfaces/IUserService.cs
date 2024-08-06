@@ -7,7 +7,9 @@ namespace HopSkills.BackOffice.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IdentityResult> CreateAsync(UserModel user);
+        Task<IdentityResult> CreateAsync(CreateUserModel user);
+        Task<UserModel> GetUserAsync(string userName);
         Task<List<UserModel>> GetUsersAsync();
+        Task<List<UserModel>> GetUsersByCustomerAsync(string customerId);
     }
 }

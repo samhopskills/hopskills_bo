@@ -111,7 +111,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/addRoles";
+        serviceEndpoint = $"https://localhost:7079/api/Customer/AddCustomer";
         return base.OnInitializedAsync();
     }
     private async void OnValidSubmit(EditContext context)
@@ -131,7 +131,8 @@
                 AttachedLicence =  SubscriptionSelected
             };
         Console.WriteLine(custom.Country);
-        await addCustomerUseCase.ExecuteAsync(custom);
+        await Http.PostAsJsonAsync(serviceEndpoint, custom);
+        // await addCustomerUseCase.ExecuteAsync(custom);
         Submit();
     }
 }

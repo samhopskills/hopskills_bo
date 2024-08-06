@@ -2,6 +2,20 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "BlazorAuthorizeRoleView/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "8.0.4"
+        },
+        "compile": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authorization/8.0.7": {
         "type": "package",
         "dependencies": {
@@ -590,7 +604,7 @@
           "build/Microsoft.NET.Sdk.WebAssembly.Pack.targets": {}
         }
       },
-      "MudBlazor/7.4.0": {
+      "MudBlazor/7.5.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components": "8.0.6",
@@ -727,6 +741,20 @@
       }
     },
     "net8.0/browser-wasm": {
+      "BlazorAuthorizeRoleView/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "8.0.4"
+        },
+        "compile": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authorization/8.0.7": {
         "type": "package",
         "dependencies": {
@@ -1315,7 +1343,7 @@
           "build/Microsoft.NET.Sdk.WebAssembly.Pack.targets": {}
         }
       },
-      "MudBlazor/7.4.0": {
+      "MudBlazor/7.5.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components": "8.0.6",
@@ -1447,6 +1475,20 @@
     }
   },
   "libraries": {
+    "BlazorAuthorizeRoleView/1.0.1": {
+      "sha512": "cU3UmI5iQERFrIJRHtSIrwWhx9Sf42XcJSNDGj1FbdL528uNdDQj+ouTofNuu/Ce0hhB1wW0Bjn9ZW5m0kMOOw==",
+      "type": "package",
+      "path": "blazorauthorizeroleview/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "blazorauthorizeroleview.1.0.1.nupkg.sha512",
+        "blazorauthorizeroleview.nuspec",
+        "lib/net8.0/BlazorAuthorizeRoleView.dll"
+      ]
+    },
     "Microsoft.AspNetCore.Authorization/8.0.7": {
       "sha512": "Oz8BvQ1iYwOTH5QcT5I+EGphgJbqCGuBRDk1BK7Hscx1xC8Bg6H0rtYcmiWdNn/cZ4Uu5FMr6z46sEZSSZ6ycw==",
       "type": "package",
@@ -2402,10 +2444,10 @@
         "tools/net8.0/System.Windows.Extensions.dll"
       ]
     },
-    "MudBlazor/7.4.0": {
-      "sha512": "dm8ZD6OhyI6icE3Si0V3BJvwPZp8fEspPFq4/iQXU8/i7L39/ny2bPgQqPnQmIojppd9cR/H4RdsaBlSLe6rIw==",
+    "MudBlazor/7.5.0": {
+      "sha512": "yW1+6b9bG0OjMa7FSUnYZ2D9v09cTru8Hri1cVekRzdQpA/rieSgbfrWY9KQOzMW+1LbOySTEEipun6GCarQNg==",
       "type": "package",
-      "path": "mudblazor/7.4.0",
+      "path": "mudblazor/7.5.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2422,7 +2464,7 @@
         "lib/net7.0/MudBlazor.xml",
         "lib/net8.0/MudBlazor.dll",
         "lib/net8.0/MudBlazor.xml",
-        "mudblazor.7.4.0.nupkg.sha512",
+        "mudblazor.7.5.0.nupkg.sha512",
         "mudblazor.nuspec",
         "staticwebassets/MudBlazor.min.css",
         "staticwebassets/MudBlazor.min.js"
@@ -2612,6 +2654,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "BlazorAuthorizeRoleView >= 1.0.1",
       "HopSkills.BO.Plugins.InMemory >= 1.0.0",
       "HopSkills.BO.UseCases >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebAssembly >= 8.*",
@@ -2623,19 +2666,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
+    "C:\\Users\\samyd\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "projectUniqueName": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
       "projectName": "HopSkills.BackOffice.Client",
-      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
-      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
+      "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2650,11 +2698,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
+            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
             },
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
+            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
             }
           }
         }
@@ -2674,6 +2722,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "BlazorAuthorizeRoleView": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          },
           "Microsoft.AspNetCore.Components.WebAssembly": {
             "target": "Package",
             "version": "[8.*, )"

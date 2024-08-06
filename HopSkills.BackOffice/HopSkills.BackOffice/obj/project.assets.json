@@ -46,6 +46,20 @@
           }
         }
       },
+      "BlazorAuthorizeRoleView/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly": "8.0.4",
+          "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "8.0.4"
+        },
+        "compile": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
+        }
+      },
       "Extensions.MudBlazor.StaticInput/2.1.1": {
         "type": "package",
         "dependencies": {
@@ -1513,7 +1527,7 @@
           "lib/netstandard2.0/Mono.TextTemplating.dll": {}
         }
       },
-      "MudBlazor/7.4.0": {
+      "MudBlazor/7.5.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components": "8.0.6",
@@ -2180,6 +2194,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "BlazorAuthorizeRoleView": "1.0.1",
           "HopSkills.BO.Plugins.InMemory": "1.0.0",
           "HopSkills.BO.UseCases": "1.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "8.0.0",
@@ -2274,6 +2289,20 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "BlazorAuthorizeRoleView/1.0.1": {
+      "sha512": "cU3UmI5iQERFrIJRHtSIrwWhx9Sf42XcJSNDGj1FbdL528uNdDQj+ouTofNuu/Ce0hhB1wW0Bjn9ZW5m0kMOOw==",
+      "type": "package",
+      "path": "blazorauthorizeroleview/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "blazorauthorizeroleview.1.0.1.nupkg.sha512",
+        "blazorauthorizeroleview.nuspec",
+        "lib/net8.0/BlazorAuthorizeRoleView.dll"
       ]
     },
     "Extensions.MudBlazor.StaticInput/2.1.1": {
@@ -4398,10 +4427,10 @@
         "mono.texttemplating.nuspec"
       ]
     },
-    "MudBlazor/7.4.0": {
-      "sha512": "dm8ZD6OhyI6icE3Si0V3BJvwPZp8fEspPFq4/iQXU8/i7L39/ny2bPgQqPnQmIojppd9cR/H4RdsaBlSLe6rIw==",
+    "MudBlazor/7.5.0": {
+      "sha512": "yW1+6b9bG0OjMa7FSUnYZ2D9v09cTru8Hri1cVekRzdQpA/rieSgbfrWY9KQOzMW+1LbOySTEEipun6GCarQNg==",
       "type": "package",
-      "path": "mudblazor/7.4.0",
+      "path": "mudblazor/7.5.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4418,7 +4447,7 @@
         "lib/net7.0/MudBlazor.xml",
         "lib/net8.0/MudBlazor.dll",
         "lib/net8.0/MudBlazor.xml",
-        "mudblazor.7.4.0.nupkg.sha512",
+        "mudblazor.7.5.0.nupkg.sha512",
         "mudblazor.nuspec",
         "staticwebassets/MudBlazor.min.css",
         "staticwebassets/MudBlazor.min.js"
@@ -5692,19 +5721,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
+    "C:\\Users\\samyd\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj",
+      "projectUniqueName": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj",
       "projectName": "HopSkills.BackOffice",
-      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj",
-      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\obj\\",
+      "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj",
+      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5719,11 +5753,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj"
+            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj"
             },
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
+            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
             }
           }
         }

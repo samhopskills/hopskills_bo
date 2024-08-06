@@ -1,6 +1,8 @@
 ﻿@inject IAddUserUseCase addUserUseCase
 @inject IConfiguration Config
 @inject HttpClient Http
+@attribute [Authorize]
+
 <MudGrid>
     <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
         <MudItem class="w-100 d-flex justify-content-center">
@@ -26,17 +28,32 @@
                                                       @bind-Value="Input.LastName"
                                                       Label="LastName" Placeholder="Doe"
                                                       UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
-                                        <MudSelect T="RoleViewModel" OnOpen="OnLoadAsync"   Placeholder="Select a role"
-                                                   @bind-Value="RoleSelected"
+                                        <MudSelect T="string"    Placeholder="Select a role"
+                                                   @bind-Value="Input.Role"
                                                    Label="Roles" Variant="Variant.Outlined"
                                                    AnchorOrigin="Origin.BottomCenter">
                                                 @foreach (var item in roles)
                                                 {
-                                                    <MudSelectItem Value="item">
+                                                    <MudSelectItem Value="item.Name">
                                                         @item.Name
                                                     </MudSelectItem>
                                                 }
                                         </MudSelect>
+                                        <AuthorizeRoleView Roles="Admin">
+                                            <Authorized>
+                                                <MudSelect T="string" Placeholder="Select a Customer"
+                                                           @bind-Value="Input.Company"
+                                                           Label="Customers" Variant="Variant.Outlined"
+                                                           AnchorOrigin="Origin.BottomCenter">
+                                                    @foreach (var item in companies)
+                                                    {
+                                                        <MudSelectItem Value="item.Id">
+                                                            @item.Name
+                                                        </MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </Authorized>
+                                        </AuthorizeRoleView>
                                     </MudItem>
                                     <MudItem md="6">
                                         <MudTextField Variant="Variant.Outlined" For="@(() => Input.Email)" @bind-Value="Input.Email"
@@ -49,7 +66,8 @@
                                         <MudTextField Variant="Variant.Outlined" For="@(() => Input.ConfirmPassword)" @bind-Value="Input.ConfirmPassword"
                                                       Label="Confirm Password" InputType="InputType.Password" Placeholder="confirm password"
                                                       UserAttributes="@(new() { { "autocomplete", "new-password" }, { "aria-required", "true" } } )" />
-                                    </MudItem>
+                                       
+                                                  </MudItem>
                                 </MudGrid>
                             </MudCardContent>
                             <MudCardActions>
@@ -76,17 +94,18 @@
 
 @code {
     [SupplyParameterFromForm]
-    UserViewModel Input { get; set; } = new UserViewModel();
-    List<Customer> companies = new List<Customer>();
+    CreateUserViewModel Input { get; set; } = new CreateUserViewModel();
+    List<CreateUserCustomerViewModel>? companies = new List<CreateUserCustomerViewModel>();
     List<RoleViewModel>? roles = new List<RoleViewModel>();
-    private RoleViewModel? RoleSelected { get; set; }
+    private string? RoleSelected { get; set; }
     private string? serviceEndpoint;
     private string? serviceEndpointRole;
+    private string? serviceEndpointCustomers;
 
     bool success;
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
-    private string CompanySelected { get; set; }
+    private CustomerViewModel CompanySelected { get; set; }
 
     private void Submit() => MudDialog.Close(DialogResult.Ok(true));
 
@@ -97,10 +116,16 @@
     {
         if(!roles.Any())
         {
-            serviceEndpointRole = $"https://localhost:7079/api/Role/GetRoles";
             if (!string.IsNullOrEmpty(serviceEndpoint))
             {
                 roles = await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpointRole);
+            }
+        }
+        if (!companies.Any())
+        {
+            if (!string.IsNullOrEmpty(serviceEndpointCustomers))
+            {
+                companies = await Http.GetFromJsonAsync<List<CreateUserCustomerViewModel>>(serviceEndpointCustomers);
             }
         }
     }
@@ -108,18 +133,16 @@
     protected override async Task OnInitializedAsync()
     {
         serviceEndpoint = $"https://localhost:7079/api/User/Create";
-        // OnLoadAsync();
+        serviceEndpointRole = $"https://localhost:7079/api/Role/GetRoles";
+        serviceEndpointCustomers = $"https://localhost:7079/api/Customer/GetAll";
+        OnLoadAsync();
     }
     private async void OnValidSubmit(EditContext context)
     {
         success = true;
         StateHasChanged();
-        if(RoleSelected != null)
-        {
-            Input.RoleId = RoleSelected.Id;
+        if(Input.Role is not null && Input.Company is not null)
             await Http.PostAsJsonAsync(serviceEndpoint, Input);
-        }
-        // await addUserUseCase.ExecuteAsync(use);
         Submit();
     }
 }

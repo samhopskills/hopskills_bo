@@ -4,6 +4,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
 {
     public class CustomerViewModel
     {
+        public string Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Phone]
@@ -12,9 +13,9 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string Email { get; set; }
         //[Required]
         public string Country { get; set; }
-        [Required]
         public string Address { get; set; }
         //[Required]
         public string Subscription { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

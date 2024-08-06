@@ -17,6 +17,8 @@ using HopSkills.BO.Plugins.InMemory;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BackOffice.Services;
+using System.Security.Claims;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +34,11 @@ builder.Services.AddDbContext<HopSkillsDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<ApplicationUser>(options => {
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    })
     .AddUserManager<UserManager<ApplicationUser>>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<HopSkillsDbContext>()
@@ -41,16 +47,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddRoleStore<RoleStore<IdentityRole, HopSkillsDbContext>>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
-//    .AddUserManager<UserManager<ApplicationUser>>()
-//    .AddRoles<ApplicationRole>()
-//    .AddEntityFrameworkStores<HopSkillsDbContext>()
-//    .AddSignInManager()
-//    .AddRoleManager<RoleManager<ApplicationRole>>()
-//    .AddRoleStore<RoleStore<ApplicationRole, HopSkillsDbContext>>()
-//    .AddDefaultTokenProviders();
-
-
+builder.Services.ConfigureOptions<ConfigureSecurityStampOptions>();
 builder.Services.AddControllers().AddNewtonsoftJson(); 
 builder.Services.AddControllersWithViews();
 builder.Services.AddCascadingAuthenticationState();
@@ -69,6 +66,8 @@ builder.Services.AddTransient<IViewRoleListUseCase, ViewRoleListUseCase>();
 builder.Services.AddTransient<IViewTrainingListUseCase, ViewTrainingListUseCase>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
@@ -78,7 +77,7 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
-
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
@@ -110,5 +109,25 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.MapGet("/api/roles", async (HttpContext httpContext) =>
+{
+    var user = httpContext.User;
+    if (user.Identity?.IsAuthenticated == true)
+    {
+        // Get roles from the claims
+        var roles = user.Claims
+                        .Where(c => c.Type == ClaimTypes.Role)
+                        .Select(c => c.Value)
+                        .ToList();
+
+        if (roles.Any())
+        {
+            return Results.Ok(roles);
+        }
+        return Results.NotFound("No roles found for this user.");
+    }
+    return Results.Unauthorized();
+}).RequireAuthorization();
 
 app.Run();

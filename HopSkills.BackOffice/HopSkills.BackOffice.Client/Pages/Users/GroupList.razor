@@ -1,11 +1,12 @@
-﻿@page "/teams"
+﻿@page "/groups"
 
 @inject IViewTeamListUseCase ViewTeamListUseCase
 @inject IDialogService DialogService
+@inject HttpClient Http
 
 
     <MudContainer Fixed="true">
-        <MudDataGrid T="Team" Items="@Teams"
+        <MudDataGrid T="GroupViewModel" Items="@Teams"
                      MultiSelection="true"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
@@ -43,9 +44,8 @@
             <Columns>
                 <SelectColumn T="Team" />
                 <PropertyColumn Property="x => x.Name" Title="Name" />
-                <PropertyColumn Editable="false" Property="x => x.NumberOfUser" Title="Number of people" />
-                <PropertyColumn Property="x => x.IsActive" Title="Active"/>
-                <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/>
+                <PropertyColumn Property="x => x.CompanyId" Title="Company"/>
+                <PropertyColumn Property="x => x.CreatedOn" Title="Creation Date"/>
                 <TemplateColumn Filterable="false">
                     <CellTemplate>
                         <MudStack Row>
@@ -68,13 +68,14 @@
 
 
 @code {
-    private List<Team>? Teams;
+    private List<GroupViewModel>? Teams = new List<GroupViewModel>();
     private bool disabledDelete;
     private string _searchString;
-    private List<Team> selectedTeams = new List<Team>();
+    private List<GroupViewModel> selectedTeams = new List<GroupViewModel>();
+    private string? serviceEndpoint;
 
     // quick filter - filter globally across multiple columns with the same input
-    private Func<Team, bool> _quickFilter => x =>
+    private Func<GroupViewModel, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
@@ -88,38 +89,40 @@
     protected override async Task OnInitializedAsync()
     {
         disabledDelete = true;
-        Teams = new List<Team>();
-        Teams = await ViewTeamListUseCase.ExecuteAsync();
+        serviceEndpoint = $"https://localhost:7079/api/Groups/GetAll";
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+        {
+            Teams = await Http.GetFromJsonAsync<List<GroupViewModel>>(serviceEndpoint);
+        }
     }
 
     private List<string> _events = new();
-    void StartedEditingItem(Team item)
+    void StartedEditingItem(GroupViewModel item)
     {
     }
 
-    void CanceledEditingItem(Team item)
+    void CanceledEditingItem(GroupViewModel item)
     {
         _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
     }
 
-    async void CommittedItemChanges(Team item)
+    async void CommittedItemChanges(GroupViewModel item)
     {
         _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
-        await ViewTeamListUseCase.UpdateAsync(item);
         await OnInitializedAsync();
     }
 
-    void RowClicked(DataGridRowClickEventArgs<Team> args)
+    void RowClicked(DataGridRowClickEventArgs<GroupViewModel> args)
     {
         _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
-    void RowRightClicked(DataGridRowClickEventArgs<Team> args)
+    void RowRightClicked(DataGridRowClickEventArgs<GroupViewModel> args)
     {
         _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
-    void SelectedItemsChanged(HashSet<Team> items)
+    void SelectedItemsChanged(HashSet<GroupViewModel> items)
     {
         selectedTeams = items.ToList();
         disabledDelete = !(selectedTeams.Count > 0);
@@ -130,7 +133,7 @@
     {
         var options = new DialogOptions { BackgroundClass = "my-custom-class" };
 
-        var dialog = await DialogService.ShowAsync<AddTeamComponent>("Create a new team", options);
+        var dialog = await DialogService.ShowAsync<AddGroupComponent>("Create a new team", options);
 
         var result = await dialog.Result;
 
@@ -154,7 +157,7 @@
 
         if (!result.Canceled)
         {
-            await ViewTeamListUseCase.DeleteAsync(selectedTeams);
+            // await ViewTeamListUseCase.DeleteAsync(selectedTeams);
             await OnInitializedAsync();
         }
 

@@ -1,4 +1,5 @@
 ﻿using HopSkills.BackOffice.Model;
+using HopSkills.BackOffice.Services;
 using HopSkills.BackOffice.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,15 +26,22 @@ namespace HopSkills.BackOffice.Controllers
         }
 
         // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("userdetails/{userName}")]
+        public async Task<IActionResult> Get(string userName)
         {
-            return "value";
+            try
+            {
+                return Ok(await _userService.GetUserAsync(userName));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST api/<UserController>
         [HttpPost("Create")]
-        public async Task<IActionResult> Post([FromBody] UserModel user)
+        public async Task<IActionResult> Post([FromBody] CreateUserModel user)
         {
             var result = await _userService.CreateAsync(user);
             if (!result.Succeeded)
@@ -41,6 +49,14 @@ namespace HopSkills.BackOffice.Controllers
                 return BadRequest(result.Errors);
             }
             return Ok();
+        }
+
+        // GET: api/<CustomerController>
+        [HttpGet("getusersbycustomer/{customerId}")]
+        public async Task<IActionResult> GetUsersByCustomer(string customerId)
+        {
+            var list = await _userService.GetUsersByCustomerAsync(customerId);
+            return Ok(list);
         }
 
         // PUT api/<UserController>/5

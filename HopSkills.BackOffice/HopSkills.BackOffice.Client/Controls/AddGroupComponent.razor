@@ -1,0 +1,92 @@
+﻿@inject IAddTeamUseCase addTeamUseCase
+@inject HttpClient Http
+@attribute [Authorize]
+<EditForm Model="group" FormName="formTeam" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem>
+            <MudCard>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem>
+                            <MudTextField Label="Enter a name for the group"
+                                          HelperText="Max. 20 characters"
+                                          Variant="Variant.Outlined"
+                                          @bind-Value="group.Name" For="@(() => group.Name)" />
+                            <AuthorizeRoleView Roles="Admin">
+                                <Authorized>
+                                    <MudSelect T="string" Placeholder="Select a Customer"
+                                               @bind-Value="group.CompanyId"
+                                               Label="Customers" Variant="Variant.Outlined"
+                                               AnchorOrigin="Origin.BottomCenter">
+                                        @foreach (var item in companies)
+                                        {
+                                            <MudSelectItem Value="item.Id">
+                                                @item.Name
+                                            </MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </Authorized>
+                            </AuthorizeRoleView>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid Justify="Justify.FlexEnd">
+                        <MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" OnClick="Cancel" 
+                            Variant="Variant.Filled"
+                            Color="Color.Dark" Class="ml-auto">Cancel</MudButton>
+                        </MudItem>
+                        <MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" 
+                            Variant="Variant.Filled"
+                            Color="Color.Primary" Class="ml-auto">Add</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+@code {
+    [SupplyParameterFromForm]
+    CreateGroupViewModel group { get; set; } = new CreateGroupViewModel();
+    private string? serviceEndpointCustomers;
+    private string? serviceEndpoint;
+    List<CreateUserCustomerViewModel>? companies = new List<CreateUserCustomerViewModel>();
+
+    bool success;
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        serviceEndpoint = $"https://localhost:7079/api/Groups/CreateGroup";
+        serviceEndpointCustomers = $"https://localhost:7079/api/Customer/GetAll";
+        if (!companies.Any())
+        {
+            if (!string.IsNullOrEmpty(serviceEndpointCustomers))
+            {
+                companies = await Http.GetFromJsonAsync<List<CreateUserCustomerViewModel>>(serviceEndpointCustomers);
+            }
+        }
+    }
+
+    private async void OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+        var tem = new CreateGroupViewModel
+            {
+                Name = group.Name,
+                CompanyId = group.CompanyId,
+            };
+        await Http.PostAsJsonAsync<CreateGroupViewModel>(serviceEndpoint, tem);
+        Submit();
+    }
+}

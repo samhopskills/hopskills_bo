@@ -16,7 +16,7 @@ namespace HopSkills.BackOffice.Controllers
         public RoleController(IRoleService roleService) => _roleService = roleService;
 
         // GET: api/<ValuesController>
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetRoles")]
         public async Task<IActionResult> GetRoles()
         {

@@ -41,16 +41,16 @@ namespace HopSkills.BackOffice.Services
             return result;
         }
 
-        private IdentityRole CreateRole()
+        private ApplicationRole CreateRole()
         {
             try
             {
-                return Activator.CreateInstance<IdentityRole>();
+                return Activator.CreateInstance<ApplicationRole>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityRole)}'. " +
-                    $"Ensure that '{nameof(IdentityRole)}' is not an abstract class and has a parameterless constructor.");
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationRole)}'. " +
+                    $"Ensure that '{nameof(ApplicationRole)}' is not an abstract class and has a parameterless constructor.");
             }
         }
 
@@ -61,8 +61,8 @@ namespace HopSkills.BackOffice.Services
 
         public async Task<List<RoleModel>> GetRolesAsync()
         {
-            var roleList = _roleManager.Roles.Select(x =>
-            new RoleModel { Id = Guid.Parse(x.Id), Name = x.Name }).ToList();
+            var roleList = _roleManager.Roles.Select(x => 
+            new RoleModel { Id = new Guid(x.Id), Name = x.Name }).ToList();
             return roleList;
         }
 

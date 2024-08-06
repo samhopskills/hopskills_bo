@@ -1,4 +1,5 @@
 ﻿@page "/users"
+@using System.Security.Claims
 @inject IViewUserListUseCase ViewUserListUseCase
 @inject IConfiguration Config
 @inject IDialogService DialogService
@@ -44,9 +45,11 @@
             </ToolBarContent>
             <Columns>
             <SelectColumn T="UserViewModel" />
-            <PropertyColumn Property="x => x.UserName" Title="UserName" />
+            @* <PropertyColumn Property="x => x.UserName" Title="UserName" /> *@
                 @* <PropertyColumn Property="x => x.LastName" Title="LastName" /> *@
                 <PropertyColumn Property="x => x.Email" Title="Email" />
+                <PropertyColumn Property="x => x.Role" Title="Role" />
+                <PropertyColumn Property="x => x.Company" Title="Company" />
                @*  <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
                 <PropertyColumn Property="x => x.role.Name" Title="Role" />
                 <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
@@ -76,8 +79,13 @@
     }
 </style>
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
     private List<UserViewModel>? Users;
     private List<UserViewModel> selectedUsers = new List<UserViewModel>();
+    private ClaimsPrincipal authenticatedUser { get; set; }
+
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
@@ -102,13 +110,23 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if (authenticationStateTask is not null)
+        {
+            authenticationState = await authenticationStateTask;
+            if (authenticatedUser is null)
+                authenticatedUser = authenticationState?.User;
+        }
         disabledDelete = true;
         Users = new List<UserViewModel>();
-        serviceEndpoint = $"https://localhost:7079/api/User/GetAll";
-        if (!string.IsNullOrEmpty(serviceEndpoint))
+        if (authenticatedUser.IsInRole("Admin"))
+            serviceEndpoint = $"https://localhost:7079/api/User/GetAll";
+        else
         {
-            Users = await Http.GetFromJsonAsync<List<UserViewModel>>(serviceEndpoint);
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"https://localhost:7079/api/User/getusersbycustomer/{user.Company}";
         }
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Users = await Http.GetFromJsonAsync<List<UserViewModel>>(serviceEndpoint);
     }
 
     private List<string> _events = new();
