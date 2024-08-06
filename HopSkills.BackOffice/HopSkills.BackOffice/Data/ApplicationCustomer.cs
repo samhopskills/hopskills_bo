@@ -13,5 +13,6 @@ namespace HopSkills.BackOffice.Data
         public DateTime CreatedOn { get; set; }
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<ApplicationGroup> Groups { get; set; }
+        public virtual ICollection<ApplicationGame> Games { get; set; }
     }
 }

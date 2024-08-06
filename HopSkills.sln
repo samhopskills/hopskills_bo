@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HopSkills.BO.Plugins", "Hop
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HopSkills.BO.Web.Modules", "HopSkills.BO.Web.Modules", "{142DB6CD-93FF-49C3-9678-0B9030409769}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopSkills.BO.CoreBusiness", "HopSkills.BO.CoreBusiness\HopSkills.BO.CoreBusiness.csproj", "{82943034-5E97-4088-81F5-F79559FFA9CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HopSkills.BO.CoreBusiness", "HopSkills.BO.CoreBusiness\HopSkills.BO.CoreBusiness.csproj", "{82943034-5E97-4088-81F5-F79559FFA9CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopSkills.BO.UseCases", "HopSkills.BO.UseCases\HopSkills.BO.UseCases.csproj", "{27E0E782-BB07-4DF8-BFCE-12856502A86D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HopSkills.BO.UseCases", "HopSkills.BO.UseCases\HopSkills.BO.UseCases.csproj", "{27E0E782-BB07-4DF8-BFCE-12856502A86D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopSkills.BO.Plugins.InMemory", "HopSkills.BO.Plugins\HopSkills.BO.Plugins.InMemory\HopSkills.BO.Plugins.InMemory.csproj", "{7AAC21E2-0127-4034-9EF4-D62CCC47A109}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HopSkills.BO.Plugins.InMemory", "HopSkills.BO.Plugins\HopSkills.BO.Plugins.InMemory\HopSkills.BO.Plugins.InMemory.csproj", "{7AAC21E2-0127-4034-9EF4-D62CCC47A109}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

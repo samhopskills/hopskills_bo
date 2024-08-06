@@ -3311,3 +3311,13 @@ C:\Users\samyd\source\repos\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\samyd\source\repos\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\BlazorAuthorizeRoleView.dll
 C:\Users\samyd\source\repos\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\webcil\BlazorAuthorizeRoleView.wasm
 C:\Users\samyd\source\repos\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\f3wmvjsqfi.gz
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorAuthorizeRoleView.wasm
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorAuthorizeRoleView.wasm.gz
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\BlazorAuthorizeRoleView.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\webcil\BlazorAuthorizeRoleView.wasm
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\g3zkvggohm.gz
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\FluentValidation.wasm
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\FluentValidation.wasm.gz
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\webcil\FluentValidation.wasm
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\psbhsp93tp.gz

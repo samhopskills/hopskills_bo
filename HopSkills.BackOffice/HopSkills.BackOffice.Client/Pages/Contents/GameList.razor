@@ -1,5 +1,221 @@
-﻿<h3>GameList</h3>
+﻿@page "/games"
+@using System.Security.Claims
+@inject IConfiguration Config
+@inject IDialogService DialogService
 
+<MudContainer Fixed="true">
+    <MudSpacer />
+    <MudSpacer />
+    <MudDataGrid T="GameViewModel" Items="@Games"
+                 MultiSelection="true"
+                 Virtualize="true"
+                 SortMode="SortMode.Multiple"
+                 Filterable="true" ReadOnly="false"
+                 StartedEditingItem="@StartedEditingItem"
+                 CommittedItemChanges="@CommittedItemChanges"
+                 EditMode="@(DataGridEditMode.Form)"
+                 CanceledEditingItem="@CanceledEditingItem"
+                 QuickFilter="@_quickFilter"
+                 RowClick="@RowClicked"
+                 RowContextMenuClick="RowRightClicked"
+                 SelectedItemsChanged="@SelectedItemsChanged">
+        <ToolBarContent>
+            <MudGrid Spacing="10">
+                <MudItem>
+                    
+                        <MudButton Size="@Size.Small"
+                               Href="creategame"
+                                   Variant="@Variant.Filled"
+                                   EndIcon="@Icons.Material.Filled.Add"
+                                   Color="@Color.Primary">Add</MudButton>
+                   
+                </MudItem>
+                <MudItem>
+                    <MudButton Size="@Size.Small"
+                               Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.Remove"
+                               Color="@Color.Error" Disabled="@disabledDelete"
+                               OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                </MudItem>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start" Immediate="true"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Variant="Variant.Filled"
+                              IconSize="Size.Medium" Class="mt-10"></MudTextField>
+            </MudGrid>
+
+        </ToolBarContent>
+        <Columns>
+            <SelectColumn T="GameViewModel" />
+            @* <PropertyColumn Property="x => x.UserName" Title="UserName" /> *@
+            @* <PropertyColumn Property="x => x.LastName" Title="LastName" /> *@
+            <PropertyColumn Property="x => x.Title" Title="Title" />
+            <PropertyColumn Property="x => x.Theme" Title="Theme" />
+            <PropertyColumn Property="x => x.Status" Title="Status" />
+            <PropertyColumn Property="x => x.NumberOfQuestion" Title="Question(s)" />
+            <PropertyColumn Property="x => x.Lasting" Title="Last" />
+            @*  <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
+            <PropertyColumn Property="x => x.role.Name" Title="Role" />
+            <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudIconButton Size="@Size.Small"
+                                       Color="@Color.Primary"
+                                       Icon="@Icons.Material.Outlined.Edit"
+                                       OnClick="@context.Actions.StartEditingItemAsync"
+                                       Variant="@Variant.Text"></MudIconButton>
+                        <MudIconButton Size="@Size.Small"
+                                       Color="@Color.Primary"
+                                       Icon="@Icons.Material.Outlined.Archive"
+                                       OnClick="@context.Actions.StartEditingItemAsync"
+                                       Variant="@Variant.Text"></MudIconButton>
+                        <MudIconButton Size="@Size.Small"
+                                       Color="@Color.Primary"
+                                       Icon="@Icons.Material.Outlined.Publish"
+                                       OnClick="@context.Actions.StartEditingItemAsync"
+                                       Variant="@Variant.Text"></MudIconButton>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="GameViewModel" />
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
+
+
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+</style>
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
+    private List<GameViewModel>? Games;
+    private List<GameViewModel> selectedUsers = new List<GameViewModel>();
+    private ClaimsPrincipal authenticatedUser { get; set; }
+
+    private bool disabledDelete;
+    private string _searchString;
+    private string? serviceEndpoint;
+    private HttpClient Http = new HttpClient();
+    // quick filter - filter globally across multiple columns with the same input
+    private Func<GameViewModel, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Theme.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationStateTask is not null)
+        {
+            authenticationState = await authenticationStateTask;
+            if (authenticatedUser is null)
+                authenticatedUser = authenticationState?.User;
+        }
+        disabledDelete = true;
+        Games = new List<GameViewModel>();
+        if (authenticatedUser.IsInRole("Admin"))
+            serviceEndpoint = $"https://localhost:7079/api/Game/GetAll";
+        else
+        {
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+        }
+        // if (!string.IsNullOrEmpty(serviceEndpoint))
+        //     Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
+    }
+
+    private List<string> _events = new();
+    void StartedEditingItem(GameViewModel item)
+    {
+    }
+
+    void CanceledEditingItem(GameViewModel item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(GameViewModel item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+        // await ViewUserListUseCase.UpdateAsync(item);
+        await OnInitializedAsync();
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<GameViewModel> args)
+    {
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<GameViewModel> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<GameViewModel> items)
+    {
+        selectedUsers = items.ToList();
+        disabledDelete = !(selectedUsers.Count > 0);
+
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions
+            {
+                BackgroundClass = "my-custom-class",
+                CloseButton = true,
+                MaxWidth = MaxWidth.ExtraLarge,
+                BackdropClick = true
+            };
+
+        var dialog = await DialogService.ShowAsync<AddUserComponent>(string.Empty, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private async Task DeleteServerAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var parameters = new DialogParameters<Dialog> {
+            { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<Dialog>("Delete Users", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            // await ViewUserListUseCase.DeleteAsync(selectedUsers);
+            await OnInitializedAsync();
+        }
+
+    }
 
 }

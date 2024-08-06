@@ -16,6 +16,19 @@
           "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
         }
       },
+      "FluentValidation/11.9.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/8.0.7": {
         "type": "package",
         "dependencies": {
@@ -755,6 +768,19 @@
           "lib/net8.0/BlazorAuthorizeRoleView.dll": {}
         }
       },
+      "FluentValidation/11.9.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/8.0.7": {
         "type": "package",
         "dependencies": {
@@ -1487,6 +1513,31 @@
         "blazorauthorizeroleview.1.0.1.nupkg.sha512",
         "blazorauthorizeroleview.nuspec",
         "lib/net8.0/BlazorAuthorizeRoleView.dll"
+      ]
+    },
+    "FluentValidation/11.9.2": {
+      "sha512": "XeHp9LvFvu1fsQ/NvDCymV02GOCB1nz7ZUhfpI3uMhCcHTkV1K5bMkv+Nc/kuNYyAsX5+5bcmUanIEMd5QN+Eg==",
+      "type": "package",
+      "path": "fluentvalidation/11.9.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.11.9.2.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net5.0/FluentValidation.dll",
+        "lib/net5.0/FluentValidation.xml",
+        "lib/net6.0/FluentValidation.dll",
+        "lib/net6.0/FluentValidation.xml",
+        "lib/net7.0/FluentValidation.dll",
+        "lib/net7.0/FluentValidation.xml",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml",
+        "lib/netstandard2.1/FluentValidation.dll",
+        "lib/netstandard2.1/FluentValidation.xml"
       ]
     },
     "Microsoft.AspNetCore.Authorization/8.0.7": {
@@ -2655,6 +2706,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "BlazorAuthorizeRoleView >= 1.0.1",
+      "FluentValidation >= 11.9.2",
       "HopSkills.BO.Plugins.InMemory >= 1.0.0",
       "HopSkills.BO.UseCases >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebAssembly >= 8.*",
@@ -2666,24 +2718,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\samyd\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
       "projectName": "HopSkills.BackOffice.Client",
-      "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
-      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
+      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2698,11 +2745,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
-              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
+            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
+              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
             },
-            "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
-              "projectPath": "C:\\Users\\samyd\\source\\repos\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
+            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
+              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
             }
           }
         }
@@ -2725,6 +2772,10 @@
           "BlazorAuthorizeRoleView": {
             "target": "Package",
             "version": "[1.0.1, )"
+          },
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[11.9.2, )"
           },
           "Microsoft.AspNetCore.Components.WebAssembly": {
             "target": "Package",

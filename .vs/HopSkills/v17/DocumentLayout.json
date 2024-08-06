@@ -3,8 +3,64 @@
   "WorkspaceRootPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\pages\\contents\\gamelist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\pages\\contents\\gamelist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\pages\\contents\\creategame.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\pages\\contents\\creategame.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\controls\\addusercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\controls\\addusercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\pages\\users\\userlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\pages\\users\\userlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\data\\applicationgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\data\\applicationgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\controls\\addcustomercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\controls\\addcustomercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\gameviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\gameviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\services\\interfaces\\igameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\services\\interfaces\\igameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\components\\account\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\components\\account\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\components\\account\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\components\\account\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,12 +75,6 @@
       "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\data\\hopskillsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HopSkillsDbContext/True/SqlTable/dbo.AspNetRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HopSkillsDbContext/True/SqlTable/dbo.AspNetUsers.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\data\\applicationrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\data\\applicationrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,16 +83,8 @@
       "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\model\\customermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\controllers\\valuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\controllers\\valuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{07A4E73E-BEED-4A4D-BF7E-2CD007A3EF6D}|HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\controls\\addusercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\controls\\addusercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\pages\\users\\rolelist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -51,10 +93,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\userviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\userviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\controls\\addcustomercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\controls\\addcustomercomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\controls\\addrolecomponent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -67,6 +105,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|c:\\users\\s.dakhlaoui\\source\\hopskills_bo\\hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\roleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A0C4A1F8-86AF-48ED-B7CD-23252B719C8F}|HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj|solutionrelative:hopskills.backoffice\\hopskills.backoffice.client\\viewmodels\\roleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -76,7 +118,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -96,20 +138,215 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationGame.cs",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationGame.cs",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationGame.cs",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationGame.cs",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationGame.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T12:40:54.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "CreateGame.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\CreateGame.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\CreateGame.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\CreateGame.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\CreateGame.razor",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAAAHMAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T12:37:05.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameList.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\GameList.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\GameList.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\GameList.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Contents\\GameList.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T09:13:46.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserList.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAADEAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-31T13:37:18.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddUserComponent.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACgAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-31T13:45:41.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\MainLayout.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T09:04:28.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Layout\\NavMenu.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAABqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T09:43:19.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\GameController.cs",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\GameController.cs",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\GameController.cs",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\GameController.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAmwBwAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T10:13:12.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CustomerController.cs",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\CustomerController.cs",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\CustomerController.cs",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\CustomerController.cs",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\CustomerController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAYwBwAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T12:40:14.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AddCustomerComponent.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAwwFIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-31T14:46:27.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GameViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\GameViewModel.cs",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\GameViewModel.cs",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\GameViewModel.cs",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\GameViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T09:17:25.496Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IGameService.cs",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Services\\Interfaces\\IGameService.cs",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Services\\Interfaces\\IGameService.cs",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Services\\Interfaces\\IGameService.cs",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Services\\Interfaces\\IGameService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-06T10:25:03.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Login.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Login.razor",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAADkAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T09:02:22.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Home.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Home.razor",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACoAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T09:04:02.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Register.razor",
+              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Register.razor",
+              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Register.razor",
+              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Components\\Account\\Pages\\Register.razor",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAAD0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-08-06T08:58:00.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Program.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Program.cs",
               "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Program.cs",
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Program.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAAFcAAAABAAAA",
+              "ViewState": "AQIAAB4AAAAAAAAAAIBJwFcAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T16:59:05.199Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 16,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\appsettings.json",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\appsettings.json",
@@ -122,17 +359,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "dbo.AspNetRoles [Donn\u00E9es]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HopSkillsDbContext/True/SqlTable/dbo.AspNetRoles.sql",
-              "ToolTip": "dbo.AspNetRoles [Donn\u00E9es]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-07-31T16:55:01.827Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 17,
               "Title": "HopSkillsDbContext.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\HopSkillsDbContext.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\HopSkillsDbContext.cs",
@@ -145,30 +372,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserList.razor",
-              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
-              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
-              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
-              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\UserList.razor",
-              "ViewState": "AQIAAF4AAAAAAAAAAAAAAGIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-31T13:37:18.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "dbo.AspNetUsers [Donn\u00E9es]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/HopSkillsDbContext/True/SqlTable/dbo.AspNetUsers.sql",
-              "ToolTip": "dbo.AspNetUsers [Donn\u00E9es]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-07-31T16:54:36.028Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 18,
               "Title": "ApplicationRole.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationRole.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Data\\ApplicationRole.cs",
@@ -181,7 +385,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 19,
               "Title": "CustomerModel.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Model\\CustomerModel.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Model\\CustomerModel.cs",
@@ -194,33 +398,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 26,
               "Title": "ValuesController.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs",
               "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs",
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\ValuesController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T16:14:18.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-31T16:14:18.03Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 22,
               "Title": "UserViewModel.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\UserViewModel.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\UserViewModel.cs",
               "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\UserViewModel.cs",
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\UserViewModel.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAADwvx8AAAATAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAwwB8AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T14:03:44.975Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 23,
               "Title": "AddRoleComponent.razor",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddRoleComponent.razor",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddRoleComponent.razor",
@@ -233,46 +435,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AddUserComponent.razor",
-              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
-              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
-              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
-              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddUserComponent.razor",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABwAAABYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-31T13:45:41.112Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 21,
               "Title": "RoleList.razor",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\RoleList.razor",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\RoleList.razor",
               "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\RoleList.razor",
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Pages\\Users\\RoleList.razor",
-              "ViewState": "AQIAAEYAAAAAAAAAAAAAAGIAAAAJAAAA",
+              "ViewState": "AQIAAEMAAAAAAAAAAIBJwGIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-07-31T13:48:16.393Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AddCustomerComponent.razor",
-              "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
-              "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
-              "ToolTip": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
-              "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Controls\\AddCustomerComponent.razor",
-              "ViewState": "AQIAADkAAAAAAAAAAAAAAFMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-31T14:46:27.873Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 24,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Program.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Program.cs",
@@ -280,11 +456,12 @@
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T14:09:43.441Z"
+              "WhenOpened": "2024-07-31T14:09:43.441Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 20,
               "Title": "RoleController.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\RoleController.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice\\Controllers\\RoleController.cs",
@@ -297,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 25,
               "Title": "RoleViewModel.cs",
               "DocumentMoniker": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\RoleViewModel.cs",
               "RelativeDocumentMoniker": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\RoleViewModel.cs",
@@ -305,7 +482,8 @@
               "RelativeToolTip": "HopSkills.BackOffice\\HopSkills.BackOffice.Client\\ViewModels\\RoleViewModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-31T14:04:57.597Z"
+              "WhenOpened": "2024-07-31T14:04:57.597Z",
+              "EditorCaption": ""
             }
           ]
         },
