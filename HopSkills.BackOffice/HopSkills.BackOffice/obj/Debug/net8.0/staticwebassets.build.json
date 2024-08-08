@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GcGUSnEtyApbZJ0lgF0PM5PqnXML3U52n4o8Bi64SBI=",
+  "Hash": "LLfgOyf2lm7GzGMt7PP5NdBg4cI6N8OBmuKrrUWiECg=",
   "Source": "HopSkills.BackOffice",
   "BasePath": "_content/HopSkills.BackOffice",
   "Mode": "Default",
@@ -67,10 +67,10 @@
       "OriginalItemSpec": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.7\\staticwebassets\\AuthenticationService.js"
     },
     {
-      "Identity": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\MudBlazor.min.css",
+      "Identity": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.css",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.css",
       "AssetKind": "All",
@@ -83,13 +83,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\MudBlazor.min.css"
+      "OriginalItemSpec": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.css"
     },
     {
-      "Identity": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\MudBlazor.min.js",
+      "Identity": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.js",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.js",
       "AssetKind": "All",
@@ -102,7 +102,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.5.0\\staticwebassets\\MudBlazor.min.js"
+      "OriginalItemSpec": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.js"
     },
     {
       "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.boot.json",
@@ -8541,6 +8541,25 @@
       "OriginalItemSpec": "wwwroot\\Images\\boy-with-rocket-light.png"
     },
     {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\finderrors.svg",
+      "SourceId": "HopSkills.BackOffice",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\",
+      "BasePath": "_content/HopSkills.BackOffice",
+      "RelativePath": "Images/finderrors.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\finderrors.svg"
+    },
+    {
       "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\girl-with-laptop-light.png",
       "SourceId": "HopSkills.BackOffice",
       "SourceType": "Discovered",
@@ -8560,6 +8579,25 @@
       "OriginalItemSpec": "wwwroot\\Images\\girl-with-laptop-light.png"
     },
     {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\login.svg",
+      "SourceId": "HopSkills.BackOffice",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\",
+      "BasePath": "_content/HopSkills.BackOffice",
+      "RelativePath": "Images/login.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\login.svg"
+    },
+    {
       "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\loginBg.svg",
       "SourceId": "HopSkills.BackOffice",
       "SourceType": "Discovered",
@@ -8577,6 +8615,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\loginBg.svg"
+    },
+    {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\multiplequestions.svg",
+      "SourceId": "HopSkills.BackOffice",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\",
+      "BasePath": "_content/HopSkills.BackOffice",
+      "RelativePath": "Images/multiplequestions.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\multiplequestions.svg"
+    },
+    {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\truefalse.svg",
+      "SourceId": "HopSkills.BackOffice",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\",
+      "BasePath": "_content/HopSkills.BackOffice",
+      "RelativePath": "Images/truefalse.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\truefalse.svg"
     }
   ]
 }

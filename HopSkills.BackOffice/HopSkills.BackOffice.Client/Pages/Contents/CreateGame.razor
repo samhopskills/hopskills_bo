@@ -1,120 +1,192 @@
 ﻿@page "/creategame"
 
-
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using FluentValidation
+@inject IDialogService DialogService
 
 @inject ISnackbar Snackbar
+@inject NavigationManager Navigation
 <MudGrid>
     <MudItem xs="12" sm="7">
-        <MudPaper Class="pa-4">
-            <MudStack Style="width: 100%">
-                <MudForm Model="@_model"
-                         @bind-IsValid="_isValid"
-                         @bind-IsTouched="_isTouched"
-                         Validation="@_validationRules.ValidateValue">
-                    <MudItem xs="12">
-                        <MudFileUpload T="IReadOnlyList<IBrowserFile>"
-                                       @ref="@_fileUpload"
-                                       @bind-Files="_model.Files"
-                                       For="@(() => _model.Files)"
-                                       AppendMultipleFiles="false"
-                                       Hidden="@false"
-                                       InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
-                                       InputStyle="opacity:0"
-                                       ErrorText="@string.Empty"
-                                       tabindex="-1"
-                                       @ondrop="@ClearDragClass"
-                                       @ondragenter="@SetDragClass"
-                                       @ondragleave="@ClearDragClass"
-                                       @ondragend="@ClearDragClass">
-                            <ActivatorContent>
-                                <MudPaper Height="300px"
-                                          Outlined="true"
-                                          Class="@_dragClass">
-                                    <MudText Typo="Typo.h6">
-                                        Add an image
-                                    </MudText>
-                                    @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
-                                    {
-                                        <MudChip T="string" Color="Color.Dark" Text="@file" />
-                                    }
-                                </MudPaper>
-                            </ActivatorContent>
-                        </MudFileUpload>
-                        <MudToolBar Gutters="@false"
-                                    Class="relative d-flex justify-end gap-4">
-                            <MudButton Color="Color.Primary"
-                                       OnClick="@OpenFilePickerAsync"
-                                       Variant="Variant.Filled">
-                                Open file picker
-                            </MudButton>
-                            <MudButton Color="Color.Primary"
-                                       Disabled="@(!_isValid || !_isTouched || _model.Files is null || !_model.Files.Any())"
-                                       OnClick="@Upload"
-                                       Variant="Variant.Filled">
-                                Upload
-                            </MudButton>
-                            <MudButton Color="Color.Error"
-                                       Disabled="@(_model.Files is null || !_model.Files.Any())"
-                                       OnClick="@ClearAsync"
-                                       Variant="Variant.Filled">
-                                Clear
-                            </MudButton>
-                        </MudToolBar>
-                    </MudItem>
-                    <MudItem>
-                        @if (_fileUpload?.ValidationErrors.Any() ?? false)
-                        {
-                            <MudText Color="Color.Error"
-                                     Typo="@Typo.caption">
-                                @_fileUpload?.ValidationErrors[0]
-                            </MudText>
-                        }
-                    </MudItem>
-                    <MudItem xs="12">
-                        IsValid: @_isValid - IsTouched: @_isTouched
-                    </MudItem>
+        
+            <MudPaper Class="pa-4">
+                <MudStack Style="width: 100%">
+                    <MudForm Model="@_model"
+                             @bind-IsValid="_isValid"
+                             @bind-IsTouched="_isTouched"
+                             Validation="@_validationRules.ValidateValue">
+                    @if (form1Validate)
+                    {
+                        <MudItem xs="12">
+                            <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                                           @ref="@_fileUpload"
+                                           @bind-Files="_model.Files"
+                                           For="@(() => _model.Files)"
+                                           AppendMultipleFiles="false"
+                                           Hidden="@false"
+                                           InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
+                                           InputStyle="opacity:0"
+                                           ErrorText="@string.Empty"
+                                           tabindex="-1"
+                                           @ondrop="@ClearDragClass"
+                                           @ondragenter="@SetDragClass"
+                                           @ondragleave="@ClearDragClass"
+                                           @ondragend="@ClearDragClass">
+                                <ActivatorContent>
+                                    <MudPaper Height="300px"
+                                              Outlined="true"
+                                              Class="@_dragClass">
+                                        <MudText Typo="Typo.h6">
+                                            Add an image
+                                        </MudText>
+                                        @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                        {
+                                            <MudChip T="string" Color="Color.Dark" Text="@file" />
+                                        }
+                                    </MudPaper>
+                                </ActivatorContent>
+                            </MudFileUpload>
+                            <MudToolBar Gutters="@false"
+                                        Class="relative d-flex justify-end gap-4">
+                                <MudButton Color="Color.Primary"
+                                           OnClick="@OpenFilePickerAsync"
+                                           Variant="Variant.Filled">
+                                    Open file picker
+                                </MudButton>
+                                <MudButton Color="Color.Primary"
+                                           Disabled="@(!_isValid || !_isTouched || _model.Files is null || !_model.Files.Any())"
+                                           OnClick="@Upload"
+                                           Variant="Variant.Filled">
+                                    Upload
+                                </MudButton>
+                                <MudButton Color="Color.Error"
+                                           Disabled="@(_model.Files is null || !_model.Files.Any())"
+                                           OnClick="@ClearAsync"
+                                           Variant="Variant.Filled">
+                                    Clear
+                                </MudButton>
+                            </MudToolBar>
+                        </MudItem>
+                        <MudItem>
+                            @if (_fileUpload?.ValidationErrors.Any() ?? false)
+                            {
+                                <MudText Color="Color.Error"
+                                         Typo="@Typo.caption">
+                                    @_fileUpload?.ValidationErrors[0]
+                                </MudText>
+                            }
+                        </MudItem>
+                        <MudItem xs="12">
+                            IsValid: @_isValid - IsTouched: @_isTouched
+                        </MudItem>
+                    <MudGrid>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudTextField T="string" Label="Title" Variant="Variant.Outlined" />
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Placeholder="Select a difficulty level"
+                                       Label="Difficulty level" Variant="Variant.Outlined"
+                                       AnchorOrigin="Origin.BottomCenter">
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Placeholder="Select a game"
+                                       Label="Game to complete before" Variant="Variant.Outlined"
+                                       AnchorOrigin="Origin.BottomCenter">
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+                    <MudGrid>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Placeholder="Select a Theme"
+                                       Label="Theme related to" Variant="Variant.Outlined"
+                                       AnchorOrigin="Origin.BottomCenter">
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Placeholder="Select a Subscription"
+                                       Label="Eligible subscription" Variant="Variant.Outlined"
+                                       AnchorOrigin="Origin.BottomCenter">
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+                    }
+                    @if (form2Validate)
+                    {
+                        <MudItem xs="12">
+                            <MudTextField  InputMode="InputMode.text"
+                                          T="string" Label="Enter a description" Variant="Variant.Filled" Text="" Lines="3" />
+                        </MudItem>
+                    }
+                    @if (form3Validate)
+                    {
+                        <MudGrid>
+                        <MudItem xs="12" sm="6" md="4">
+                       <MudCard>
+                               <MudCardMedia Image="images/multiplequestions.svg" Height="200" />
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Multiple choices questions</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Create a multiple questions form with multiple answer choices</MudText>
+    </MudCardContent>
+    <MudCardActions>
+                                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="OpenDialogAsync">Go</MudButton>
+    </MudCardActions>
+</MudCard>
+                        </MudItem>
+                                                <MudItem xs="12" sm="6" md="4">
+
+                        <MudCard>
+                 <MudCardMedia Image="images/truefalse.svg" Height="200" />
+
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">True/False</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Create a form in which the user will have to determine what is true</MudText>
+    </MudCardContent>
+    <MudCardActions>
+                                        <MudButton @onclick="OpenDialogAsync" Variant="Variant.Text" Color="Color.Primary">Go</MudButton>
+    </MudCardActions>
+</MudCard>
+                        </MudItem>
+                                                                        <MudItem xs="12" sm="6" md="4">
+
+                        <MudCard>
+                                                    <MudCardMedia Image="images/finderrors.svg" Height="200" />
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Find Errors</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Create an form in which the user will have to find errors</MudText>
+    </MudCardContent>
+    <MudCardActions>
+                                        <MudButton @onclick="OpenDialogAsync" Variant="Variant.Text" Color="Color.Primary">Go</MudButton>
+    </MudCardActions>
+</MudCard>
+                        </MudItem>
+                        </MudGrid>
+                    }
                 </MudForm>
-            </MudStack>
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudGrid>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudTextField T="string" Label="Title" Variant="Variant.Outlined"/> 
-                    </MudItem>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudSelect T="string" Placeholder="Select a difficulty level"
-                                   Label="Difficulty level" Variant="Variant.Outlined"
-                                   AnchorOrigin="Origin.BottomCenter">
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudSelect T="string" Placeholder="Select a game"
-                                   Label="Game to complete before" Variant="Variant.Outlined"
-                                   AnchorOrigin="Origin.BottomCenter">
-                        </MudSelect>
-                    </MudItem>
-                </MudGrid>
-                <MudGrid>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudSelect T="string" Placeholder="Select a Theme"
-                                   Label="Theme related to" Variant="Variant.Outlined"
-                                   AnchorOrigin="Origin.BottomCenter">
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudSelect T="string" Placeholder="Select a Subscription"
-                                   Label="Eligible subscription" Variant="Variant.Outlined"
-                                   AnchorOrigin="Origin.BottomCenter">
-                        </MudSelect>
-                    </MudItem>
-                </MudGrid>
-            </MudForm>
-        </MudPaper>
+                </MudStack>
+               @*  <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                    
+                </MudForm> *@
+            </MudPaper>
         <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="@(()=>form.Validate())">Next</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="@(()=>form.ResetAsync())" Class="mx-2">Reset</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
+            @if (form2Validate || form3Validate)
+                    {
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="NavigateToPreviousGameForm" Class="mx-2">Previous</MudButton>
+                    }
             <MudButton Variant="Variant.Filled" DropShadow="false" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
         </MudPaper>
     </MudItem>
@@ -136,9 +208,17 @@
 
 @code {
     bool success;
+    private bool form1Validate { get; set; }
+    private bool form2Validate { get; set; }
+    private bool form3Validate { get; set; }
     string[] errors = { };
     MudTextField<string> pwField1;
     MudForm form;
+
+    protected override async Task OnInitializedAsync()
+    {
+        form1Validate = true;
+    }
 
     private IEnumerable<string> PasswordStrength(string pw)
     {
@@ -162,6 +242,53 @@
         if (pwField1.Value != arg)
             return "Passwords don't match";
         return null;
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions
+            {
+                BackgroundClass = "my-custom-class",
+                CloseButton = true,
+                BackdropClick = true,
+                FullWidth = true,
+                MaxWidth = MaxWidth.ExtraLarge
+            };
+
+        var dialog = await DialogService.ShowAsync<AddQuestionFormComponent>(string.Empty, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private void NavigateToNextGameForm()
+    {
+        if (form1Validate)
+        {
+            form1Validate = false;
+            form2Validate = true;
+        }
+        else if (form2Validate)
+        {
+            form2Validate = false;
+            form3Validate = true;
+        }
+    }
+
+    private void NavigateToPreviousGameForm()
+    {
+        if (form2Validate)
+        {
+            form1Validate = true;
+            form2Validate = false;
+        }
+        else if (form3Validate)
+        {
+            form2Validate = true;
+            form3Validate = false;
+        }
     }
 
     #nullable enable

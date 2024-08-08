@@ -5,12 +5,28 @@
       "PackagePath": "staticwebassets\\Images\\boy-with-rocket-light.png"
     },
     {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\finderrors.svg",
+      "PackagePath": "staticwebassets\\Images\\finderrors.svg"
+    },
+    {
       "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\girl-with-laptop-light.png",
       "PackagePath": "staticwebassets\\Images\\girl-with-laptop-light.png"
     },
     {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\login.svg",
+      "PackagePath": "staticwebassets\\Images\\login.svg"
+    },
+    {
       "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\loginBg.svg",
       "PackagePath": "staticwebassets\\Images\\loginBg.svg"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\multiplequestions.svg",
+      "PackagePath": "staticwebassets\\Images\\multiplequestions.svg"
+    },
+    {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\truefalse.svg",
+      "PackagePath": "staticwebassets\\Images\\truefalse.svg"
     },
     {
       "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\favicon.ico",

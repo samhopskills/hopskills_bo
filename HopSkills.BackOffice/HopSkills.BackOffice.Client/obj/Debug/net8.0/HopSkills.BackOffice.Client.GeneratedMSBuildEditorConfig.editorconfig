@@ -33,6 +33,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkR3JvdXBDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddQuestionFormComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkUXVlc3Rpb25Gb3JtQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Controls/AddRoleComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29udHJvbHNcQWRkUm9sZUNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -63,6 +67,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/CreateGame.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcQ3JlYXRlR2FtZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/CreateGameForm1.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcQ3JlYXRlR2FtZUZvcm0xLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/GameList.razor]
