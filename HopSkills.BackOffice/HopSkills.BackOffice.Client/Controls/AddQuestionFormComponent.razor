@@ -1,37 +1,182 @@
-﻿<MudGrid>
-    <MudItem xs="12" sm="7">
+﻿@using System.ComponentModel.DataAnnotations
+<MudGrid>
+    <MudItem xs="12" sm="12" md="12">
         <MudPaper Class="pa-4">
-            <MudForm Spacing="20">
+            <EditForm Model="questionFormInput" OnValidSubmit="OnValidSubmit">
                 <MudGrid>
-                    <MudItem>
-                        <MudTextField T="string" Label="Title" />
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="string" Label="Question" @bind-Value="@questionFormInput.Title" />
                     </MudItem>
-                    <MudItem>
-                        <MudTextField T="string" Label="Time" />
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="TimeOnly" Label="Duration" @bind-Value="@questionFormInput.Duration" />
                     </MudItem>
-                    <MudItem>
-                        <MudTextField T="string" Label="Xp" />
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="int" Label="Xp" @bind-Value="@questionFormInput.Xperience" />
                     </MudItem>
                 </MudGrid>
-                <MudTextField T="string" Label="Email" />
-                <MudTextField T="string" Label="Password" HelperText="Choose a strong password" InputType="InputType.Password" />
-                <MudTextField T="string" Label="Password" HelperText="Repeat the password" InputType="InputType.Password" />
-                <div class="d-flex">
-                    <MudRadioGroup T="string">
-                        <MudRadio Value="@("Personal")">Personal</MudRadio>
-                        <MudRadio Value="@("Professional")">Professional</MudRadio>
-                    </MudRadioGroup>
-                </div>
-            </MudForm>
+                <br />
+                    <MudGrid>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                            <ActivatorContent>
+                                <MudFab Color="Color.Secondary"
+                                        StartIcon="@Icons.Material.Filled.Image"
+                                        Label="Load picture" />
+                            </ActivatorContent>
+                        </MudFileUpload>
+                    </MudItem>
+                    <MudItem xs="4" sm="4" md="4"></MudItem>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudFileUpload T="IBrowserFile" Accept=".mp3" FilesChanged="UploadFiles2" MaximumFileCount="100">
+                            <ActivatorContent>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.AudioFile">
+                                    Upload audio files (mp3)
+                                </MudButton>
+                            </ActivatorContent>
+                        </MudFileUpload>
+                    </MudItem>
+                    </MudGrid>
+                    <br />
+                    <br />
+                @foreach (var item in questionFormInput.Answers)
+                    {
+                        <MudGrid>
+                        <MudItem xs="9" sm="9" md="9">
+                            <MudTextField InputMode="InputMode.text"
+                                          T="string" Label="@item.Label" 
+                                          @bind-Value="@item.Answer"
+                                          AutoGrow="true" Variant="Variant.Text" />
+                        </MudItem>
+                        <MudItem>
+                            <MudCheckBox T="bool"></MudCheckBox>
+                        </MudItem>
+                        @if(!item.Label.Equals("Answer 1"))
+                        {
+                            <MudItem>
+                                <MudIconButton OnClick="@(e => DeleteAnswer(item.Id-1))" Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
+                            </MudItem>
+                        }
+                        </MudGrid>
+                        <br />
+                    }
+                    <MudGrid>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudButton ButtonType="ButtonType.Button" EndIcon="@Icons.Material.Filled.Add" OnClick="AddAnswer">Add an answer</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                <br />
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudTextField InputMode="InputMode.text"
+                                      T="string" 
+                                      Label="Explain the correct answer" @bind-Value="questionFormInput.AnswerExplanation"
+                                      AutoGrow="true" Variant="Variant.Filled" />
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
         </MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="5">
-        <MudPaper Class="pa-4 mud-height-full">
-            <MudSlider @bind-Value="spacing" Min="0" Max="16" ValueLabel>Spacing between items</MudSlider>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmit" Variant="Variant.Filled" Color="Color.Primary" DropShadow="false">Validate</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" 
+            Variant="Variant.Filled" DropShadow="false" OnClick="Cancel">Cancel</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>
 
 @code {
     int spacing;
+    IList<IBrowserFile> _files = new List<IBrowserFile>();
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public EventCallback<int> OnCancelEvent { get; set; }
+    private QuestionFormInputViewModel questionFormInput { get; set; } = new QuestionFormInputViewModel
+    {
+        Answers = new List<AnswerInputViewModel>
+        {
+            new AnswerInputViewModel { Id = 1, Label = "Answer 1",Answer = string.Empty,
+            IsCorrect = false}
+        }
+    };
+    private CustomerViewModel CompanySelected { get; set; }
+    public bool Dense_CheckBox { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private async void Cancel()
+    {
+        await OnCancelEvent.InvokeAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    private void AddAnswer()
+    {
+        questionFormInput.Answers.Add(new AnswerInputViewModel
+        {
+                Id = questionFormInput.Answers.Count + 1,
+                Label = $"Answer {questionFormInput.Answers.Count + 1}",
+            Answer = string.Empty,
+            IsCorrect = false
+        });
+    }
+
+    private EventCallback CorrectAnswer(int Id)
+    {
+        questionFormInput.Answers[Id].IsCorrect = true;
+        return EventCallback.Empty;
+    }
+
+    private EventCallback DeleteAnswer(int Id)
+    {
+        questionFormInput.Answers.RemoveAt(Id);
+        return EventCallback.Empty;
+    }
+
+    private void UploadFiles(IBrowserFile file)
+    {
+        _files.Add(file);
+        //TODO upload the files to the server
+    }
+
+    private void UploadFiles2(IBrowserFile file)
+    {
+        _files.Add(file);
+        //TODO upload the files to the server
+    }
+
+    private async void OnValidSubmit()
+    {
+        StateHasChanged();
+        Submit();
+    }
+
+    public class AnswerInputViewModel
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Label { get; set; }
+        [Required]
+        public string Answer { get; set; }
+        [Required]
+        public bool IsCorrect { get; set; }
+    }
+
+    public class QuestionFormInputViewModel
+    {
+        public List<AnswerInputViewModel> Answers { get; set; }
+        [Required]
+        public string Title { get; set; }
+        [Required]
+        public TimeOnly Duration { get; set; }
+        [Required]
+        public int Xperience { get; set; }
+        [Required]
+        public string AnswerExplanation { get; set; }
+    }
 }

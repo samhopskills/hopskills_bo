@@ -116,7 +116,7 @@
                     {
                         <MudItem xs="12">
                             <MudTextField  InputMode="InputMode.text"
-                                          T="string" Label="Enter a description" Variant="Variant.Filled" Text="" Lines="3" />
+                                          T="string" Label="Enter a description" AutoGrow="true" Variant="Variant.Filled" Text="" Lines="10" />
                         </MudItem>
                     }
                     @if (form3Validate)
@@ -134,7 +134,7 @@
         <MudText>Create a multiple questions form with multiple answer choices</MudText>
     </MudCardContent>
     <MudCardActions>
-                                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="OpenDialogAsync">Go</MudButton>
+                                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="DisplayFormQuestions">Go</MudButton>
     </MudCardActions>
 </MudCard>
                         </MudItem>
@@ -175,20 +175,27 @@
                         </MudItem>
                         </MudGrid>
                     }
+                    @if(formQuestions)
+                    {
+                        <AddQuestionFormComponent OnCancelEvent="CreateFormCanceled"></AddQuestionFormComponent>
+                    }
                 </MudForm>
                 </MudStack>
                @*  <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
                     
                 </MudForm> *@
             </MudPaper>
-        <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
-            @if (form2Validate || form3Validate)
-                    {
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="NavigateToPreviousGameForm" Class="mx-2">Previous</MudButton>
-                    }
-            <MudButton Variant="Variant.Filled" DropShadow="false" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
+        @if (!formQuestions)
+        {
+            <MudPaper Class="pa-4 mt-4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
+                @if (form2Validate || form3Validate)
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="NavigateToPreviousGameForm" Class="mx-2">Previous</MudButton>
+                }
+                <MudButton Variant="Variant.Filled" DropShadow="false" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
         </MudPaper>
+        }
     </MudItem>
     <MudItem xs="12" sm="5">
         <MudPaper Class="pa-4 mud-height-full">
@@ -211,6 +218,7 @@
     private bool form1Validate { get; set; }
     private bool form2Validate { get; set; }
     private bool form3Validate { get; set; }
+    private bool formQuestions { get; set; }
     string[] errors = { };
     MudTextField<string> pwField1;
     MudForm form;
@@ -218,6 +226,12 @@
     protected override async Task OnInitializedAsync()
     {
         form1Validate = true;
+    }
+
+    protected async Task CreateFormCanceled()
+    {
+        formQuestions = !formQuestions;
+        form3Validate = !form3Validate;
     }
 
     private IEnumerable<string> PasswordStrength(string pw)
@@ -252,7 +266,8 @@
                 CloseButton = true,
                 BackdropClick = true,
                 FullWidth = true,
-                MaxWidth = MaxWidth.ExtraLarge
+                MaxWidth = MaxWidth.ExtraLarge,
+                FullScreen = true
             };
 
         var dialog = await DialogService.ShowAsync<AddQuestionFormComponent>(string.Empty, options);
@@ -261,6 +276,12 @@
 
         if (!result.Canceled)
             await OnInitializedAsync();
+    }
+
+    private void DisplayFormQuestions()
+    {
+        form3Validate = false;
+        formQuestions = !formQuestions;
     }
 
     private void NavigateToNextGameForm()

@@ -12,7 +12,7 @@ namespace HopSkills.BackOffice.Data
         public string Theme { get; set; }
         public string Status { get; set; }
         public int NumberOfQuestion { get; set; }
-        public int Lasting { get; set; }
+        public int Duration { get; set; }
         public string ImageUri { get; set; }
         public int TotalXp { get; set; }
         [ForeignKey("UserId")]

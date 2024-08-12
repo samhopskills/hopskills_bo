@@ -33,3 +33,15 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\refint\HopSkills.BO.CoreBusiness.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.pdb
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\ref\HopSkills.BO.CoreBusiness.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\bin\Debug\net8.0\HopSkills.BO.CoreBusiness.deps.json
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\bin\Debug\net8.0\HopSkills.BO.CoreBusiness.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\bin\Debug\net8.0\HopSkills.BO.CoreBusiness.pdb
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.AssemblyInfoInputs.cache
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.AssemblyInfo.cs
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.csproj.CoreCompileInputs.cache
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.sourcelink.json
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\refint\HopSkills.BO.CoreBusiness.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\HopSkills.BO.CoreBusiness.pdb
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.CoreBusiness\obj\Debug\net8.0\ref\HopSkills.BO.CoreBusiness.dll

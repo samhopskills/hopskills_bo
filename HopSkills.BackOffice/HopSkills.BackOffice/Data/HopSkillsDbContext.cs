@@ -9,5 +9,8 @@ public class HopSkillsDbContext(DbContextOptions<HopSkillsDbContext> options) : 
 {
     public DbSet<ApplicationCustomer> Customers { get; set; }
     public DbSet<ApplicationGroup> Groups { get; set; }
+    public DbSet<ApplicationGame> Games { get; set; }
+    public DbSet<ApplicationMultiQuestion> MultiQuestions { get; set; }
+    public DbSet<ApplicationAnswer> Answers { get; set; }
     //public DbSet<ApplicationGroupsApplicationUsers> GroupsUsers { get; set; }
 }
