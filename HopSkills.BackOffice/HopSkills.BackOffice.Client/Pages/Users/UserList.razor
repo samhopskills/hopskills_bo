@@ -3,7 +3,7 @@
 @inject IViewUserListUseCase ViewUserListUseCase
 @inject IConfiguration Config
 @inject IDialogService DialogService
-
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
     <MudContainer Fixed="true">
         <MudSpacer />
         <MudSpacer />
@@ -85,7 +85,7 @@
     private List<UserViewModel>? Users;
     private List<UserViewModel> selectedUsers = new List<UserViewModel>();
     private ClaimsPrincipal authenticatedUser { get; set; }
-
+    private readonly IConfiguration _configuration;
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
@@ -110,6 +110,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var bckUrl = config.GetValue<string>("BackendUrl");
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;

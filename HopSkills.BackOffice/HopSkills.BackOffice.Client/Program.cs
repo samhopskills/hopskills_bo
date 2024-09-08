@@ -36,9 +36,10 @@ builder.Services.AddTransient<IEditCustomerUseCase, EditCustomerUseCase>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped(sp => (IAccountManagement)sp.GetRequiredService<AuthenticationStateProvider>());
 
+var serverAddress = builder.Configuration["BackendUrl"];
 // set base address for default host
 builder.Services.AddScoped(sp =>
-    new HttpClient { BaseAddress = new Uri(builder.Configuration["BackendUrl"] ?? "https://localhost:7079") });
+    new HttpClient { BaseAddress = new Uri(serverAddress ?? "https://localhost:7079") });
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();

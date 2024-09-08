@@ -136,4 +136,9 @@ app.MapGet("/api/roles", async (HttpContext httpContext) =>
     return Results.Unauthorized();
 }).RequireAuthorization();
 
+app.UseCors(builder => builder.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader()
+    );
+
 app.Run();

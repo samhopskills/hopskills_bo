@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "NnyAxsC4Jpq3Cq+x3mxj5JWVh/CkOZsHlV+lT4XiGIA=",
+  "Hash": "JcgZGrFW19rqKyKPSFz+m1ivsHaKCuRm/XJBNyWhWyo=",
   "Source": "HopSkills.BackOffice.Client",
   "BasePath": "/",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "HopSkills.BackOffice.Client\\wwwroot",
+      "Source": "HopSkills.BackOffice.Client",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [
     {
       "Identity": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.8\\staticwebassets\\AuthenticationService.js",
@@ -8462,6 +8470,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Transactions.wasm"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.json",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "appsettings.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "settings",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\appsettings.json"
     }
   ]
 }

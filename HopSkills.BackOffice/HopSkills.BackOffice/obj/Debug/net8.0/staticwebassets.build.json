@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NVp0UAUuVdwofDUPgn3RDK7BSWD7XHOASf8KjwHRmck=",
+  "Hash": "zh6wIQY+IAzwEVA8tr1wNKtms9s3SIqgzEHlKehXeh4=",
   "Source": "HopSkills.BackOffice",
   "BasePath": "_content/HopSkills.BackOffice",
   "Mode": "Default",
@@ -19,6 +19,13 @@
     }
   ],
   "DiscoveryPatterns": [
+    {
+      "Name": "HopSkills.BackOffice.Client\\wwwroot",
+      "Source": "HopSkills.BackOffice.Client",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "Pattern": "**"
+    },
     {
       "Name": "HopSkills.BackOffice\\wwwroot",
       "Source": "HopSkills.BackOffice",
@@ -8501,6 +8508,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Transactions.wasm"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.json",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Project",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "appsettings.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "settings",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\appsettings.json"
     },
     {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\favicon.ico",
