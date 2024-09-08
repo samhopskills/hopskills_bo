@@ -83,7 +83,7 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
@@ -136,9 +136,9 @@ app.MapGet("/api/roles", async (HttpContext httpContext) =>
     return Results.Unauthorized();
 }).RequireAuthorization();
 
-app.UseCors(builder => builder.AllowAnyOrigin()
-.AllowAnyMethod()
-.AllowAnyHeader()
-    );
+app.UseCors(builder => builder
+.AllowAnyOrigin()
+     .AllowAnyMethod()
+     .AllowAnyHeader());
 
 app.Run();

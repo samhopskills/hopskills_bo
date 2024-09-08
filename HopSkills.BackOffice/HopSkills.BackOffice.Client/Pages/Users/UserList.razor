@@ -110,7 +110,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var bckUrl = config.GetValue<string>("BackendUrl");
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;
@@ -120,7 +119,7 @@
         disabledDelete = true;
         Users = new List<UserViewModel>();
         if (authenticatedUser.IsInRole("Admin"))
-            serviceEndpoint = $"https://localhost:7079/api/User/GetAll";
+            serviceEndpoint = $"{Http.BaseAddress}/api/User/GetAll";
         else
         {
             var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
