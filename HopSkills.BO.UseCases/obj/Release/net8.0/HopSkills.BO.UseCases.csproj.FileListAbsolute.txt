@@ -1,0 +1,16 @@
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\bin\Release\net8.0\HopSkills.BO.UseCases.deps.json
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\bin\Release\net8.0\HopSkills.BO.UseCases.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\bin\Release\net8.0\HopSkills.BO.UseCases.pdb
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\bin\Release\net8.0\HopSkills.BO.CoreBusiness.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\bin\Release\net8.0\HopSkills.BO.CoreBusiness.pdb
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.csproj.AssemblyReference.cache
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.AssemblyInfoInputs.cache
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.AssemblyInfo.cs
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.csproj.CoreCompileInputs.cache
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.sourcelink.json
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkill.39AE66E7.Up2Date
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\refint\HopSkills.BO.UseCases.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\HopSkills.BO.UseCases.pdb
+C:\Users\samyd\source\hopskills_bo\HopSkills.BO.UseCases\obj\Release\net8.0\ref\HopSkills.BO.UseCases.dll

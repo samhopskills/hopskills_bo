@@ -19,6 +19,8 @@ using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BackOffice.Services;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Blobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<HopSkillsDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("StorageAccount")));
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => {
     options.SignIn.RequireConfirmedEmail = false;
@@ -68,6 +72,8 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<ITrainingService, TrainingService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hu0wg/hwqJeRudpHCxmE3YDV3InVZnSyfS+OkTKsm50=",
+  "Hash": "NnyAxsC4Jpq3Cq+x3mxj5JWVh/CkOZsHlV+lT4XiGIA=",
   "Source": "HopSkills.BackOffice.Client",
   "BasePath": "/",
   "Mode": "Default",
@@ -9,10 +9,10 @@
   "DiscoveryPatterns": [],
   "Assets": [
     {
-      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.7\\staticwebassets\\AuthenticationService.js",
+      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.8\\staticwebassets\\AuthenticationService.js",
       "SourceId": "Microsoft.AspNetCore.Components.WebAssembly.Authentication",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.7\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.8\\staticwebassets\\",
       "BasePath": "_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication",
       "RelativePath": "AuthenticationService.js",
       "AssetKind": "All",
@@ -25,13 +25,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.7\\staticwebassets\\AuthenticationService.js"
+      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\8.0.8\\staticwebassets\\AuthenticationService.js"
     },
     {
-      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.css",
+      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\MudBlazor.min.css",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.css",
       "AssetKind": "All",
@@ -44,13 +44,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.css"
+      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\MudBlazor.min.css"
     },
     {
-      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.js",
+      "Identity": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\MudBlazor.min.js",
       "SourceId": "MudBlazor",
       "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\",
+      "ContentRoot": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\",
       "BasePath": "_content/MudBlazor",
       "RelativePath": "MudBlazor.min.js",
       "AssetKind": "All",
@@ -63,7 +63,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.6.0\\staticwebassets\\MudBlazor.min.js"
+      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\mudblazor\\7.8.0\\staticwebassets\\MudBlazor.min.js"
     },
     {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.boot.json",
@@ -101,7 +101,7 @@
       "AssetTraitValue": "boot",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.7\\build\\net8.0\\blazor.webassembly.js"
+      "OriginalItemSpec": "C:\\Users\\samyd\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\8.0.8\\build\\net8.0\\blazor.webassembly.js"
     },
     {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\BlazorAuthorizeRoleView.wasm",
@@ -4626,6 +4626,25 @@
       "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Configuration.wasm"
     },
     {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\Debug\\net8.0\\compressed\\34rdsqbsy5.gz",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/blazor.webassembly.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js"
+    },
+    {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\Debug\\net8.0\\compressed\\37pwg6go16.gz",
       "SourceId": "HopSkills.BackOffice.Client",
       "SourceType": "Computed",
@@ -5099,25 +5118,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\System.Diagnostics.FileVersionInfo.wasm"
-    },
-    {
-      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\Debug\\net8.0\\compressed\\6n9carebxx.gz",
-      "SourceId": "HopSkills.BackOffice.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/blazor.webassembly.js.gz",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js"
     },
     {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\Debug\\net8.0\\compressed\\6zp2dniz7i.gz",

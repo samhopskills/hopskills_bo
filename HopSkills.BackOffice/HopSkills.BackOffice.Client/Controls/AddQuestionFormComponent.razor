@@ -2,13 +2,14 @@
 <MudGrid>
     <MudItem xs="12" sm="12" md="12">
         <MudPaper Class="pa-4">
-            <EditForm Model="questionFormInput" OnValidSubmit="OnValidSubmit">
+            <EditForm  Model="questionFormInput" OnValidSubmit="OnValidSubmit">
                 <MudGrid>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTextField T="string" Label="Question" @bind-Value="@questionFormInput.Title" />
+                        <MudTextField T="string" Label="Question" @bind-Value="@questionFormInput.Question" />
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTextField T="TimeOnly" Label="Duration" @bind-Value="@questionFormInput.Duration" />
+                        <MudTimePicker Label="Duration" @bind-Time="@questionFormInput.Duration"
+                                        TimeEditMode="TimeEditMode.OnlyMinutes" />
                     </MudItem>
                     <MudItem xs="12" sm="6" md="4">
                         <MudTextField T="int" Label="Xp" @bind-Value="@questionFormInput.Xperience" />
@@ -17,17 +18,22 @@
                 <br />
                     <MudGrid>
                     <MudItem xs="4" sm="4" md="4">
-                        <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                        <MudFileUpload T="IBrowserFile" Accept=".png" FilesChanged="UploadFiles">
                             <ActivatorContent>
                                 <MudFab Color="Color.Secondary"
                                         StartIcon="@Icons.Material.Filled.Image"
                                         Label="Load picture" />
+                                @foreach (var file in _files.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                {
+                                    <MudChip T="string" Color="Color.Dark" Text="@file" />
+                                }
                             </ActivatorContent>
                         </MudFileUpload>
                     </MudItem>
                     <MudItem xs="4" sm="4" md="4"></MudItem>
                     <MudItem xs="4" sm="4" md="4">
-                        <MudFileUpload T="IBrowserFile" Accept=".mp3" FilesChanged="UploadFiles2" MaximumFileCount="100">
+                        <MudFileUpload T="IBrowserFile" 
+                            Accept=".mp3" FilesChanged="UploadFiles2" MaximumFileCount="100">
                             <ActivatorContent>
                                 <MudButton Variant="Variant.Filled"
                                            Color="Color.Primary"
@@ -40,7 +46,7 @@
                     </MudGrid>
                     <br />
                     <br />
-                @foreach (var item in questionFormInput.Answers)
+                @foreach (var item in questionFormInput.PossibleAnswers)
                     {
                         <MudGrid>
                         <MudItem xs="9" sm="9" md="9">
@@ -50,7 +56,7 @@
                                           AutoGrow="true" Variant="Variant.Text" />
                         </MudItem>
                         <MudItem>
-                            <MudCheckBox T="bool"></MudCheckBox>
+                            <MudCheckBox @bind-Value="@item.IsCorrect" T="bool"></MudCheckBox>
                         </MudItem>
                         @if(!item.Label.Equals("Answer 1"))
                         {
@@ -71,7 +77,7 @@
                     <MudItem xs="12" sm="12" md="12">
                         <MudTextField InputMode="InputMode.text"
                                       T="string" 
-                                      Label="Explain the correct answer" @bind-Value="questionFormInput.AnswerExplanation"
+                                      Label="Explain the correct answer" @bind-Value="questionFormInput.CorrectAnswerExplanation"
                                       AutoGrow="true" Variant="Variant.Filled" />
                     </MudItem>
                 </MudGrid>
@@ -88,22 +94,19 @@
 @code {
     int spacing;
     IList<IBrowserFile> _files = new List<IBrowserFile>();
+    IList<IBrowserFile> _audios = new List<IBrowserFile>();
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
     [Parameter]
     public EventCallback<int> OnCancelEvent { get; set; }
-    private QuestionFormInputViewModel questionFormInput { get; set; } = new QuestionFormInputViewModel
-    {
-        Answers = new List<AnswerInputViewModel>
-        {
-            new AnswerInputViewModel { Id = 1, Label = "Answer 1",Answer = string.Empty,
-            IsCorrect = false}
-        }
-    };
+    [Parameter]
+    public EventCallback<CreateMultipleQuestionsViewModel> OnValidEvent { get; set; }
+    [Parameter]
+    public CreateMultipleQuestionsViewModel questionFormInput { get; set; }
     private CustomerViewModel CompanySelected { get; set; }
     public bool Dense_CheckBox { get; set; }
 
-    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
 
     private async void Cancel()
     {
@@ -112,15 +115,24 @@
 
     protected override async Task OnInitializedAsync()
     {
-
+        questionFormInput = new CreateMultipleQuestionsViewModel
+            {
+                PossibleAnswers = new List<CreateAnswerViewModel>
+                {
+                    new CreateAnswerViewModel { Id = 1, Label = "Answer 1",Answer = string.Empty,
+                    IsCorrect = false}
+                },
+                ImageFiles = new List<string>(),
+                AudioFiles = new List<string>()
+            };
     }
 
     private void AddAnswer()
     {
-        questionFormInput.Answers.Add(new AnswerInputViewModel
+        questionFormInput.PossibleAnswers.Add(new CreateAnswerViewModel
         {
-                Id = questionFormInput.Answers.Count + 1,
-                Label = $"Answer {questionFormInput.Answers.Count + 1}",
+                Id = questionFormInput.PossibleAnswers.Count + 1,
+                Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
             Answer = string.Empty,
             IsCorrect = false
         });
@@ -128,55 +140,46 @@
 
     private EventCallback CorrectAnswer(int Id)
     {
-        questionFormInput.Answers[Id].IsCorrect = true;
+        questionFormInput.PossibleAnswers[Id].IsCorrect = true;
         return EventCallback.Empty;
     }
 
     private EventCallback DeleteAnswer(int Id)
     {
-        questionFormInput.Answers.RemoveAt(Id);
+        questionFormInput.PossibleAnswers.RemoveAt(Id);
         return EventCallback.Empty;
     }
+    
 
-    private void UploadFiles(IBrowserFile file)
+    private async void UploadFiles(IBrowserFile file)
     {
         _files.Add(file);
-        //TODO upload the files to the server
+        var format = "image/png";
+        var resizeImage = await file.RequestImageFileAsync(format, int.MaxValue, int.MaxValue);
+        var buffer = new byte[resizeImage.Size];
+        await resizeImage.OpenReadStream().ReadAsync(buffer);
+        questionFormInput.ImageFiles.Add(Convert.ToBase64String(buffer));
     }
 
-    private void UploadFiles2(IBrowserFile file)
+    private async void UploadFiles2(IBrowserFile file)
     {
-        _files.Add(file);
-        //TODO upload the files to the server
+        _audios.Add(file);
+        using (var stream = file.OpenReadStream())
+        {
+            var length = stream.Length;
+            if(length <= int.MaxValue)
+            {
+                var result = new byte[length];
+                await stream.ReadAsync(result);
+                questionFormInput.AudioFiles.Add(Convert.ToBase64String(result));
+            }
+        }
     }
 
     private async void OnValidSubmit()
     {
-        StateHasChanged();
-        Submit();
+        await OnValidEvent.InvokeAsync(questionFormInput);
     }
 
-    public class AnswerInputViewModel
-    {
-        public int Id { get; set; }
-        [Required]
-        public string Label { get; set; }
-        [Required]
-        public string Answer { get; set; }
-        [Required]
-        public bool IsCorrect { get; set; }
-    }
-
-    public class QuestionFormInputViewModel
-    {
-        public List<AnswerInputViewModel> Answers { get; set; }
-        [Required]
-        public string Title { get; set; }
-        [Required]
-        public TimeOnly Duration { get; set; }
-        [Required]
-        public int Xperience { get; set; }
-        [Required]
-        public string AnswerExplanation { get; set; }
-    }
+    
 }

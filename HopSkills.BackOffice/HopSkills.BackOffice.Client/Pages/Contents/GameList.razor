@@ -2,7 +2,6 @@
 @using System.Security.Claims
 @inject IConfiguration Config
 @inject IDialogService DialogService
-
 <MudContainer Fixed="true">
     <MudSpacer />
     <MudSpacer />
@@ -41,7 +40,7 @@
                 <MudTextField @bind-Value="_searchString" Placeholder="Search"
                               Adornment="Adornment.Start" Immediate="true"
                               AdornmentIcon="@Icons.Material.Filled.Search"
-                              Variant="Variant.Filled"
+                              Variant="Variant.Outlined"
                               IconSize="Size.Medium" Class="mt-10"></MudTextField>
             </MudGrid>
 
@@ -54,28 +53,41 @@
             <PropertyColumn Property="x => x.Theme" Title="Theme" />
             <PropertyColumn Property="x => x.Status" Title="Status" />
             <PropertyColumn Property="x => x.NumberOfQuestion" Title="Question(s)" />
-            <PropertyColumn Property="x => x.Lasting" Title="Last" />
+            <PropertyColumn Property="x => x.Duration" Title="Duration" />
             @*  <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
             <PropertyColumn Property="x => x.role.Name" Title="Role" />
             <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
                     <MudStack Row>
+                        <MudTooltip Text="Edit">
                         <MudIconButton Size="@Size.Small"
                                        Color="@Color.Primary"
+                                           Href="updategame"
                                        Icon="@Icons.Material.Outlined.Edit"
-                                       OnClick="@context.Actions.StartEditingItemAsync"
                                        Variant="@Variant.Text"></MudIconButton>
-                        <MudIconButton Size="@Size.Small"
-                                       Color="@Color.Primary"
-                                       Icon="@Icons.Material.Outlined.Archive"
-                                       OnClick="@context.Actions.StartEditingItemAsync"
-                                       Variant="@Variant.Text"></MudIconButton>
-                        <MudIconButton Size="@Size.Small"
-                                       Color="@Color.Primary"
-                                       Icon="@Icons.Material.Outlined.Publish"
-                                       OnClick="@context.Actions.StartEditingItemAsync"
-                                       Variant="@Variant.Text"></MudIconButton>
+                        </MudTooltip>
+                        @if (context.Item.Status.Equals("Published"))
+                        {
+                            <MudTooltip Text="Draft"><MudIconButton Size="@Size.Small"
+                            Color="@Color.Primary"
+                            Icon="@Icons.Material.Outlined.Archive"
+                            OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                               Variant="@Variant.Text"></MudIconButton>
+                            </MudTooltip>
+
+                        }
+                        @if (context.Item.Status.Equals("Draft"))
+                        {
+                            <MudTooltip Text="Publish">
+                                <MudIconButton Size="@Size.Small"
+                                               Color="@Color.Primary"
+                                               Icon="@Icons.Material.Outlined.Publish"
+                                               OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                               Variant="@Variant.Text"></MudIconButton>
+                            </MudTooltip>
+
+                        }
                     </MudStack>
                 </CellTemplate>
             </TemplateColumn>
@@ -98,12 +110,14 @@
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private AuthenticationState authenticationState { get; set; }
     private List<GameViewModel>? Games;
-    private List<GameViewModel> selectedUsers = new List<GameViewModel>();
+    private List<GameViewModel> selectedGames = new List<GameViewModel>();
     private ClaimsPrincipal authenticatedUser { get; set; }
-
+    private GameViewModel selectedItem { get; set; }
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
+    private string? deleteServiceEndpoint;
+    private string? updateStatusServiceEndpoint;
     private HttpClient Http = new HttpClient();
     // quick filter - filter globally across multiple columns with the same input
     private Func<GameViewModel, bool> _quickFilter => x =>
@@ -133,6 +147,7 @@
         }
         disabledDelete = true;
         Games = new List<GameViewModel>();
+
         if (authenticatedUser.IsInRole("Admin"))
             serviceEndpoint = $"https://localhost:7079/api/Game/GetAll";
         else
@@ -140,8 +155,8 @@
             var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
             serviceEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
         }
-        // if (!string.IsNullOrEmpty(serviceEndpoint))
-        //     Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
     }
 
     private List<string> _events = new();
@@ -163,6 +178,7 @@
 
     void RowClicked(DataGridRowClickEventArgs<GameViewModel> args)
     {
+        selectedItem = args.Item;
         _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
     }
 
@@ -173,8 +189,8 @@
 
     void SelectedItemsChanged(HashSet<GameViewModel> items)
     {
-        selectedUsers = items.ToList();
-        disabledDelete = !(selectedUsers.Count > 0);
+        selectedGames = items.ToList();
+        disabledDelete = !(selectedGames.Count > 0);
 
         _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
     }
@@ -197,6 +213,13 @@
             await OnInitializedAsync();
     }
 
+    private async Task UpdateStatusAsync(GameViewModel selectedItem)
+    {
+        updateStatusServiceEndpoint = $"https://localhost:7079/api/Game/UpdateStatus/{selectedItem.Id.ToString()}";
+        await Http.GetAsync(updateStatusServiceEndpoint);
+        await OnInitializedAsync();
+    }
+
     private async Task DeleteServerAsync()
     {
         var options = new DialogOptions { BackgroundClass = "my-custom-class" };
@@ -207,15 +230,15 @@
             { x => x.Color, Color.Error }
         };
 
-        var dialog = await DialogService.ShowAsync<Dialog>("Delete Users", parameters, options);
+        var dialog = await DialogService.ShowAsync<Dialog>("Delete Game(s)", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled)
         {
-            // await ViewUserListUseCase.DeleteAsync(selectedUsers);
+            deleteServiceEndpoint = $"https://localhost:7079/api/Game/Delete";
+            await Http.PostAsJsonAsync(deleteServiceEndpoint, selectedGames);
             await OnInitializedAsync();
         }
-
     }
 
 }

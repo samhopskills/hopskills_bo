@@ -15,5 +15,6 @@ public class ApplicationUser : IdentityUser
     public virtual ApplicationCustomer Customer { get; set; }
     public List<ApplicationGroup> Groups { get; } = [];
     public List<ApplicationGame> Games { get; } = [];
+
 }
 

@@ -12,5 +12,7 @@ public class HopSkillsDbContext(DbContextOptions<HopSkillsDbContext> options) : 
     public DbSet<ApplicationGame> Games { get; set; }
     public DbSet<ApplicationMultiQuestion> MultiQuestions { get; set; }
     public DbSet<ApplicationAnswer> Answers { get; set; }
+    public DbSet<ApplicationTraining> Trainings { get; set; }
+    public DbSet<TrainingGame> TrainingsGames { get; set; }
     //public DbSet<ApplicationGroupsApplicationUsers> GroupsUsers { get; set; }
 }

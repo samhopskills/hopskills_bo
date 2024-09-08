@@ -17,7 +17,7 @@ namespace HopSkills.BackOffice.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -35,6 +35,32 @@ namespace HopSkills.BackOffice.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("ApplicationGroupApplicationUser");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MultiQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MultiQuestionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MultiQuestionsId");
+
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationCustomer", b =>
@@ -57,6 +83,66 @@ namespace HopSkills.BackOffice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationGame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApplicationTrainingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfQuestion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("TotalDuration")
+                        .HasColumnType("time");
+
+                    b.Property<int>("TotalXp")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationTrainingId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationGroup", b =>
@@ -82,15 +168,86 @@ namespace HopSkills.BackOffice.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationGroupsApplicationUsers", b =>
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationMultiQuestion", b =>
                 {
-                    b.Property<Guid>("GroupsId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsersId")
+                    b.Property<string>("CorrectAnswerExplanation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.ToTable("GroupsUsers");
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Xperience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("MultiQuestions");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationTraining", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("DoesCertify")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly>("TotalDuration")
+                        .HasColumnType("time");
+
+                    b.Property<int>("TotalXperience")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Trainings");
                 });
 
             modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationUser", b =>
@@ -173,6 +330,17 @@ namespace HopSkills.BackOffice.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.TrainingGame", b =>
+                {
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TrainingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.ToTable("TrainingsGames");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -323,6 +491,38 @@ namespace HopSkills.BackOffice.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationAnswer", b =>
+                {
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationMultiQuestion", "MultiQuestions")
+                        .WithMany("PossibleAnswers")
+                        .HasForeignKey("MultiQuestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MultiQuestions");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationGame", b =>
+                {
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationTraining", null)
+                        .WithMany("Games")
+                        .HasForeignKey("ApplicationTrainingId");
+
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationUser", "Creator")
+                        .WithMany("Games")
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationCustomer", "Customer")
+                        .WithMany("Games")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationGroup", b =>
                 {
                     b.HasOne("HopSkills.BackOffice.Data.ApplicationCustomer", "Customer")
@@ -330,6 +530,34 @@ namespace HopSkills.BackOffice.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationMultiQuestion", b =>
+                {
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationGame", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationTraining", b =>
+                {
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("HopSkills.BackOffice.Data.ApplicationCustomer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Customer");
                 });
@@ -398,9 +626,26 @@ namespace HopSkills.BackOffice.Migrations
 
             modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationCustomer", b =>
                 {
+                    b.Navigation("Games");
+
                     b.Navigation("Groups");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationMultiQuestion", b =>
+                {
+                    b.Navigation("PossibleAnswers");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationTraining", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("HopSkills.BackOffice.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

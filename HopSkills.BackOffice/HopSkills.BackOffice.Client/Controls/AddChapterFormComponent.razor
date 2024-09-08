@@ -1,0 +1,227 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject IDialogService DialogService
+@inject HttpClient Http
+<MudGrid>
+    <MudItem xs="12" sm="12" md="12">
+        <MudPaper Class="pa-4">
+            <EditForm Model="chapterFormInput" OnValidSubmit="OnValidSubmit">
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="string" Label="Title" @bind-Value="@chapterFormInput.Title" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTimePicker Label="Duration" @bind-Time="@chapterFormInput.Duration"
+                                       TimeEditMode="TimeEditMode.OnlyMinutes" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudTextField T="int" Label="Xp" @bind-Value="@chapterFormInput.Xperience" />
+                    </MudItem>
+                </MudGrid>
+                <br />
+                <MudGrid>
+                    <MudItem xs="4" sm="6" md="12">
+                        <MudTextField InputMode="InputMode.text"
+                                      T="string"
+                                      @bind-Value="@chapterFormInput.Content"
+                                      AutoGrow="true" Variant="Variant.Text" />
+                    </MudItem>
+                </MudGrid>
+               
+                <br />
+                <br />
+                <MudGrid>
+                    <MudItem xs="4" sm="4" md="4">
+                    </MudItem>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudFileUpload T="IBrowserFile" Accept=".png" FilesChanged="UploadFiles">
+                            <ActivatorContent>
+                                <MudFab Color="Color.Secondary"
+                                        StartIcon="@Icons.Material.Filled.Image"
+                                        Label="Add an image" />
+                                @foreach (var file in _files.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                {
+                                    <MudChip T="string" Color="Color.Dark" Text="@file" />
+                                }
+                            </ActivatorContent>
+                        </MudFileUpload>
+                    </MudItem>
+                    <MudItem xs="4" sm="4" md="4">
+                        @* <MudFileUpload T="IBrowserFile"
+                                       Accept=".mp3" FilesChanged="UploadFiles2" MaximumFileCount="100">
+                            <ActivatorContent>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.AudioFile">
+                                    Upload audio files (mp3)
+                                </MudButton>
+                            </ActivatorContent>
+                        </MudFileUpload> *@
+                    </MudItem>
+                </MudGrid>
+                <br/>
+                <br/>
+                <MudGrid>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudButton ButtonType="ButtonType.Button" 
+                        OnClick="OpenGameDialog"
+                        Color="Color.Info" Variant="Variant.Text">Add A Game</MudButton>
+                    </MudItem>
+                    <MudItem xs="4" sm="4" md="4">
+                    </MudItem>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudButton ButtonType="ButtonType.Button" Color="Color.Tertiary" Variant="Variant.Text">Add Content</MudButton>
+                    </MudItem>
+                </MudGrid>
+                @* @foreach (var item in questionFormInput.PossibleAnswers)
+                {
+                    <MudGrid>
+                        <MudItem xs="9" sm="9" md="9">
+                            <MudTextField InputMode="InputMode.text"
+                                          T="string" Label="@item.Label"
+                                          @bind-Value="@item.Answer"
+                                          AutoGrow="true" Variant="Variant.Text" />
+                        </MudItem>
+                        <MudItem>
+                            <MudCheckBox @bind-Value="@item.IsCorrect" T="bool"></MudCheckBox>
+                        </MudItem>
+                        @if (!item.Label.Equals("Answer 1"))
+                        {
+                            <MudItem>
+                                <MudIconButton OnClick="@(e => DeleteAnswer(item.Id-1))" Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                    <br />
+                } *@
+               @*  <MudGrid>
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudButton ButtonType="ButtonType.Button" EndIcon="@Icons.Material.Filled.Add" OnClick="AddAnswer">Add an answer</MudButton>
+                    </MudItem>
+                </MudGrid>
+                <br />
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudTextField InputMode="InputMode.text"
+                                      T="string"
+                                      Label="Explain the correct answer" @bind-Value="chapterFormInput.CorrectAnswerExplanation"
+                                      AutoGrow="true" Variant="Variant.Filled" />
+                    </MudItem>
+                </MudGrid> *@
+            </EditForm>
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton ButtonType="ButtonType.Submit" OnClick="OnValidSubmit" Variant="Variant.Filled" 
+Color="Color.Primary" DropShadow="false">Validate</MudButton>
+            <MudButton ButtonType="ButtonType.Submit"
+                       Variant="Variant.Filled" DropShadow="false" OnClick="Cancel">Cancel</MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    int spacing;
+    IList<IBrowserFile> _files = new List<IBrowserFile>();
+    IList<IBrowserFile> _audios = new List<IBrowserFile>();
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public EventCallback<int> OnCancelEvent { get; set; }
+    [Parameter]
+    public EventCallback<CreateChapterViewModel> OnValidEvent { get; set; }
+    [Parameter]
+    public CreateChapterViewModel chapterFormInput { get; set; }
+    private CustomerViewModel CompanySelected { get; set; }
+    public bool Dense_CheckBox { get; set; }
+
+
+
+    private async void Cancel()
+    {
+        await OnCancelEvent.InvokeAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        chapterFormInput = new CreateChapterViewModel()
+        {
+            AttachedFiles = new List<ChapterAttachedFileViewModel>(),
+            AttachedGames = new List<string>(),
+            Content = string.Empty,
+            Title = string.Empty
+        };
+        // chapterFormInput = new CreateChapterViewModel
+        //     {
+        //         ImageFiles = new List<string>(),
+        //         AudioFiles = new List<string>()
+        //     };
+    }
+
+    private void AddAnswer()
+    {
+        // questionFormInput.PossibleAnswers.Add(new CreateAnswerViewModel
+        //     {
+        //         Id = questionFormInput.PossibleAnswers.Count + 1,
+        //         Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
+        //         Answer = string.Empty,
+        //         IsCorrect = false
+        //     });
+    }
+
+    private EventCallback CorrectAnswer(int Id)
+    {
+        // chapterFormInput.PossibleAnswers[Id].IsCorrect = true;
+        return EventCallback.Empty;
+    }
+
+    private EventCallback DeleteAnswer(int Id)
+    {
+        // questionFormInput.PossibleAnswers.RemoveAt(Id);
+        return EventCallback.Empty;
+    }
+
+
+    private async void UploadFiles(IBrowserFile file)
+    {
+        _files.Add(file);
+        var format = "image/png";
+        var resizeImage = await file.RequestImageFileAsync(format, int.MaxValue, int.MaxValue);
+        var buffer = new byte[resizeImage.Size];
+        await resizeImage.OpenReadStream().ReadAsync(buffer);
+        // chapterFormInput.ImageFiles.Add(Convert.ToBase64String(buffer));
+    }
+
+    private async void UploadFiles2(IBrowserFile file)
+    {
+        _audios.Add(file);
+        using (var stream = file.OpenReadStream())
+        {
+            var length = stream.Length;
+            if (length <= int.MaxValue)
+            {
+                var result = new byte[length];
+                await stream.ReadAsync(result);
+                // chapterFormInput.AudioFiles.Add(Convert.ToBase64String(result));
+            }
+        }
+    }
+
+    private async void OpenGameDialog()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class"
+        };
+
+        var dialog = DialogService.Show<SelectAGameComponent>("Select a game", options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private async void OnValidSubmit()
+    {
+        await OnValidEvent.InvokeAsync(chapterFormInput);
+    }
+
+
+}

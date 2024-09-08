@@ -1,0 +1,232 @@
+﻿@using System.Security.Claims
+@inject IConfiguration Config
+@inject HttpClient Http
+    <DataAnnotationsValidator />
+    <MudGrid>
+   @*  <MudItem xs="4" sm="4" md="4">
+
+        </MudItem> *@
+    <MudItem xs="12" sm="12" md="12">
+        
+        <MudPaper>
+            <MudStack Justify="Justify.Center" 
+            AlignItems="AlignItems.Center">
+            <MudPaper></MudPaper>
+            <MudPaper>
+                    @if (@Games.Count() <= 0)
+                    {
+                        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+                    }
+                    <MudTable T="GameViewModel" MultiSelection="false"
+                        SelectionChangeable="true"
+                              Items="@Games" Dense="false"
+                              Hover="true" Bordered="false" Striped="true"
+                              RowClassFunc="@SelectedRowClassFunc"
+                              @bind-SelectedItems="selectedItem" 
+                              OnRowClick="@OnRowClick" SelectOnRowClick="true"
+                              @ref="mudTable">
+                        <ToolBarContent>
+                        @* <MudText Typo="Typo.h6">Periodic Elements</MudText> *@
+                        <MudSpacer />
+                        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" 
+                        AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                        </ToolBarContent>
+                        @*  <HeaderContent>
+                        <MudTh>Nr</MudTh>
+                        <MudTh>Sign</MudTh>
+                        <MudTh>Name</MudTh>
+                        <MudTh>Position</MudTh>
+                        <MudTh>Molar mass</MudTh>
+                        </HeaderContent> *@
+                        <RowTemplate>
+                            <MudTd DataLabel="Title">@context.Title</MudTd>
+                            <MudTd DataLabel="Theme">@context.Theme</MudTd>
+                            <MudTd DataLabel="Question(s)">
+                                <MudIcon Icon="@Icons.Material.Outlined.QuestionMark" />@context.NumberOfQuestion Question(s)
+                            </MudTd>
+                            <MudTd DataLabel="Duration">
+                                <MudIcon Icon="@Icons.Material.Outlined.Timer" />@context.Duration
+                            </MudTd>
+                        </RowTemplate>
+                        <PagerContent>
+                            <MudTablePager />
+                        </PagerContent>
+                    </MudTable>
+
+            </MudPaper>
+            <MudPaper>
+                    @* <MudButton ButtonType="ButtonType.Submit" 
+                    OnClick="OnValidSubmit" Variant="Variant.Filled" 
+                    Color="Color.Primary" DropShadow="false">Validate</MudButton> *@
+                    <MudButton ButtonType="ButtonType.Button"
+                               Variant="Variant.Filled" DropShadow="false" OnClick="Cancel">Cancel</MudButton>
+            </MudPaper>
+            </MudStack>
+
+                        @* <MudItem>
+                            <MudTextField Label="Name"
+                                          HelperText="Max. 10 characters" Variant="Variant.Outlined"
+                                          @bind-Value="customer.Name" For="@(() => customer.Name)" />
+                            <MudTextField Label="Email"
+                                          HelperText="Max. 20 characters" Variant="Variant.Outlined"
+                                          @bind-Value="customer.Email" For="@(() => customer.Email)" />
+                            <MudTextField Label="Address"
+                                          HelperText="Max. 25 characters" Variant="Variant.Outlined"
+                                          @bind-Value="customer.Address" For="@(() => customer.Address)" />
+                        </MudItem>
+                        <MudItem>
+                            <MudTextField Label="Phone"
+                                          HelperText="Max. 10 characters" Variant="Variant.Outlined"
+                                          @bind-Value="customer.Phone" For="@(() => customer.Phone)" />
+                            <MudSelect T="string" Placeholder="Select country" 
+                                @bind-Value="CountrySelected"
+                                       Label="Countries" Variant="Variant.Outlined" 
+                                       AnchorOrigin="Origin.BottomCenter">
+                                @foreach (var item in countries)
+                                {
+                                    <MudSelectItem Value="item.name">
+                                        <img src="@item.flagUrl" height="14" class="mr-1" />@item.name
+                                    </MudSelectItem>
+                                }
+                                </MudSelect>
+                            <br />
+                            <br />
+                            <MudSelect T="string" Placeholder="Select a subscription" 
+                                @bind-Value="SubscriptionSelected"
+                                       Label="With render fragements" Variant="Variant.Outlined">
+                                @foreach (var item in subscriptions)
+                                {
+                                    <MudSelectItem Value="item">@item
+                                        @if (item.Equals("Standard"))
+                                        {
+                                            <MudRating ReadOnly="true" SelectedValue="1" MaxValue="1" />
+                                        }
+                                        else if (item.Equals("Medium"))
+                                            {<MudRating ReadOnly="true" SelectedValue="2" MaxValue="2" />}
+                                    else
+                                            {<MudRating ReadOnly="true" SelectedValue="3" MaxValue="3" />}
+                                    </MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem> *@
+                    </MudPaper>
+               @*  </MudCardContent>
+                <MudCardActions>
+                    
+                </MudCardActions>
+            </MudCard> *@
+        </MudItem>
+   @*  <MudItem xs="4" sm="4" md="4">
+
+        </MudItem> *@
+    </MudGrid>
+@code {
+    private string? serviceEndpoint;
+
+    [SupplyParameterFromForm]
+    CustomerViewModel customer { get; set; } = new CustomerViewModel();
+    bool success;
+    private int selectedRowNumber = -1;
+    private string? CountrySelected { get; set; }
+    private string? SubscriptionSelected { get; set; }
+    private string? searchString1 { get; set; }
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+    private List<GameViewModel>? Games;
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
+    private ClaimsPrincipal authenticatedUser { get; set; }
+    private List<string> clickedEvents = new();
+    private MudTable<GameViewModel> mudTable;
+    private string _selectedItemText = "No row clicked";
+    private HashSet<GameViewModel> selectedItem = new HashSet<GameViewModel>();
+    private void Submit() {
+        Console.WriteLine("Submit button clicked");
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+    private void Cancel() { 
+        Console.WriteLine("Cancel button clicked");
+        MudDialog.Cancel(); 
+    }
+    private List<string> subscriptions { get; set; } = new List<string>{
+        "Standard",
+        "Medium",
+        "Premium"
+    };
+    public class Country
+    {
+        public string name { get; set; }
+        public string flagUrl { get; set; }
+    }
+    private List<Country> countries = new List<Country>{
+        new Country{name ="France", 
+        flagUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg"},
+        new Country{name = "Canada", 
+        flagUrl ="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg"},
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationStateTask is not null)
+        {
+            authenticationState = await authenticationStateTask;
+            if (authenticatedUser is null)
+                authenticatedUser = authenticationState?.User;
+        }
+        if (authenticatedUser.IsInRole("Admin"))
+            serviceEndpoint = $"https://localhost:7079/api/Game/GetAll";
+        else
+        {
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+        }
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
+    }
+
+    void OnRowClick(TableRowClickEventArgs<GameViewModel> args)
+    {
+        _selectedItemText = $"{args.Item.Title} ({args.Item.Id})";
+    }
+
+    private string SelectedRowClassFunc(GameViewModel element, int rowNumber)
+    {
+        if (selectedRowNumber == rowNumber)
+        {
+            selectedRowNumber = -1;
+            clickedEvents.Add("Selected Row: None");
+            return string.Empty;
+        }
+        else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
+        {
+            selectedRowNumber = rowNumber;
+            clickedEvents.Add($"Selected Row: {rowNumber}");
+            return "selected";
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+    private async void OnValidSubmit(EditContext context)
+    {
+        Console.WriteLine(SubscriptionSelected);
+        Console.WriteLine(CountrySelected);
+        success = true;
+        StateHasChanged();
+        var custom = new Customer
+            {
+                Name = customer.Name,
+                Email = customer.Email,
+                Address = customer.Address,
+                Country = CountrySelected,
+                Phone = customer.Phone,
+                CreationDate = DateTime.Now,
+                AttachedLicence =  SubscriptionSelected
+            };
+        Console.WriteLine(custom.Country);
+        await Http.PostAsJsonAsync(serviceEndpoint, custom);
+        Submit();
+    }
+}

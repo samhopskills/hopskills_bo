@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "HopSkills.BO.Plugins.InMemory/1.0.0": {
+        "dependencies": {
+          "HopSkills.BO.CoreBusiness": "1.0.0",
+          "HopSkills.BO.UseCases": "1.0.0"
+        },
+        "runtime": {
+          "HopSkills.BO.Plugins.InMemory.dll": {}
+        }
+      },
+      "HopSkills.BO.CoreBusiness/1.0.0": {
+        "runtime": {
+          "HopSkills.BO.CoreBusiness.dll": {}
+        }
+      },
+      "HopSkills.BO.UseCases/1.0.0": {
+        "dependencies": {
+          "HopSkills.BO.CoreBusiness": "1.0.0"
+        },
+        "runtime": {
+          "HopSkills.BO.UseCases.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HopSkills.BO.Plugins.InMemory/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HopSkills.BO.CoreBusiness/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HopSkills.BO.UseCases/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

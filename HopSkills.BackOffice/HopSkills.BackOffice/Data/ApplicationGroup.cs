@@ -9,7 +9,7 @@ namespace HopSkills.BackOffice.Data
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<ApplicationUser> Users { get; } = [];
+        public List<ApplicationUser> Users { get; set; }
         public DateTime CreatedOn { get; set; }
         [ForeignKey("CustomerId")]
         public Guid CustomerId { get; set; }

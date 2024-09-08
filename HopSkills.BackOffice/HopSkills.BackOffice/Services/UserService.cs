@@ -102,6 +102,7 @@ namespace HopSkills.BackOffice.Services
             {
                 var foundUser = new UserModel
                 {
+                    Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Role = user.Role,

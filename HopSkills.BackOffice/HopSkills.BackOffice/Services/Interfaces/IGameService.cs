@@ -6,7 +6,10 @@ namespace HopSkills.BackOffice.Services.Interfaces
     public interface IGameService
     {
         Task AddGame(CreateGameModel createGameModel);
-        Task<GameViewModel> GetAll();
-        Task<GameViewModel> GetGamesByCustomer();
+        Task<bool> DeleteGame(List<GameViewModel> games);
+        Task<IEnumerable<GameViewModel>> GetAll();
+        Task<IEnumerable<GameViewModel>> GetGamesByCustomer(string companyId);
+        Task<IEnumerable<GameViewModel>> GetGamesByUser(string usermail);
+        Task<bool> UpdateGameStatus(string id);
     }
 }

@@ -1,21 +1,98 @@
 ﻿@page "/creategame"
+@inject HttpClient Http
 
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using FluentValidation
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.Security.Claims
+@using static HopSkills.BackOffice.Client.Controls.AddQuestionFormComponent
+
 @inject IDialogService DialogService
 
 @inject ISnackbar Snackbar
 @inject NavigationManager Navigation
+
+<MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Bottom">
+
+    @if (form1Validate)
+    {
+        <MudTimelineItem Color="Color.Info">
+            <ItemContent>
+                <MudText Color="Color.Info" Align="Align.Center">Step 1</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem>
+            <ItemContent>
+                <MudText Align="Align.Center">Step 2</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem>
+            <ItemContent>
+                <MudText Align="Align.Center">Step 3</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+    }
+    @if (form2Validate)
+    {
+
+        <MudTimelineItem Color="Color.Success">
+            <ItemContent>
+                <MudText Color="Color.Success" Align="Align.Center">Step 1</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem Color="Color.Info">
+            <ItemContent>
+                <MudText Color="Color.Info" Align="Align.Center">Step 2</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem>
+            <ItemContent>
+                <MudText Align="Align.Center">Step 3</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+    }
+   
+    @if (form3Validate)
+    {
+        <MudTimelineItem Color="Color.Success">
+            <ItemContent>
+                <MudText Color="Color.Success" Align="Align.Center">Step 1</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem Color="Color.Success">
+            <ItemContent>
+                <MudText Color="Color.Success" Align="Align.Center">Step 2</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        @if(InputGame.multipleQuestions.Any())
+        {
+            <MudTimelineItem Color="Color.Success">
+                <ItemContent>
+                    <MudText Color="Color.Success" Align="Align.Center">Step 3</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        }
+        else
+        {
+            <MudTimelineItem Color="Color.Info">
+                <ItemContent>
+                    <MudText Color="Color.Info" Align="Align.Center">Step 3</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        }
+
+    }
+
+</MudTimeline>
+
 <MudGrid>
     <MudItem xs="12" sm="7">
         
             <MudPaper Class="pa-4">
                 <MudStack Style="width: 100%">
-                    <MudForm Model="@_model"
-                             @bind-IsValid="_isValid"
-                             @bind-IsTouched="_isTouched"
-                             Validation="@_validationRules.ValidateValue">
+                <EditForm EditContext="InputGameContext" FormName="FormGame" OnValidSubmit="OnValidSubmit">
+                    <DataAnnotationsValidator />
                     @if (form1Validate)
                     {
                         <MudItem xs="12">
@@ -29,12 +106,14 @@
                                            InputStyle="opacity:0"
                                            ErrorText="@string.Empty"
                                            tabindex="-1"
+                                           Accept=".png, .jpg"
                                            @ondrop="@ClearDragClass"
                                            @ondragenter="@SetDragClass"
                                            @ondragleave="@ClearDragClass"
-                                           @ondragend="@ClearDragClass">
+                                           @ondragend="@ClearDragClass"
+                                           OnFilesChanged="LoadFiles">
                                 <ActivatorContent>
-                                    <MudPaper Height="300px"
+                                    <MudPaper 
                                               Outlined="true"
                                               Class="@_dragClass">
                                         <MudText Typo="Typo.h6">
@@ -51,13 +130,7 @@
                                         Class="relative d-flex justify-end gap-4">
                                 <MudButton Color="Color.Primary"
                                            OnClick="@OpenFilePickerAsync"
-                                           Variant="Variant.Filled">
-                                    Open file picker
-                                </MudButton>
-                                <MudButton Color="Color.Primary"
-                                           Disabled="@(!_isValid || !_isTouched || _model.Files is null || !_model.Files.Any())"
-                                           OnClick="@Upload"
-                                           Variant="Variant.Filled">
+                                           Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Image">
                                     Upload
                                 </MudButton>
                                 <MudButton Color="Color.Error"
@@ -80,152 +153,281 @@
                         <MudItem xs="12">
                             IsValid: @_isValid - IsTouched: @_isTouched
                         </MudItem>
+                        <MudCard>
+                            <MudCardContent>
+                        <MudForm @ref="form1"  @bind-IsValid="@success">
                     <MudGrid>
                         <MudItem xs="12" sm="6" md="4">
-                            <MudTextField T="string" Label="Title" Variant="Variant.Outlined" />
+                            <MudTextField T="string" Required="true" @bind-Value="@InputGame.Title"
+                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                              Label="Title" For="@(() => InputGame.Title)" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" Placeholder="Select a difficulty level"
+                                <MudSelect T="string" Required="true" @bind-Value="@InputGame.DifficultyLevel"
+                                           Placeholder="Select a difficulty level"
+                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                           For="@(() => InputGame.DifficultyLevel)"
                                        Label="Difficulty level" Variant="Variant.Outlined"
                                        AnchorOrigin="Origin.BottomCenter">
+                                    <MudSelectItem T="string" Value="@("Easy")" />
+                                    <MudSelectItem T="string" Value="@("Medium")" />
+                                    <MudSelectItem T="string" Value="@("Hard")" />
                             </MudSelect>
                         </MudItem>
                         <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" Placeholder="Select a game"
+                                <MudSelect T="string" Required="false"
+                                    @bind-Value="@InputGame.PriorGame" Placeholder="Select a game"
                                        Label="Game to complete before" Variant="Variant.Outlined"
                                        AnchorOrigin="Origin.BottomCenter">
+                                       @foreach (var item in Games)
+                                       {
+                                          <MudSelectItem T="string" Value="@(item.Title)" />
+                                       }
                             </MudSelect>
                         </MudItem>
                     </MudGrid>
                     <MudGrid>
                         <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" Placeholder="Select a Theme"
-                                       Label="Theme related to" Variant="Variant.Outlined"
+                                <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)" @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
+                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                           Label="Theme related to" Variant="Variant.Outlined"
                                        AnchorOrigin="Origin.BottomCenter">
+                                    <MudSelectItem T="string" Value="@("Theme A")" />
+                                    <MudSelectItem T="string" Value="@("Theme B")" />
+                                    <MudSelectItem T="string" Value="@("Theme C")" />
                             </MudSelect>
                         </MudItem>
                         <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" Placeholder="Select a Subscription"
-                                       Label="Eligible subscription" Variant="Variant.Outlined"
+                                <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)" @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
+                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                           Label="Eligible subscription" Variant="Variant.Outlined"
                                        AnchorOrigin="Origin.BottomCenter">
+                                    <MudSelectItem T="string" Value="@("Sub A")" />
+                                    <MudSelectItem T="string" Value="@("Sub B")" />
+                                    <MudSelectItem T="string" Value="@("Sub C")" />
                             </MudSelect>
                         </MudItem>
                     </MudGrid>
+                        </MudForm>
+                        </MudCardContent>
+                        </MudCard>
                     }
                     @if (form2Validate)
                     {
-                        <MudItem xs="12">
-                            <MudTextField  InputMode="InputMode.text"
-                                          T="string" Label="Enter a description" AutoGrow="true" Variant="Variant.Filled" Text="" Lines="10" />
-                        </MudItem>
+                        <MudCard>
+                            <MudCardContent>
+                                <MudItem xs="12">
+                                    <MudTextField Required="true" For="@(() => InputGame.Description)"
+                                                  UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                  @bind-Value="@InputGame.Description" InputMode="InputMode.text"
+                                                  T="string" Label="Enter a description" AutoGrow="true" Variant="Variant.Filled" Lines="10" />
+                                </MudItem>
+                            </MudCardContent>
+                            <MudCardActions>
+                            </MudCardActions>
+                        </MudCard>
+                       
                     }
                     @if (form3Validate)
                     {
                         <MudGrid>
                         <MudItem xs="12" sm="6" md="4">
-                       <MudCard>
-                               <MudCardMedia Image="images/multiplequestions.svg" Height="200" />
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudText Typo="Typo.h6">Multiple choices questions</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent>
-        <MudText>Create a multiple questions form with multiple answer choices</MudText>
-    </MudCardContent>
-    <MudCardActions>
-                                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="DisplayFormQuestions">Go</MudButton>
-    </MudCardActions>
-</MudCard>
-                        </MudItem>
-                                                <MudItem xs="12" sm="6" md="4">
+                                <MudCard>
+                                    <MudCardMedia Image="images/multiplequestions.svg" Height="200" />
+                                    <MudCardHeader>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.h6">Multiple choices questions</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText>Create a multiple questions form with multiple answer choices</MudText>
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="DisplayFormQuestions">Add</MudButton>
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                            <MudItem xs="12" sm="6" md="4">
 
-                        <MudCard>
-                 <MudCardMedia Image="images/truefalse.svg" Height="200" />
+                                <MudCard>
+                                    <MudCardMedia Image="images/truefalse.svg" Height="200" />
 
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudText Typo="Typo.h6">True/False</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent>
-        <MudText>Create a form in which the user will have to determine what is true</MudText>
-    </MudCardContent>
-    <MudCardActions>
-                                        <MudButton @onclick="OpenDialogAsync" Variant="Variant.Text" Color="Color.Primary">Go</MudButton>
-    </MudCardActions>
-</MudCard>
-                        </MudItem>
-                                                                        <MudItem xs="12" sm="6" md="4">
-
-                        <MudCard>
-                                                    <MudCardMedia Image="images/finderrors.svg" Height="200" />
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudText Typo="Typo.h6">Find Errors</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent>
-        <MudText>Create an form in which the user will have to find errors</MudText>
-    </MudCardContent>
-    <MudCardActions>
-                                        <MudButton @onclick="OpenDialogAsync" Variant="Variant.Text" Color="Color.Primary">Go</MudButton>
-    </MudCardActions>
-</MudCard>
+                                    <MudCardHeader>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.h6">True/False</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText>Create a form in which the user will have to determine what is true</MudText>
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudButton @onclick="DisplayFormQuestions" Variant="Variant.Text" Color="Color.Primary">Add</MudButton>
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                            <MudItem xs="12" sm="6" md="4">
+                                <MudCard>
+                                    <MudCardMedia Image="images/finderrors.svg" Height="200" />
+                                    <MudCardHeader>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.h6">Find Errors</MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent>
+                                        <MudText>Create an form in which the user will have to find errors</MudText>
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudButton @onclick="DisplayFormQuestions" Variant="Variant.Text" Color="Color.Primary">Add</MudButton>
+                                    </MudCardActions>
+                                </MudCard>
                         </MudItem>
                         </MudGrid>
                     }
                     @if(formQuestions)
                     {
-                        <AddQuestionFormComponent OnCancelEvent="CreateFormCanceled"></AddQuestionFormComponent>
+                        <AddQuestionFormComponent questionFormInput="@_questionFormInput"
+                                                  OnValidEvent="CreateFormValid"
+                            OnCancelEvent="CreateFormCanceled"></AddQuestionFormComponent>
                     }
-                </MudForm>
+                </EditForm>
                 </MudStack>
-               @*  <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                    
-                </MudForm> *@
             </MudPaper>
         @if (!formQuestions)
         {
             <MudPaper Class="pa-4 mt-4">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
-                @if (form2Validate || form3Validate)
+                @if (form1Validate)
                 {
+                    <MudButton Disabled="@disabledNext1" Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
+                }
+                @if(form2Validate || form3Validate)
+                {
+                    <MudButton Disabled="@disabledNext2" Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
                     <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="NavigateToPreviousGameForm" Class="mx-2">Previous</MudButton>
                 }
-                <MudButton Variant="Variant.Filled" DropShadow="false" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
-        </MudPaper>
+            </MudPaper>
         }
     </MudItem>
-    <MudItem xs="12" sm="5">
-        <MudPaper Class="pa-4 mud-height-full">
+    <MudItem>
+        <MudPaper Class="gap-4 pa-4 mud-height-full">
             <MudGrid>
-                <MudItem>
-                    <MudText><b>Title:</b> </MudText>
-                    <MudText><b>Duration:</b> </MudText>
+                <MudItem Class="d-flex justify-start flex-grow-1 gap-4">
+                    <MudText>Title:@InputGame.Title </MudText>
+                    <MudText>
+                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />
+                        Duration: @InputGame.TotalDuration.Minutes </MudText>
                 </MudItem>
-                <MudItem>
-                    <MudText><b>Theme:</b> </MudText>
-                    <MudText><b>Points:</b> </MudText>
+                <MudItem Class="d-flex justify-end flex-grow-1 gap-4">
+                    <MudText>Theme:@InputGame.Theme</MudText>
+                    <MudText ><MudIcon Icon="@Icons.Material.Outlined.Star"/>
+                        Xp:@InputGame.TotalXperience </MudText>
                 </MudItem>
             </MudGrid>
+            <MudDivider DividerType="DividerType.FullWidth" />
+            <MudGrid Style="object-position:bottom">
+                <MudItem xs="12" sm="12" md="12" xl="12">
+                    <MudPaper>
+                            @foreach(var item in InputGame.multipleQuestions)
+                            {
+                            <MudPaper Class=" gap-x-10 d-flex pa-4 ">
+                                <MudText Class="d-inline-flex pa-4">@item.Question</MudText>
+                                <MudText Class="d-inline-flex justify-end pa-4">
+                                    <MudIcon Icon="@Icons.Material.Outlined.Star" />@item.Xperience
+                                </MudText>
+                                <MudText Class="d-inline-flex justify-end pa-4">
+                                    <MudIcon Icon="@Icons.Material.Outlined.Timer" />@item.Duration
+                                </MudText>
+                                   @*  <MudIconButton Class="d-flex justify-end" 
+                                    Icon="@Icons.Material.Filled.Edit"/> *@
+                            </MudPaper>
+
+                            }
+                    </MudPaper>
+                    
+                </MudItem>
+                
+            </MudGrid>
+            @if (InputGame.multipleQuestions.Any())
+            {
+                <MudGrid>
+                <MudItem>
+                    <MudPaper>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
+                    </MudPaper>
+                </MudItem>
+                </MudGrid>
+            }
         </MudPaper>
     </MudItem>
 </MudGrid>
 
+
 @code {
-    bool success;
+    private string? serviceEndpoint;
+    private bool success;
+    private bool disabledNext1 {get; set;}
+    private bool disabledNext2 {get; set;}
     private bool form1Validate { get; set; }
     private bool form2Validate { get; set; }
     private bool form3Validate { get; set; }
     private bool formQuestions { get; set; }
+    private bool form1IsValid { get; set; }
+    private string getPriorGamesEndpoint { get; set; }
+    private CreateMultipleQuestionsViewModel _questionFormInput { get; set; } 
+    EditContext InputGameContext;
+    [SupplyParameterFromForm]
+    private CreateGameViewModel InputGame { get; set; } = new CreateGameViewModel();
     string[] errors = { };
-    MudTextField<string> pwField1;
-    MudForm form;
+    MudForm form1 = new MudForm() { IsValid = false };
+    MudButton next1 = new MudButton() { Disabled = true };
+    MudButton next2 = new MudButton() { Disabled = true };
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
+    private ClaimsPrincipal authenticatedUser { get; set; }
+    private List<GameViewModel>? Games;
 
     protected override async Task OnInitializedAsync()
     {
+        serviceEndpoint = $"https://localhost:7079/api/Game/AddGame";
+        InputGameContext = new(InputGame);
+        InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
+        InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
         form1Validate = true;
+        disabledNext1 = true;
+        disabledNext2 = true;
+        if (authenticationStateTask is not null)
+        {
+            authenticationState = await authenticationStateTask;
+            if (authenticatedUser is null)
+                authenticatedUser = authenticationState?.User;
+        }
+        Games = new List<GameViewModel>();
+        if (authenticatedUser.IsInRole("Admin"))
+            getPriorGamesEndpoint = $"https://localhost:7079/api/Game/GetAll";
+        else
+        {
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            getPriorGamesEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+        }
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
+    }
+
+    private void InputGameContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        if (!String.IsNullOrEmpty(InputGame.Title)
+        && !String.IsNullOrEmpty(InputGame.DifficultyLevel)
+        && !String.IsNullOrEmpty(InputGame.Theme)
+        && !String.IsNullOrEmpty(InputGame.ElligibleSub))
+            disabledNext1 = false;
+        if (!String.IsNullOrEmpty(InputGame.Description))
+            disabledNext2 = false;
+        StateHasChanged();
     }
 
     protected async Task CreateFormCanceled()
@@ -234,48 +436,21 @@
         form3Validate = !form3Validate;
     }
 
-    private IEnumerable<string> PasswordStrength(string pw)
+    protected async void CreateFormValid(CreateMultipleQuestionsViewModel validQuestionFom)
     {
-        if (string.IsNullOrWhiteSpace(pw))
-        {
-            yield return "Password is required!";
-            yield break;
-        }
-        if (pw.Length < 8)
-            yield return "Password must be at least of length 8";
-        if (!Regex.IsMatch(pw, @"[A-Z]"))
-            yield return "Password must contain at least one capital letter";
-        if (!Regex.IsMatch(pw, @"[a-z]"))
-            yield return "Password must contain at least one lowercase letter";
-        if (!Regex.IsMatch(pw, @"[0-9]"))
-            yield return "Password must contain at least one digit";
+        _questionFormInput = validQuestionFom;
+        InputGame.multipleQuestions.Add(_questionFormInput);
+        InputGame.TotalXperience += _questionFormInput.Xperience;
+        InputGame.TotalDuration.Add(_questionFormInput.Duration.Value);
+        Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
+        formQuestions = !formQuestions;
+        form3Validate = !form3Validate;
+        StateHasChanged();
     }
 
-    private string PasswordMatch(string arg)
+    private void OnValidSubmit(EditContext context)
     {
-        if (pwField1.Value != arg)
-            return "Passwords don't match";
-        return null;
-    }
-
-    private async Task OpenDialogAsync()
-    {
-        var options = new DialogOptions
-            {
-                BackgroundClass = "my-custom-class",
-                CloseButton = true,
-                BackdropClick = true,
-                FullWidth = true,
-                MaxWidth = MaxWidth.ExtraLarge,
-                FullScreen = true
-            };
-
-        var dialog = await DialogService.ShowAsync<AddQuestionFormComponent>(string.Empty, options);
-
-        var result = await dialog.Result;
-
-        if (!result.Canceled)
-            await OnInitializedAsync();
+        StateHasChanged();
     }
 
     private void DisplayFormQuestions()
@@ -312,6 +487,22 @@
         }
     }
 
+    private async void CreateGameAndPublish()
+    {
+        InputGame.Status = "Published";
+        InputGame.Creator = authenticatedUser.Identity.Name; ;
+        var result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
+        Navigation.NavigateTo("/games");
+    }
+
+    private async void CreateGameAsDraft()
+    {
+        InputGame.Status = "Draft";
+        InputGame.Creator = authenticatedUser.Identity.Name;
+        var result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
+        Navigation.NavigateTo("/games");
+    }
+
     #nullable enable
     public class Model
     {
@@ -326,6 +517,15 @@
     private const string FileContent = "this is content";
     private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
     private string _dragClass = DefaultDragClass;
+
+    private async void LoadFiles(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+        var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
+        var buffer = new byte[resizeImage.Size];
+        await resizeImage.OpenReadStream().ReadAsync(buffer);
+        InputGame.Image = Convert.ToBase64String(buffer);
+    }
 
     private void Upload()
     {

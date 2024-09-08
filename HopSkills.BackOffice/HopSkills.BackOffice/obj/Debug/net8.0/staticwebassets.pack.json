@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\EmployeeTrainingPresentation.svg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeTrainingPresentation.svg"
+    },
+    {
       "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\Images\\boy-with-rocket-light.png",
       "PackagePath": "staticwebassets\\Images\\boy-with-rocket-light.png"
     },

@@ -13,10 +13,7 @@ namespace HopSkills.BackOffice.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
+        public UserController(IUserService userService) => _userService = userService;
         // GET: api/<UserController>
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()

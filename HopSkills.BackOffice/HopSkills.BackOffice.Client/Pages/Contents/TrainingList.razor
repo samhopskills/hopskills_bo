@@ -1,64 +1,126 @@
-﻿@page "/training"
-@inject IViewTrainingListUseCase ViewTrainingListUseCase
+﻿@page "/trainings"
+@using System.Security.Claims
+@inject IConfiguration Config
+@inject IDialogService DialogService
+<MudContainer Fixed="true">
+    <MudSpacer />
+    <MudSpacer />
+    <MudDataGrid T="TrainingViewModel" Items="@Trainings"
+                 MultiSelection="true"
+                 Virtualize="true"
+                 SortMode="SortMode.Multiple"
+                 Filterable="true" ReadOnly="false"
+                 StartedEditingItem="@StartedEditingItem"
+                 CommittedItemChanges="@CommittedItemChanges"
+                 EditMode="@(DataGridEditMode.Form)"
+                 CanceledEditingItem="@CanceledEditingItem"
+                 QuickFilter="@_quickFilter"
+                 RowClick="@RowClicked"
+                 RowContextMenuClick="RowRightClicked"
+                 SelectedItemsChanged="@SelectedItemsChanged">
+        <ToolBarContent>
+            <MudGrid Spacing="10">
+                <MudItem>
 
+                    <MudButton Size="@Size.Small"
+                               Href="createtraining"
+                               Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.Add"
+                               Color="@Color.Primary">Add</MudButton>
 
-@if (Trainings is not null && Trainings.Any())
-{
-    <MudContainer Fixed="true">
-        <MudButton Size="@Size.Small"
-                   Variant="@Variant.Filled"
-                   StartIcon="@Icons.Material.Filled.Add"
-                   Color="@Color.Primary">Add a Traning program</MudButton>
-        <br />
-        <br />
-        <MudDataGrid T="Training" Items="@Trainings"
-                     Virtualize="true"
-                     SortMode="SortMode.Multiple"
-                     Filterable="true" QuickFilter="@_quickFilter">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6">Training</MudText>
-                <MudSpacer />
+                </MudItem>
+                <MudItem>
+                    <MudButton Size="@Size.Small"
+                               Variant="@Variant.Filled"
+                               EndIcon="@Icons.Material.Filled.Remove"
+                               Color="@Color.Error" Disabled="@disabledDelete"
+                               OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                </MudItem>
                 <MudSpacer />
                 <MudTextField @bind-Value="_searchString" Placeholder="Search"
                               Adornment="Adornment.Start" Immediate="true"
                               AdornmentIcon="@Icons.Material.Filled.Search"
-                              IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                              Variant="Variant.Outlined"
+                              IconSize="Size.Medium" Class="mt-10"></MudTextField>
+            </MudGrid>
 
-            </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Title" Title="Title" />
-                <PropertyColumn Property="x => x.theme.Title" Title="Theme" />
-                <PropertyColumn Property="x => x.Status" Title="Status" />
-                <PropertyColumn Property="x => x.Difficulty.Title" Title="Difficulty" />
-                <PropertyColumn Property="x => x.TotalLast" Title="Time" />
-                <PropertyColumn Property="x => x.IsCertification" Title="Certification" />
-                <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        <MudStack Row>
-                            <MudIconButton Icon="@Icons.Material.Outlined.Edit"
-                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
-                            <MudIconButton Icon="@Icons.Material.Outlined.Archive"
-                                           Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary" />
-                            <MudIconButton Icon="@Icons.Material.Outlined.Publish"
-                                Size="@Size.Small" Variant="@Variant.Outlined" Color="@Color.Primary"/>
-                        </MudStack>
-                    </CellTemplate>
-                </TemplateColumn>
-            </Columns>
-            <PagerContent>
-                <MudDataGridPager T="Training" />
-            </PagerContent>
-        </MudDataGrid>
-    </MudContainer>
-}
+        </ToolBarContent>
+        <Columns>
+            <SelectColumn T="TrainingViewModel" />
+            @* <PropertyColumn Property="x => x.UserName" Title="UserName" /> *@
+            @* <PropertyColumn Property="x => x.LastName" Title="LastName" /> *@
+            <PropertyColumn Property="x => x.Title" Title="Title" />
+            <PropertyColumn Property="x => x.Theme" Title="Theme" />
+            <PropertyColumn Property="x => x.Status" Title="Status" />
+            <PropertyColumn Property="x => x.ChaptersNumber" Title="Chapter(s)" />
+            <PropertyColumn Property="x => x.Duration" Title="Duration" />
+            <PropertyColumn Property="x => x.DoesCertify" Title="Certification" />
+            @* <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudTooltip Text="Edit">
+                            <MudIconButton Size="@Size.Small"
+                                           Color="@Color.Primary"
+                                           Href="updategame"
+                                           Icon="@Icons.Material.Outlined.Edit"
+                                           Variant="@Variant.Text"></MudIconButton>
+                        </MudTooltip>
+                        @if (context.Item.Status.Equals("Published"))
+                        {
+                            <MudTooltip Text="Draft">
+                                <MudIconButton Size="@Size.Small"
+                                               Color="@Color.Primary"
+                                               Icon="@Icons.Material.Outlined.Archive"
+                                               OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                               Variant="@Variant.Text"></MudIconButton>
+                            </MudTooltip>
+
+                        }
+                        @if (context.Item.Status.Equals("Draft"))
+                        {
+                            <MudTooltip Text="Publish">
+                                <MudIconButton Size="@Size.Small"
+                                               Color="@Color.Primary"
+                                               Icon="@Icons.Material.Outlined.Publish"
+                                               OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                               Variant="@Variant.Text"></MudIconButton>
+                            </MudTooltip>
+
+                        }
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="TrainingViewModel" />
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
 
 
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+</style>
 @code {
-    private List<Training>? Trainings = new List<Training>();
-
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
+    private List<TrainingViewModel>? Trainings;
+    private List<TrainingViewModel> selectedTrainings = new List<TrainingViewModel>();
+    private ClaimsPrincipal authenticatedUser { get; set; }
+    private TrainingViewModel selectedItem { get; set; }
+    private bool disabledDelete;
     private string _searchString;
+    private string? serviceEndpoint;
+    private string? deleteServiceEndpoint;
+    private string? updateStatusServiceEndpoint;
+    private HttpClient Http = new HttpClient();
     // quick filter - filter globally across multiple columns with the same input
-    private Func<Training, bool> _quickFilter => x =>
+    private Func<TrainingViewModel, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
@@ -66,11 +128,117 @@
         if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
+        if (x.Theme.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
         return false;
     };
 
     protected override async Task OnInitializedAsync()
     {
-        Trainings = await ViewTrainingListUseCase.ExecuteAsync();
+        if (authenticationStateTask is not null)
+        {
+            authenticationState = await authenticationStateTask;
+            if (authenticatedUser is null)
+                authenticatedUser = authenticationState?.User;
+        }
+        disabledDelete = true;
+        Trainings = new List<TrainingViewModel>();
+
+        if (authenticatedUser.IsInRole("Admin"))
+            serviceEndpoint = $"https://localhost:7079/api/Training/GetAll";
+        else
+        {
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"https://localhost:7079/api/Training/gettrainingsbycustomer/{user.Company}";
+        }
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Trainings = await Http.GetFromJsonAsync<List<TrainingViewModel>>(serviceEndpoint);
     }
+
+    private List<string> _events = new();
+    void StartedEditingItem(TrainingViewModel item)
+    {
+    }
+
+    void CanceledEditingItem(TrainingViewModel item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async void CommittedItemChanges(TrainingViewModel item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+        // await ViewUserListUseCase.UpdateAsync(item);
+        await OnInitializedAsync();
+    }
+
+    void RowClicked(DataGridRowClickEventArgs<TrainingViewModel> args)
+    {
+        selectedItem = args.Item;
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<TrainingViewModel> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<TrainingViewModel> items)
+    {
+        selectedTrainings = items.ToList();
+        disabledDelete = !(selectedTrainings.Count > 0);
+
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    private async Task OpenDialogAsync()
+    {
+        var options = new DialogOptions
+            {
+                BackgroundClass = "my-custom-class",
+                CloseButton = true,
+                MaxWidth = MaxWidth.ExtraLarge,
+                BackdropClick = true
+            };
+
+        var dialog = await DialogService.ShowAsync<AddUserComponent>(string.Empty, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await OnInitializedAsync();
+    }
+
+    private async Task UpdateStatusAsync(TrainingViewModel selectedItem)
+    {
+        updateStatusServiceEndpoint = $"https://localhost:7079/api/Training/UpdateStatus/{selectedItem.Id.ToString()}";
+        await Http.GetAsync(updateStatusServiceEndpoint);
+        await OnInitializedAsync();
+    }
+
+    private async Task DeleteServerAsync()
+    {
+        var options = new DialogOptions { BackgroundClass = "my-custom-class" };
+
+        var parameters = new DialogParameters<Dialog> {
+            { x => x.ContentText, "Do you really want to delete these records? This process cannot be undone." },
+            { x => x.ButtonText, "Delete" },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<Dialog>("Delete Training(s)", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            deleteServiceEndpoint = $"https://localhost:7079/api/Training/Delete";
+            await Http.PostAsJsonAsync(deleteServiceEndpoint, selectedTrainings);
+            await OnInitializedAsync();
+        }
+    }
+
 }

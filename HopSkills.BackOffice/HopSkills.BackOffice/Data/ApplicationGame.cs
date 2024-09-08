@@ -13,6 +13,7 @@ namespace HopSkills.BackOffice.Data
         public string Status { get; set; }
         public int NumberOfQuestion { get; set; }
         public int Duration { get; set; }
+        public TimeOnly TotalDuration { get; set; }
         public string ImageUri { get; set; }
         public int TotalXp { get; set; }
         [ForeignKey("UserId")]
@@ -21,5 +22,6 @@ namespace HopSkills.BackOffice.Data
         [ForeignKey("CustomerId")]
         public Guid CustomerId { get; set; }
         public ApplicationCustomer Customer { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
