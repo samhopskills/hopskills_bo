@@ -1,5 +1,6 @@
 ﻿@page "/customers"
 @inject IViewCustomerListUseCase ViewCustomerListUseCase
+@inject IConfiguration config
 
 
 @inject IDialogService DialogService
@@ -64,6 +65,8 @@
 
 @code {
     private string? serviceEndpoint;
+    private string? backendUrl;
+
     List<CustomerViewModel>? Customers = new List<CustomerViewModel>();
     private bool _readOnly;
     private string _searchString;
@@ -114,7 +117,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Customer/GetAll";
+        backendUrl = config.GetValue<string>("BackendUrl");
+
+        serviceEndpoint = $"{backendUrl}/api/Customer/GetAll";
         if (!string.IsNullOrEmpty(serviceEndpoint))
         {
             Customers = await Http.GetFromJsonAsync<List<CustomerViewModel>>(serviceEndpoint);
