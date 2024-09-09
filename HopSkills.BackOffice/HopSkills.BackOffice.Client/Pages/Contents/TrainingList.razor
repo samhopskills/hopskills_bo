@@ -2,6 +2,8 @@
 @using System.Security.Claims
 @inject IConfiguration Config
 @inject IDialogService DialogService
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
+
 <MudContainer Fixed="true">
     <MudSpacer />
     <MudSpacer />
@@ -139,6 +141,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var backendUrl = config.GetValue<string>("BackendUrl");
+
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;

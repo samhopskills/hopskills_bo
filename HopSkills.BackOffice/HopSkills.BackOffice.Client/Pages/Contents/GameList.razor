@@ -2,6 +2,8 @@
 @using System.Security.Claims
 @inject IConfiguration Config
 @inject IDialogService DialogService
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
+
 <MudContainer Fixed="true">
     <MudSpacer />
     <MudSpacer />
@@ -116,6 +118,7 @@
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
+    private string? backendUrl;
     private string? deleteServiceEndpoint;
     private string? updateStatusServiceEndpoint;
     private HttpClient Http = new HttpClient();
@@ -139,6 +142,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        backendUrl = config.GetValue<string>("BackendUrl");
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;
@@ -149,14 +153,15 @@
         Games = new List<GameViewModel>();
 
         if (authenticatedUser.IsInRole("Admin"))
-            serviceEndpoint = $"https://localhost:7079/api/Game/GetAll";
+            serviceEndpoint = $"{backendUrl}/api/Game/GetAll";
         else
         {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            serviceEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
+        Console.WriteLine(Games.Count);
     }
 
     private List<string> _events = new();
@@ -215,7 +220,7 @@
 
     private async Task UpdateStatusAsync(GameViewModel selectedItem)
     {
-        updateStatusServiceEndpoint = $"https://localhost:7079/api/Game/UpdateStatus/{selectedItem.Id.ToString()}";
+        updateStatusServiceEndpoint = $"{backendUrl}/api/Game/UpdateStatus/{selectedItem.Id.ToString()}";
         await Http.GetAsync(updateStatusServiceEndpoint);
         await OnInitializedAsync();
     }
@@ -235,7 +240,7 @@
 
         if (!result.Canceled)
         {
-            deleteServiceEndpoint = $"https://localhost:7079/api/Game/Delete";
+            deleteServiceEndpoint = $"{backendUrl}/api/Game/Delete";
             await Http.PostAsJsonAsync(deleteServiceEndpoint, selectedGames);
             await OnInitializedAsync();
         }

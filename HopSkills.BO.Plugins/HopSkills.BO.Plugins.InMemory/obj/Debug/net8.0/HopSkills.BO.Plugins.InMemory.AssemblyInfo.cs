@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HopSkills.BO.Plugins.InMemory")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ada8164ef8504df4a22d6129a9e02bd0e46f580e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+393f935c01e1138677c215c7ce67731fa2115faf")]
 [assembly: System.Reflection.AssemblyProductAttribute("HopSkills.BO.Plugins.InMemory")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HopSkills.BO.Plugins.InMemory")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

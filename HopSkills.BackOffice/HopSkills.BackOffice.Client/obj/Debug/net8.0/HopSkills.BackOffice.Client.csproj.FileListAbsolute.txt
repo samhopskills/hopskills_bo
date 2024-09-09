@@ -3095,7 +3095,6 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.HopSkills.BackOffice.Client.props
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\scopedcss\bundle\HopSkills.BackOffice.Client.styles.css
-C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\67u6d0feoe.gz
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\g3zkvggohm.gz
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\psbhsp93tp.gz
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\oa4y4z1duy.gz
@@ -4434,3 +4433,4 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\HopSkills.BackOffice.Client.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\ref\HopSkills.BackOffice.Client.dll
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\34rdsqbsy5.gz
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\7sg324t0br.gz

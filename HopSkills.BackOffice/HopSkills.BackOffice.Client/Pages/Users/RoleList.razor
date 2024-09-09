@@ -3,6 +3,7 @@
 @inject HttpClient Http
 @inject IViewRoleListUseCase ViewRoleListUseCase
 @inject IDialogService DialogService
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
 
 
 <MudContainer Fixed="true">
@@ -91,8 +92,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var backendUrl = config.GetValue<string>("BackendUrl");
+
         disabledDelete = true;
-        serviceEndpoint = $"https://localhost:7079/api/Role/GetRoles";
+        serviceEndpoint = $"{backendUrl}/api/Role/GetRoles";
         if (!string.IsNullOrEmpty(serviceEndpoint))
         {
             Roles = await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpoint);

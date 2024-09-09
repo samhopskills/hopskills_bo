@@ -2718,24 +2718,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\samyd\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
       "projectName": "HopSkills.BackOffice.Client",
-      "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
-      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
+      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2750,11 +2745,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
-              "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
+            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
+              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
             },
-            "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
-              "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
+            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
+              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
             }
           }
         }

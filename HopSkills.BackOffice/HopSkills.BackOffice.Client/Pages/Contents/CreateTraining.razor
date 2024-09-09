@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Forms;
 @using System.Security.Claims
 @using static HopSkills.BackOffice.Client.Controls.AddQuestionFormComponent
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
 
 @inject IDialogService DialogService
 
@@ -337,6 +338,7 @@
 
 @code {
     private string? serviceEndpoint;
+    private string? backendUrl;
     private bool success;
     private bool disabledNext1 { get; set; }
     private bool disabledNext2 { get; set; }
@@ -362,7 +364,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Training/AddTraining";
+        backendUrl = config.GetValue<string>("BackendUrl");
+
+        serviceEndpoint = $"{backendUrl}/api/Training/AddTraining";
         InputTrainingContext = new(InputTraining);
         InputTrainingContext.OnFieldChanged += InputTrainingContext_OnFieldChanged;
         InputTraining.AttachedChapters = new List<CreateChapterViewModel>();
@@ -377,11 +381,11 @@
         }
         Trainings = new List<TrainingViewModel>();
         if (authenticatedUser.IsInRole("Admin"))
-            getPriorTrainingsEndpoint = $"https://localhost:7079/api/Training/GetAll";
+            getPriorTrainingsEndpoint = $"{backendUrl}/api/Training/GetAll";
         else
         {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            getPriorTrainingsEndpoint = $"https://localhost:7079/api/Training/gettrainingsbycustomer/{user.Company}";
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            getPriorTrainingsEndpoint = $"{backendUrl}/api/Training/gettrainingsbycustomer/{user.Company}";
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Trainings = await Http.GetFromJsonAsync<List<TrainingViewModel>>(getPriorTrainingsEndpoint);

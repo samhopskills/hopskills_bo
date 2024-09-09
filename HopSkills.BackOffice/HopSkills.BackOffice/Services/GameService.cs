@@ -109,7 +109,6 @@ namespace HopSkills.BackOffice.Services
                                     }
                                 }
                             }
-                            
                         }
                         await _hopSkillsDb.SaveChangesAsync();
                     }

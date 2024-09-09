@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Forms;
 @using System.Security.Claims
 @using static HopSkills.BackOffice.Client.Controls.AddQuestionFormComponent
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
 
 @inject IDialogService DialogService
 
@@ -368,6 +369,7 @@
 
 @code {
     private string? serviceEndpoint;
+    private string? backendUrl;
     private bool success;
     private bool disabledNext1 {get; set;}
     private bool disabledNext2 {get; set;}
@@ -393,7 +395,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Game/AddGame";
+        serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
         InputGameContext = new(InputGame);
         InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
         InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
@@ -408,11 +410,11 @@
         }
         Games = new List<GameViewModel>();
         if (authenticatedUser.IsInRole("Admin"))
-            getPriorGamesEndpoint = $"https://localhost:7079/api/Game/GetAll";
+            getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
         else
         {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            getPriorGamesEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
