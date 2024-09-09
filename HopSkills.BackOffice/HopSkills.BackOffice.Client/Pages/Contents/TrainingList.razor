@@ -120,6 +120,8 @@
     private string? serviceEndpoint;
     private string? deleteServiceEndpoint;
     private string? updateStatusServiceEndpoint;
+    private string? backendUrl;
+
     private HttpClient Http = new HttpClient();
     // quick filter - filter globally across multiple columns with the same input
     private Func<TrainingViewModel, bool> _quickFilter => x =>
@@ -153,11 +155,11 @@
         Trainings = new List<TrainingViewModel>();
 
         if (authenticatedUser.IsInRole("Admin"))
-            serviceEndpoint = $"https://localhost:7079/api/Training/GetAll";
+            serviceEndpoint = $"{backendUrl}/api/Training/GetAll";
         else
         {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            serviceEndpoint = $"https://localhost:7079/api/Training/gettrainingsbycustomer/{user.Company}";
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"{backendUrl}/api/Training/gettrainingsbycustomer/{user.Company}";
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Trainings = await Http.GetFromJsonAsync<List<TrainingViewModel>>(serviceEndpoint);
@@ -219,7 +221,7 @@
 
     private async Task UpdateStatusAsync(TrainingViewModel selectedItem)
     {
-        updateStatusServiceEndpoint = $"https://localhost:7079/api/Training/UpdateStatus/{selectedItem.Id.ToString()}";
+        updateStatusServiceEndpoint = $"{backendUrl}/api/Training/UpdateStatus/{selectedItem.Id.ToString()}";
         await Http.GetAsync(updateStatusServiceEndpoint);
         await OnInitializedAsync();
     }
@@ -239,7 +241,7 @@
 
         if (!result.Canceled)
         {
-            deleteServiceEndpoint = $"https://localhost:7079/api/Training/Delete";
+            deleteServiceEndpoint = $"{backendUrl}/api/Training/Delete";
             await Http.PostAsJsonAsync(deleteServiceEndpoint, selectedTrainings);
             await OnInitializedAsync();
         }
