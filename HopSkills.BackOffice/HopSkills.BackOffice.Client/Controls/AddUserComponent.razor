@@ -1,5 +1,5 @@
 ﻿@inject IAddUserUseCase addUserUseCase
-@inject IConfiguration Config
+@inject IConfiguration config
 @inject HttpClient Http
 @attribute [Authorize]
 
@@ -101,6 +101,7 @@
     private string? serviceEndpoint;
     private string? serviceEndpointRole;
     private string? serviceEndpointCustomers;
+    private string? backendUrl;
 
     bool success;
     [CascadingParameter]
@@ -132,9 +133,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/User/Create";
-        serviceEndpointRole = $"https://localhost:7079/api/Role/GetRoles";
-        serviceEndpointCustomers = $"https://localhost:7079/api/Customer/GetAll";
+        backendUrl = config.GetValue<string>("BackendUrl");
+
+        serviceEndpoint = $"{backendUrl}/api/User/Create";
+        serviceEndpointRole = $"{backendUrl}/api/Role/GetRoles";
+        serviceEndpointCustomers = $"{backendUrl}/api/Customer/GetAll";
         OnLoadAsync();
     }
     private async void OnValidSubmit(EditContext context)

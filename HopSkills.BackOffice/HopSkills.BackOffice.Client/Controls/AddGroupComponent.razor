@@ -1,5 +1,7 @@
 ﻿@inject IAddTeamUseCase addTeamUseCase
 @inject HttpClient Http
+@inject IConfiguration config
+
 @attribute [Authorize]
 <EditForm Model="group" FormName="formTeam" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
@@ -55,6 +57,7 @@
     private string? serviceEndpointCustomers;
     private string? serviceEndpoint;
     List<CreateUserCustomerViewModel>? companies = new List<CreateUserCustomerViewModel>();
+    private string? backendUrl;
 
     bool success;
     [CascadingParameter]
@@ -66,8 +69,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Groups/CreateGroup";
-        serviceEndpointCustomers = $"https://localhost:7079/api/Customer/GetAll";
+        backendUrl = config.GetValue<string>("BackendUrl");
+
+        serviceEndpoint = $"{backendUrl}/api/Groups/CreateGroup";
+        serviceEndpointCustomers = $"{backendUrl}/api/Customer/GetAll";
         if (!companies.Any())
         {
             if (!string.IsNullOrEmpty(serviceEndpointCustomers))

@@ -1,6 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @inject IAddRoleUseCase addRoleUseCase
-@inject IConfiguration Config
+@inject IConfiguration config
 <EditForm Model="Input" FormName="formRole" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudGrid>
@@ -38,6 +38,8 @@
     private RoleViewModel Input { get; set; } = new();
     private string? serviceEndpoint;
     private HttpClient Http = new HttpClient();
+    private string? backendUrl;
+
     // [SupplyParameterFromForm]
     // RoleViewModel role { get; set; } = new RoleViewModel();
     bool success;
@@ -50,7 +52,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Role/addRoles";
+        backendUrl = config.GetValue<string>("BackendUrl");
+        serviceEndpoint = $"{backendUrl}/api/Role/addRoles";
         // Roles = await ViewRoleListUseCase.ExecuteAsync();
     }
 

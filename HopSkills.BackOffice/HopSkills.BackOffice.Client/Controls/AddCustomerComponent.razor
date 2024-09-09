@@ -1,6 +1,5 @@
 ﻿@inject IAddCustomerUseCase addCustomerUseCase
-
-@inject IConfiguration Config
+@inject IConfiguration config
 @inject HttpClient Http
 <EditForm Model="customer" FormName="formCustomer" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
@@ -78,11 +77,13 @@
     @code {
     private string? serviceEndpoint;
 
-        [SupplyParameterFromForm]
+    [SupplyParameterFromForm]
     CustomerViewModel customer { get; set; } = new CustomerViewModel();
     bool success;
     private string? CountrySelected { get; set; }
     private string? SubscriptionSelected { get; set; }
+    private string? backendUrl;
+
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
     
@@ -113,7 +114,9 @@
 
     protected override Task OnInitializedAsync()
     {
-        serviceEndpoint = $"https://localhost:7079/api/Customer/AddCustomer";
+        backendUrl = config.GetValue<string>("BackendUrl");
+
+        serviceEndpoint = $"{backendUrl}/api/Customer/AddCustomer";
         return base.OnInitializedAsync();
     }
     private async void OnValidSubmit(EditContext context)

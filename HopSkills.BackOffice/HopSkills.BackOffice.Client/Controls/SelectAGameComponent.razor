@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@inject IConfiguration Config
+@inject IConfiguration config
 @inject HttpClient Http
     <DataAnnotationsValidator />
     <MudGrid>
@@ -133,6 +133,8 @@
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
     private List<GameViewModel>? Games;
+    private string? backendUrl;
+
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private AuthenticationState authenticationState { get; set; }
@@ -168,6 +170,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        backendUrl = config.GetValue<string>("BackendUrl");
+
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;
@@ -175,11 +179,11 @@
                 authenticatedUser = authenticationState?.User;
         }
         if (authenticatedUser.IsInRole("Admin"))
-            serviceEndpoint = $"https://localhost:7079/api/Game/GetAll";
+            serviceEndpoint = $"{backendUrl}/api/Game/GetAll";
         else
         {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"https://localhost:7079/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            serviceEndpoint = $"https://localhost:7079/api/Game/getgamesbycustomer/{user.Company}";
+            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+            serviceEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
