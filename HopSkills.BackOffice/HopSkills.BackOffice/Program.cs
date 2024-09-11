@@ -42,7 +42,7 @@ builder.Services.AddDbContext<HopSkillsDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped(x => new 
-BlobServiceClient(configuration["ConnectionStrings:StorageAccount"]));
+BlobServiceClient(builder.Configuration.GetConnectionString("StorageAccount")));
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)

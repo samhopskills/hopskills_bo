@@ -120,7 +120,7 @@ namespace HopSkills.BackOffice.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError($"[ERROR] : {ex.Message}");
             }
         }
 
