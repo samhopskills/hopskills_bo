@@ -21,6 +21,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Azure;
 using Azure.Storage.Blobs;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,12 +32,24 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .Build();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<HopSkillsDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddSingleton(x => new BlobServiceClient(builder.Configuration.GetConnectionString("StorageAccount")));
+builder.Services.AddScoped(x => new 
+BlobServiceClient(configuration["ConnectionStrings:StorageAccount"]));
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
+builder.Services.AddLogging(logging => logging.AddSerilog(Log.Logger, true));
+
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => {
     options.SignIn.RequireConfirmedEmail = false;
@@ -59,15 +72,11 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<ITeamRepository, TeamRepository>();
-builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
-builder.Services.AddSingleton<ITrainingRepository, TrainingRepository>();
-builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
-builder.Services.AddTransient<IViewUserListUseCase, ViewUserListUseCase>();
-builder.Services.AddTransient<IViewTeamListUseCase, ViewTeamListUseCase>();
-builder.Services.AddTransient<IViewRoleListUseCase, ViewRoleListUseCase>();
-builder.Services.AddTransient<IViewTrainingListUseCase, ViewTrainingListUseCase>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<ITrainingRepository, TrainingRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
@@ -84,7 +93,7 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7079/") });
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddScoped<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
 

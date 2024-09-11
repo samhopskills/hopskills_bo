@@ -15,20 +15,24 @@ namespace HopSkills.BackOffice.Services
         private readonly IUserService _userService;
         private readonly ICustomerService _customerService;
         private readonly BlobServiceClient _blobServiceClient;
+        private readonly ILogger<GameService> _logger;
         private const string ImageContainerName = "images";
         private const string AudioContainerName = "audio";
-        public GameService(HopSkillsDbContext hopSkillsDb, 
+        public GameService(HopSkillsDbContext hopSkillsDb,
             IUserService userService,
             ICustomerService customerService,
-            BlobServiceClient blobServiceClient)
+            BlobServiceClient blobServiceClient,
+            ILogger<GameService> logger)
         {
             _hopSkillsDb = hopSkillsDb;
             _userService = userService;
             _customerService = customerService;
             _blobServiceClient = blobServiceClient;
+            _logger = logger;
         }
         public async Task AddGame(CreateGameModel createGameModel)
         {
+            _logger.LogInformation("Add a game");
             try
             {
                 var creator = _hopSkillsDb.Users.FirstOrDefault(u => u.Email == createGameModel.Creator);
@@ -116,7 +120,7 @@ namespace HopSkills.BackOffice.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
         }
 
