@@ -36,13 +36,12 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .Build();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<HopSkillsDbContext>(options =>
     options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped(x => new 
-BlobServiceClient(builder.Configuration.GetConnectionString("StorageAccount")));
+BlobServiceClient(configuration["ConnectionStrings:StorageAccount"]));
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
