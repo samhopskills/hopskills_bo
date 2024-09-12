@@ -1,27 +1,18 @@
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MudBlazor.Services;
-using HopSkills.BackOffice.Client.Pages;
+using Azure.Storage.Blobs;
 using HopSkills.BackOffice.Components;
 using HopSkills.BackOffice.Components.Account;
 using HopSkills.BackOffice.Data;
-using HopSkills.BO.UseCases.Content.Interface;
-using HopSkills.BO.UseCases.Content;
-using HopSkills.BO.UseCases.Customers.Interfaces;
-using HopSkills.BO.UseCases.Customers;
-using HopSkills.BO.UseCases.PluginInterfaces;
-using HopSkills.BO.UseCases.Users.Interfaces;
-using HopSkills.BO.UseCases.Users;
-using HopSkills.BO.Plugins.InMemory;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BackOffice.Services;
-using System.Security.Claims;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Azure;
-using Azure.Storage.Blobs;
+using HopSkills.BackOffice.Services.Interfaces;
+using HopSkills.BO.Plugins.InMemory;
+using HopSkills.BO.UseCases.PluginInterfaces;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 using Serilog;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
