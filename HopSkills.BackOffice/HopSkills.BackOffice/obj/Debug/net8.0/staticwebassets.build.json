@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OpaK5InYMi/ivCb+r2LdDLOySivBRtceQ36xQr+kEI8=",
+  "Hash": "iatImf5BkxbvUeQE1HXvFXyJ0PXjhx9B6tdAQ7XE+cc=",
   "Source": "HopSkills.BackOffice",
   "BasePath": "_content/HopSkills.BackOffice",
   "Mode": "Default",
@@ -8546,6 +8546,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\appsettings.json"
+    },
+    {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.Staging.json",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Project",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "appsettings.Staging.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "settings",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\appsettings.Staging.json"
     },
     {
       "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\favicon.ico",

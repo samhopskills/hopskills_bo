@@ -1651,19 +1651,6 @@
           }
         }
       },
-      "NLog/5.3.3": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/NLog.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/NLog.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Serilog/4.0.1": {
         "type": "package",
         "compile": {
@@ -4851,30 +4838,6 @@
         "newtonsoft.json.bson.nuspec"
       ]
     },
-    "NLog/5.3.3": {
-      "sha512": "cy0+hlrUbYu+6mgUsILqCcqlJ2Csqyt2lm8y9T9kE8nhgwl8SvR+LM21QX4nmzFCPiowbrTFYxNF8+gWpy7/HQ==",
-      "type": "package",
-      "path": "nlog/5.3.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "N.png",
-        "lib/net35/NLog.dll",
-        "lib/net35/NLog.xml",
-        "lib/net45/NLog.dll",
-        "lib/net45/NLog.xml",
-        "lib/net46/NLog.dll",
-        "lib/net46/NLog.xml",
-        "lib/netstandard1.3/NLog.dll",
-        "lib/netstandard1.3/NLog.xml",
-        "lib/netstandard1.5/NLog.dll",
-        "lib/netstandard1.5/NLog.xml",
-        "lib/netstandard2.0/NLog.dll",
-        "lib/netstandard2.0/NLog.xml",
-        "nlog.5.3.3.nupkg.sha512",
-        "nlog.nuspec"
-      ]
-    },
     "Serilog/4.0.1": {
       "sha512": "pzeDRXdpSLSsgBHpZcmpIDxqMy845Ab4s+dfnBg0sN9h8q/4Wo3vAoe0QCGPze1Q06EVtEPupS+UvLm8iXQmTQ==",
       "type": "package",
@@ -6318,7 +6281,6 @@
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 8.0.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 8.*",
-      "NLog >= 5.3.3",
       "Newtonsoft.Json >= 13.0.3",
       "Serilog >= 4.0.1",
       "Serilog.AspNetCore >= 8.0.2",
@@ -6410,10 +6372,6 @@
           "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
             "version": "[8.*, )"
-          },
-          "NLog": {
-            "target": "Package",
-            "version": "[5.3.3, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",

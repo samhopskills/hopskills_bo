@@ -742,7 +742,6 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Azure.Storage.Common.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\System.ClientModel.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\System.IO.Hashing.dll
-C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\NLog.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.AspNetCore.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
@@ -753,3 +752,4 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Serilog.Sinks.File.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\appsettings.Staging.json

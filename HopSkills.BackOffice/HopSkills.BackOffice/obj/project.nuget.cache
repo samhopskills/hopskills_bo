@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Jah9DgLUvRA=",
+  "dgSpecHash": "FR+2XtRua5o=",
   "success": true,
   "projectFilePath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\HopSkills.BackOffice.csproj",
   "expectedPackageFiles": [
@@ -88,7 +88,6 @@
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\mudblazor\\7.8.0\\mudblazor.7.8.0.nupkg.sha512",
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
-    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\nlog\\5.3.3\\nlog.5.3.3.nupkg.sha512",
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\serilog\\4.0.1\\serilog.4.0.1.nupkg.sha512",
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\serilog.aspnetcore\\8.0.2\\serilog.aspnetcore.8.0.2.nupkg.sha512",
     "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\serilog.extensions.hosting\\8.0.0\\serilog.extensions.hosting.8.0.0.nupkg.sha512",

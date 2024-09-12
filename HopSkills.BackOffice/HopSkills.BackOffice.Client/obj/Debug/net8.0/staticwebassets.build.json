@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "n4jgFEBVy7H/R089Is/QJ3hqn4yEwqArjDBJiGA5F54=",
+  "Hash": "qIrmkonVWaK4RVChlvNZWngwxbGYnhBjFpzVWSNaYSs=",
   "Source": "HopSkills.BackOffice.Client",
   "BasePath": "/",
   "Mode": "Default",
@@ -8508,6 +8508,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\appsettings.json"
+    },
+    {
+      "Identity": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.Staging.json",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "appsettings.Staging.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "WasmResource",
+      "AssetTraitValue": "settings",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\appsettings.Staging.json"
     }
   ]
 }

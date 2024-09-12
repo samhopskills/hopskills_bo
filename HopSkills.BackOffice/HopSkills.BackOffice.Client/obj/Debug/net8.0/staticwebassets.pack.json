@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\appsettings.Development.json"
     },
     {
+      "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.Staging.json",
+      "PackagePath": "staticwebassets\\appsettings.Staging.json"
+    },
+    {
       "Id": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.json",
       "PackagePath": "staticwebassets\\appsettings.json"
     },
