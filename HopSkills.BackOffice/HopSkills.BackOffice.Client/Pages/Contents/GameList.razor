@@ -3,6 +3,7 @@
 @inject IConfiguration Config
 @inject IDialogService DialogService
 @inject Microsoft.Extensions.Configuration.IConfiguration config;
+@inject NavigationManager Navigation
 
 <MudContainer Fixed="true">
     <MudSpacer />
@@ -65,7 +66,7 @@
                         <MudTooltip Text="Edit">
                         <MudIconButton Size="@Size.Small"
                                        Color="@Color.Primary"
-                                           Href="updategame"
+                                           OnClick="NavigateToEditGame"
                                        Icon="@Icons.Material.Outlined.Edit"
                                        Variant="@Variant.Text"></MudIconButton>
                         </MudTooltip>
@@ -198,6 +199,11 @@
         disabledDelete = !(selectedGames.Count > 0);
 
         _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    void NavigateToEditGame()
+    {
+        Navigation.NavigateTo($"/editgame/{selectedGames.FirstOrDefault().Id}");
     }
 
     private async Task OpenDialogAsync()

@@ -81,6 +81,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcQ3JlYXRlVHJhaW5pbmcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/EditGame.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcRWRpdEdhbWUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/s.dakhlaoui/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Contents/GameList.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudHNcR2FtZUxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using HopSkills.BackOffice.Client.ViewModels;
 using HopSkills.BackOffice.Data;
+using HopSkills.BackOffice.Migrations;
 using HopSkills.BackOffice.Model;
 using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BO.CoreBusiness;
@@ -124,6 +125,102 @@ namespace HopSkills.BackOffice.Services
             }
         }
 
+        public async Task EditGame(EditGameModel editGameModel)
+        {
+            try
+            {
+                var creator = _hopSkillsDb.Users.FirstOrDefault(u => u.Email == editGameModel.Creator);
+                if (creator != null) {
+                    var gameToEdit = await _hopSkillsDb.Games.FirstOrDefaultAsync(g => g.Id == editGameModel.Id);
+                    if (gameToEdit != null)
+                    {
+                        using (var transaction = _hopSkillsDb.Database.BeginTransactionAsync())
+                        {
+
+                            if (creator != null)
+                            {
+                                var editedAppGame = new ApplicationGame
+                                {
+                                    Id = editGameModel.Id,
+                                    TotalDuration = editGameModel.TotalDuration,
+                                    Status = editGameModel.Status.ToString(),
+                                    Theme = editGameModel.Theme.ToString(),
+                                    TotalXp = editGameModel.TotalXperience,
+                                    Title = editGameModel.Title,
+                                    ImageUri = string.Empty
+                                };
+                                var resultGame = _hopSkillsDb.Games.Update(editedAppGame);
+
+                                //BlobContainerClient _containerClient = _blobServiceClient.GetBlobContainerClient(ImageContainerName);
+                                //var editMutliQ = editGameModel.multipleQuestions;
+                                //var blobClient = _containerClient.GetBlobClient($"{editedAppGame.Id}.png");
+                                //var bytes = Convert.FromBase64String(editGameModel.Image);
+                                //await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                                //if (editMutliQ.Count != 0)
+                                //{
+                                //    var multiQ = editMutliQ.Select(
+                                //    e => new ApplicationMultiQuestion
+                                //    {
+                                //        CorrectAnswerExplanation = e.CorrectAnswerExplanation,
+                                //        Duration = e.Duration,
+                                //        PossibleAnswers = e.PossibleAnswers.Select(e => new ApplicationAnswer
+                                //        {
+                                //            Answer = e.Answer,
+                                //            IsCorrect = e.IsCorrect
+                                //        }).ToList(),
+                                //        Question = e.Question,
+                                //        Xperience = e.Xperience,
+                                //        GameId = gameId.Value
+                                //    }).ToList();
+                                //    foreach (var multi in multiQ)
+                                //    {
+                                //        var result = await _hopSkillsDb.MultiQuestions.AddAsync(multi);
+                                //        if (result != null)
+                                //        {
+                                //            Guid? mutlId = result.Entity.Id;
+                                //            if (mutlId.HasValue)
+                                //            {
+                                //                multi.PossibleAnswers.ForEach(e => e.MultiQuestionId = mutlId.Value);
+                                //                await _hopSkillsDb.Answers.AddRangeAsync(multi.PossibleAnswers);
+                                //                var imagesFiles = editMutliQ.FirstOrDefault(q => q.Question == multi.Question).ImageFiles;
+                                //                var audioFiles = editMutliQ.FirstOrDefault(q => q.Question == multi.Question).AudioFiles;
+                                //                if (imagesFiles.Count != 0)
+                                //                {
+                                //                    var bytes = imagesFiles.Select(Convert.FromBase64String);
+                                //                    int count = 0;
+                                //                    foreach (var b in bytes)
+                                //                    {
+                                //                        var blobClient = _containerClient.GetBlobClient($"{gameId.Value}/{mutlId.Value}_{count++}.png");
+                                //                        await blobClient.UploadAsync(BinaryData.FromBytes(b));
+                                //                    }
+                                //                }
+                                //                if (audioFiles.Count > 0)
+                                //                {
+                                //                    _containerClient = _blobServiceClient.GetBlobContainerClient(AudioContainerName);
+                                //                    var bytes = audioFiles.Select(Convert.FromBase64String);
+                                //                    int count = 0;
+                                //                    foreach (var b in bytes)
+                                //                    {
+                                //                        var blobClient = _containerClient.GetBlobClient($"{gameId.Value}/{mutlId.Value}_{count++}.mp3");
+                                //                        await blobClient.UploadAsync(BinaryData.FromBytes(b));
+                                //                    }
+                                //                }
+                                //            }
+                                //        }
+                                //    }
+                                //}
+                                await _hopSkillsDb.SaveChangesAsync();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[ERROR] : {ex.Message}");
+            }
+        }
+
         public async Task<IEnumerable<GameViewModel>> GetAll()
         {
             return _hopSkillsDb.Games.Select(g => new GameViewModel
@@ -228,5 +325,7 @@ namespace HopSkills.BackOffice.Services
             }
             return false;
         }
+
+       
     }
 }

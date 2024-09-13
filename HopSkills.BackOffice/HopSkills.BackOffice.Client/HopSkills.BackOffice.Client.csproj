@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Contents\UpdateGame.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BlazorAuthorizeRoleView" Version="1.0.1" />
     <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.*" />
@@ -25,18 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\HopSkills.BO.Plugins\HopSkills.BO.Plugins.InMemory\HopSkills.BO.Plugins.InMemory.csproj" />
     <ProjectReference Include="..\..\HopSkills.BO.UseCases\HopSkills.BO.UseCases.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Contents\UpdateGame.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Contents\UpdateGame.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Contents\UpdateGame.razor" />
   </ItemGroup>
 
 </Project>
