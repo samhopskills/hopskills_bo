@@ -103,8 +103,20 @@ namespace HopSkills.BackOffice.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DifficultyLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<string>("ElligibleSub")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUri")
                         .IsRequired()
@@ -112,6 +124,9 @@ namespace HopSkills.BackOffice.Migrations
 
                     b.Property<int>("NumberOfQuestion")
                         .HasColumnType("int");
+
+                    b.Property<string>("PriorGame")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()

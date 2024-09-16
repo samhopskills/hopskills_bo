@@ -1,12 +1,12 @@
 {
   "mainAssemblyName": "HopSkills.BackOffice.Client",
   "resources": {
-    "hash": "sha256-8FH8u40us54jrhWatvbrojC+wdM1hKRIDTwYoHO4w/M=",
+    "hash": "sha256-OeRy9djasagRYYR5k5UJqTrpRYlfOKiYrZpNAuhpxwU=",
     "jsModuleNative": {
-      "dotnet.native.8.0.7.bmdswrlkhe.js": "sha256-tFsxPBbhkdn6GKNBKvCRLzrfAHdyM86odYTe0MtrwMk="
+      "dotnet.native.8.0.7.z0gkbd1vjm.js": "sha256-tFsxPBbhkdn6GKNBKvCRLzrfAHdyM86odYTe0MtrwMk="
     },
     "jsModuleRuntime": {
-      "dotnet.runtime.8.0.7.ixpmulkv8z.js": "sha256-soZyw6XWXOLKhA26AOyzSpCP5cAsw1wvhdPHSYNTMfQ="
+      "dotnet.runtime.8.0.7.83nlaq5s4u.js": "sha256-soZyw6XWXOLKhA26AOyzSpCP5cAsw1wvhdPHSYNTMfQ="
     },
     "wasmNative": {
       "dotnet.native.wasm": "sha256-ApuqKsuYqEC0ZTUIUV5mIV1IIRYYCwmOiB912jgs8CQ="
@@ -219,16 +219,16 @@
       "mscorlib.wasm": "sha256-fLbZiSHBNdpHoh4EgRqMaNP5NQyIK5TEj6AXFLqo8m8=",
       "netstandard.wasm": "sha256-d4xbAE8qrKq5euUoZHPO+jkYPjlCYBzUew45MKsYKic=",
       "System.Private.CoreLib.wasm": "sha256-8yi6NcX1lkNQgV4WKjnMBYIZyKh4P+OXnXVQmgxGZD4=",
-      "HopSkills.BO.CoreBusiness.wasm": "sha256-dtLuL4f9a7JuGiCylKyxKGd7jOjQkvidmtBzlrzjm1A=",
-      "HopSkills.BO.Plugins.InMemory.wasm": "sha256-o70eHcHWjAUVhS4hHgtP+u9ELLVbPOT8cu1aIb/qXm8=",
-      "HopSkills.BO.UseCases.wasm": "sha256-VXClSF+HShYLDBEJDXOFLyKaXhrJ6Pa94gusdazzfTA=",
-      "HopSkills.BackOffice.Client.wasm": "sha256-2mN0TzXy7qtqC9j+eF0gBoR+dagVqojweQijkIdJiG0="
+      "HopSkills.BO.CoreBusiness.wasm": "sha256-Mn9Mlu3yHxeVnPHO0qyJvt4ac17vYefeYr+5CY69l5w=",
+      "HopSkills.BO.Plugins.InMemory.wasm": "sha256-RbyIo2DRlATvyJxOMWboxdA8KU0SADUdZbe87TnRS5Y=",
+      "HopSkills.BO.UseCases.wasm": "sha256-GH68/ZC57UZWHmWoRySFkKSCgR2C3Ea/Y7FjzZH9wXQ=",
+      "HopSkills.BackOffice.Client.wasm": "sha256-tWlJoaTA31I8YDOGDZFyf7Y+5JmZdQWwLZ53r14TybU="
     },
     "pdb": {
-      "HopSkills.BO.Plugins.InMemory.pdb": "sha256-T/u8C/WDrDbfrxe7degRwS1NPaIl7xNXZOugLsRVO0E=",
-      "HopSkills.BO.UseCases.pdb": "sha256-G4cRY19/TDY/KVeZWIEC3qatz9hukSlch+TObskBnYg=",
-      "HopSkills.BO.CoreBusiness.pdb": "sha256-TGs6Ay5pEpwl0zC5C8wtfk65SgTZv2ncYRMhPgHLF9U=",
-      "HopSkills.BackOffice.Client.pdb": "sha256-iKRCysXDLdwCO/Bm2bjjXu2N8m5ZiR2R06dmjbuYvnk="
+      "HopSkills.BO.Plugins.InMemory.pdb": "sha256-ayYXdkOEQeAdeooOkSzHMPszHiQk0j11Ly008RSgPqQ=",
+      "HopSkills.BO.UseCases.pdb": "sha256-2xib+rqXcVkgH6zK/QHU+qUf6H9O1Oza7vRJkDNPhas=",
+      "HopSkills.BO.CoreBusiness.pdb": "sha256-mHiddwYyq5n6KsSnk6p+CT/f33kPMGW5vYwUZefk2/Q=",
+      "HopSkills.BackOffice.Client.pdb": "sha256-fEx5KDsPaqGeJLC473FtK7O8urk/GC4yNuosbN1piCg="
     }
   },
   "cacheBootResources": true,

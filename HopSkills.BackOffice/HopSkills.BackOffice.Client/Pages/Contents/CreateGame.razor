@@ -397,6 +397,7 @@
     {
         serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
         InputGameContext = new(InputGame);
+        InputGame.Image = new CreateGameImageViewModel();
         InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
         InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
         form1Validate = true;
@@ -522,11 +523,13 @@
 
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
-        var format = "image/png";
+        var format = e.File.ContentType;
+        var name = e.File.Name.ToString();
         var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
         var buffer = new byte[resizeImage.Size];
         await resizeImage.OpenReadStream().ReadAsync(buffer);
-        InputGame.Image = Convert.ToBase64String(buffer);
+        InputGame.Image.Title = name.ToString();
+        InputGame.Image.Content = Convert.ToBase64String(buffer);
     }
 
     private void Upload()

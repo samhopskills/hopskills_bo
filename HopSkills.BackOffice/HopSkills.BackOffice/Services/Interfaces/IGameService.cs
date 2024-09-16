@@ -12,5 +12,6 @@ namespace HopSkills.BackOffice.Services.Interfaces
         Task<IEnumerable<GameViewModel>> GetGamesByCustomer(string companyId);
         Task<IEnumerable<GameViewModel>> GetGamesByUser(string usermail);
         Task<bool> UpdateGameStatus(string id);
+        Task<EditGameModel?> GetGameById(string id);
     }
 }

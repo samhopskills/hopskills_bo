@@ -36,6 +36,20 @@ namespace HopSkills.BackOffice.Controllers
             }
         }
 
+        [HttpGet("Get/{id}")]
+        public async Task<IActionResult> GetAll(string id)
+        {
+            try
+            {
+                return Ok(await _gameService.GetGameById(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
         //[Authorize("Admin, Manager")]
         [HttpGet("GetGamesByUser/{userMail}")]
         public async Task<IActionResult> GetGamesByUser(string userMail)

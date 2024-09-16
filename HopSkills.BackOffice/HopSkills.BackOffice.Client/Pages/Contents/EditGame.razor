@@ -14,7 +14,7 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager Navigation
 
-<MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Bottom">
+@* <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Bottom">
 
     @if (form1Validate)
     {
@@ -85,7 +85,7 @@
 
     }
 
-</MudTimeline>
+</MudTimeline> *@
 
 <MudGrid>
     <MudItem xs="12" sm="7">
@@ -119,9 +119,19 @@
                                         <MudText Typo="Typo.h6">
                                             Add an image
                                         </MudText>
-                                        @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                        @if (_model.Files is null || !_model.Files.Any())
                                         {
-                                            <MudChip T="string" Color="Color.Dark" Text="@file" />
+                                            @if(!string.IsNullOrEmpty(InputGame.Image?.Content))
+                                            {
+                                                <MudChip T="string"  Color="Color.Dark" Text="@InputGame.Image.Title" />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                            {
+                                                <MudChip T="string" Color="Color.Dark" Text="@file" />
+                                            }
                                         }
                                     </MudPaper>
                                 </ActivatorContent>
@@ -140,18 +150,6 @@
                                     Clear
                                 </MudButton>
                             </MudToolBar>
-                        </MudItem>
-                        <MudItem>
-                            @if (_fileUpload?.ValidationErrors.Any() ?? false)
-                            {
-                                <MudText Color="Color.Error"
-                                         Typo="@Typo.caption">
-                                    @_fileUpload?.ValidationErrors[0]
-                                </MudText>
-                            }
-                        </MudItem>
-                        <MudItem xs="12">
-                            IsValid: @_isValid - IsTouched: @_isTouched
                         </MudItem>
                         <MudCard>
                             <MudCardContent>
@@ -188,7 +186,8 @@
                                     </MudGrid>
                                     <MudGrid>
                                         <MudItem xs="12" sm="6" md="4">
-                                            <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)" @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
+                                            <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)" 
+                                                @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
                                                        UserAttributes="@(new() { { "aria-required", "true" } } )"
                                                        Label="Theme related to" Variant="Variant.Outlined"
                                                        AnchorOrigin="Origin.BottomCenter">
@@ -198,7 +197,8 @@
                                             </MudSelect>
                                         </MudItem>
                                         <MudItem xs="12" sm="6" md="4">
-                                            <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)" @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
+                                            <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)" 
+                                                @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
                                                        UserAttributes="@(new() { { "aria-required", "true" } } )"
                                                        Label="Eligible subscription" Variant="Variant.Outlined"
                                                        AnchorOrigin="Origin.BottomCenter">
@@ -326,9 +326,63 @@
                 </MudItem>
             </MudGrid>
             <MudDivider DividerType="DividerType.FullWidth" />
-            <MudGrid Style="object-position:bottom">
+            @if(InputGame is not null)
+            {
+                @if(InputGame.multipleQuestions is not null || InputGame.multipleQuestions.Any())
+            {
+                <MudGrid Style="object-position:bottom">
                 <MudItem xs="12" sm="12" md="12" xl="12">
-                    <MudPaper>
+                            <MudDataGrid T="CreateMultipleQuestionsViewModel" 
+                                Items="@InputGame.multipleQuestions"
+                                         RowClick="@RowClicked"
+                                         RowContextMenuClick="RowRightClicked"
+                                         SelectedItemsChanged="@SelectedItemsChanged">
+                                <Columns>
+                                    <SelectColumn T="CreateMultipleQuestionsViewModel" />
+                                    <PropertyColumn Property="x => x.Question" Title="Question" />
+                                    <PropertyColumn Property="x => x.Xperience" Title="Xp" />
+                                    <PropertyColumn Property="x => x.Duration" Title="Duration" />
+                                    <TemplateColumn CellClass="d-flex justify-end">
+                                        <CellTemplate>
+                                            <MudStack Row>
+                                                <MudTooltip Text="Delete">
+                                                    <MudIconButton Size="@Size.Small"
+                                                                   Color="@Color.Error"
+                                                                   OnClick="@context.Actions.StartEditingItemAsync"
+                                                                   Icon="@Icons.Material.Outlined.Delete"
+                                                                   Variant="@Variant.Text"></MudIconButton>
+                                                </MudTooltip>
+                                                @* @if (context.Item.Status.Equals("Published"))
+                                                {
+                                                    <MudTooltip Text="Draft">
+                                                        <MudIconButton Size="@Size.Small"
+                                                                       Color="@Color.Primary"
+                                                                       Icon="@Icons.Material.Outlined.Archive"
+                                                                       OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                                                       Variant="@Variant.Text"></MudIconButton>
+                                                    </MudTooltip>
+
+                                                }
+                                                @if (context.Item.Status.Equals("Draft"))
+                                                {
+                                                    <MudTooltip Text="Publish">
+                                                        <MudIconButton Size="@Size.Small"
+                                                                       Color="@Color.Primary"
+                                                                       Icon="@Icons.Material.Outlined.Publish"
+                                                                       OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                                                       Variant="@Variant.Text"></MudIconButton>
+                                                    </MudTooltip>
+
+                                                } *@
+                                            </MudStack>
+                                        </CellTemplate>
+                                    </TemplateColumn>
+                                </Columns>
+                                <PagerContent>
+                                    <MudDataGridPager T="CreateMultipleQuestionsViewModel" />
+                                </PagerContent>
+                    </MudDataGrid>
+                    @* <MudPaper>
                         @foreach (var item in InputGame.multipleQuestions)
                         {
                             <MudPaper Class=" gap-x-10 d-flex pa-4 ">
@@ -339,31 +393,34 @@
                                 <MudText Class="d-inline-flex justify-end pa-4">
                                     <MudIcon Icon="@Icons.Material.Outlined.Timer" />@item.Duration
                                 </MudText>
-                                @*  <MudIconButton Class="d-flex justify-end"
-                            Icon="@Icons.Material.Filled.Edit"/> *@
+                                 <MudIconButton Class="d-flex justify-end"
+                            Icon="@Icons.Material.Filled.Edit"/>
                             </MudPaper>
 
                         }
-                    </MudPaper>
+                    </MudPaper> *@
 
                 </MudItem>
 
             </MudGrid>
-            @if (InputGame.multipleQuestions.Any())
-            {
-                <MudGrid>
-                    <MudItem>
-                        <MudPaper>
-                            <MudButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
-                            <MudButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
-                        </MudPaper>
-                    </MudItem>
-                </MudGrid>
+                @if (InputGame.multipleQuestions != null && InputGame.multipleQuestions.Any())
+                {
+                    <MudGrid>
+                        <MudItem>
+                            <MudPaper>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
+                                <MudButton Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                }
             }
+            }
+            
         </MudPaper>
     </MudItem>
 </MudGrid>
@@ -379,11 +436,10 @@
     private bool form2Validate { get; set; }
     private bool form3Validate { get; set; }
     private bool formQuestions { get; set; }
-    private bool form1IsValid { get; set; }
+    private bool form1IsValid  { get; set; }
     private string getPriorGamesEndpoint { get; set; }
     private CreateMultipleQuestionsViewModel _questionFormInput { get; set; }
     EditContext InputGameContext;
-    [SupplyParameterFromForm]
     private EditGameViewModel InputGame { get; set; } = new EditGameViewModel();
     string[] errors = { };
     MudForm form1 = new MudForm() { IsValid = false };
@@ -396,32 +452,78 @@
     private List<GameViewModel>? Games;
     [Parameter]
     public string selectedId { get; set; }
+    public class Model
+    {
+        public IReadOnlyList<IBrowserFile>? Files { get; set; } = new List<IBrowserFile>();
+    }
+
+    private Model _model = new();
+    private ModelFluentValidator _validationRules = new();
+    private MudFileUpload<IReadOnlyList<IBrowserFile>>? _fileUpload;
+    private bool _isValid;
+    private bool _isTouched;
+    private const string FileContent = "this is content";
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
+    private string _dragClass = DefaultDragClass;
 
     protected override async Task OnInitializedAsync()
     {
-        serviceEndpoint = $"{backendUrl}/api/Game/EditGame";
         InputGameContext = new(InputGame);
-        InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
-        InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
-        form1Validate = true;
-        disabledNext1 = true;
-        disabledNext2 = true;
-        if (authenticationStateTask is not null)
+        InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
+        if(InputGame != null)
         {
-            authenticationState = await authenticationStateTask;
-            if (authenticatedUser is null)
-                authenticatedUser = authenticationState?.User;
+            serviceEndpoint = $"{backendUrl}/api/Game/EditGame";
+            InputGameContext = new(InputGame);
+            InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
+
+            // InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
+            form1Validate = true;
+            disabledNext1 = false;
+            disabledNext2 = false;
+            if (authenticationStateTask is not null)
+            {
+                authenticationState = await authenticationStateTask;
+                if (authenticatedUser is null)
+                    authenticatedUser = authenticationState?.User;
+            }
+            Games = new List<GameViewModel>();
+            if (authenticatedUser.IsInRole("Admin"))
+                getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
+            else
+            {
+                var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+                getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
+            }
+            if (!string.IsNullOrEmpty(serviceEndpoint))
+                Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
         }
-        Games = new List<GameViewModel>();
-        if (authenticatedUser.IsInRole("Admin"))
-            getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
         else
-        {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
-        }
-        if (!string.IsNullOrEmpty(serviceEndpoint))
-            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
+            Navigation.NavigateTo("/games");
+    }
+    private List<string> _events = new();
+
+    void RowClicked(DataGridRowClickEventArgs<CreateMultipleQuestionsViewModel> args)
+    {
+        // selectedItem = args.Item;
+        _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void RowRightClicked(DataGridRowClickEventArgs<CreateMultipleQuestionsViewModel> args)
+    {
+        _events.Insert(0, $"Event = RowRightClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");
+    }
+
+    void SelectedItemsChanged(HashSet<CreateMultipleQuestionsViewModel> items)
+    {
+        // selectedGames = items.ToList();
+        // disabledDelete = !(selectedGames.Count > 0);
+
+        _events.Insert(0, $"Event = SelectedItemsChanged, Data = {System.Text.Json.JsonSerializer.Serialize(items)}");
+    }
+
+    void Closed(MudChip<string> chip)
+    {
+        InputGame.Image = new EditGameImageViewModel();
     }
 
     private void InputGameContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
@@ -509,28 +611,14 @@
         Navigation.NavigateTo("/games");
     }
 
-#nullable enable
-    public class Model
-    {
-        public IReadOnlyList<IBrowserFile>? Files { get; set; } = new List<IBrowserFile>();
-    }
-
-    private Model _model = new();
-    private ModelFluentValidator _validationRules = new();
-    private MudFileUpload<IReadOnlyList<IBrowserFile>>? _fileUpload;
-    private bool _isValid;
-    private bool _isTouched;
-    private const string FileContent = "this is content";
-    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full";
-    private string _dragClass = DefaultDragClass;
-
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
         var format = "image/png";
         var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
         var buffer = new byte[resizeImage.Size];
         await resizeImage.OpenReadStream().ReadAsync(buffer);
-        InputGame.Image = Convert.ToBase64String(buffer);
+        InputGame.Image.Title = resizeImage.Name;
+        InputGame.Image.Content = Convert.ToBase64String(buffer);
     }
 
     private void Upload()
@@ -550,7 +638,11 @@
         => _fileUpload?.OpenFilePickerAsync() ?? Task.CompletedTask;
 
     private Task ClearAsync()
-        => _fileUpload?.ClearAsync() ?? Task.CompletedTask;
+    {
+        InputGame.Image = new EditGameImageViewModel();
+        _fileUpload?.ClearAsync();
+        return Task.CompletedTask;
+    }
 
     public class ModelFluentValidator : AbstractValidator<Model>
     {
@@ -561,7 +653,8 @@
                 .WithMessage("There must be at least 1 file.");
         }
 
-        public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+        public Func<object, string, Task<IEnumerable<string>>> 
+        ValidateValue => async (model, propertyName) =>
         {
             var result = await ValidateAsync(ValidationContext<Model>.CreateWithOptions((Model)model, x => x.IncludeProperties(propertyName)));
             return result.IsValid ? Array.Empty<string>() : result.Errors.Select(e => e.ErrorMessage);
