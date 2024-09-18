@@ -532,15 +532,14 @@
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
         var regexItem = new Regex("^[a-zA-Z0-9_.]*$");
-        var name = e.File.Name.ToString();
-        if (regexItem.IsMatch(name))
+        if (regexItem.IsMatch(e.File.Name.ToString()))
         {
             fileNameWrong = false;
             var format = e.File.ContentType;
             var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
-            InputGame.Image.Title = name.ToString();
+            InputGame.Image.Title = e.File.Name.ToString();
             InputGame.Image.Content = Convert.ToBase64String(buffer);
         }
         else
