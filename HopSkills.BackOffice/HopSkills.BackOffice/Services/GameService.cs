@@ -34,6 +34,7 @@ namespace HopSkills.BackOffice.Services
                 var creator = _hopSkillsDb.Users.FirstOrDefault(u => u.Email == createGameModel.Creator);
                 if (creator != null)
                 {
+                    var mainImage = string.IsNullOrEmpty(createGameModel.Image?.Title) ? createGameModel.Image?.Title.Replace(" ", "").ToUpper() : string.Empty;
                     var newAppGame = new ApplicationGame
                     {
                         TotalDuration = createGameModel.TotalDuration,
@@ -44,7 +45,7 @@ namespace HopSkills.BackOffice.Services
                         UserId = new Guid(creator.Id),
                         CustomerId = creator.CustomerId,
                         Description = createGameModel.Description,
-                        ImageUri = string.Empty,
+                        ImageUri = mainImage,
                         DifficultyLevel = createGameModel.DifficultyLevel,
                         ElligibleSub = createGameModel.ElligibleSub,
                         CreatedOn = DateTime.UtcNow,
@@ -63,7 +64,7 @@ namespace HopSkills.BackOffice.Services
                             {
                                 Tags = new Dictionary<string, string>
                                 {
-                                    {"Title",  createGameModel.Image.Title},
+                                    {"Title",  mainImage},
                                     {"Date",  DateTime.UtcNow.ToShortDateString()}
                                 }
                             };

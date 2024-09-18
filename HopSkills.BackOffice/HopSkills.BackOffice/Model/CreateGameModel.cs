@@ -19,8 +19,8 @@
 
     public class CreateGameImage
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string? Title { get; set; }
+        public string? Content { get; set; }
     }
 
     

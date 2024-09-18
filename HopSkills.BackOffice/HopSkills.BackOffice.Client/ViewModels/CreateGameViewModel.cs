@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HopSkills.BackOffice.Client.ViewModels
 {
@@ -22,7 +23,8 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public int NumberOfQuestion { get; set; }
         //[Required]
         public TimeSpan TotalDuration { get; set; }
-        public CreateGameImageViewModel Image { get; set; }
+        [AllowNull]
+        public CreateGameImageViewModel? Image { get; set; }
         //[Required]
         public int TotalXperience { get; set; }
         public List<CreateMultipleQuestionsViewModel> multipleQuestions { get; set; }
@@ -30,7 +32,10 @@ namespace HopSkills.BackOffice.Client.ViewModels
 
     public class CreateGameImageViewModel
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        [MaxLength(255)]
+        [RegularExpression(@"^[a-zA-Z\s.\-']{2,}$")]
+        [AllowNull]
+        public string? Title { get; set; }
+        public string? Content { get; set; }
     }
 }

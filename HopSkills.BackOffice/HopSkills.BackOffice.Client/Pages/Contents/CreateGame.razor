@@ -92,7 +92,8 @@
         
             <MudPaper Class="pa-4">
                 <MudStack Style="width: 100%">
-                <EditForm EditContext="InputGameContext" FormName="FormGame" OnValidSubmit="OnValidSubmit">
+                <EditForm EditContext="InputGameContext" FormName="FormGame" 
+                    OnValidSubmit="OnValidSubmit">
                     <DataAnnotationsValidator />
                     @if (form1Validate)
                     {
@@ -127,6 +128,10 @@
                                     </MudPaper>
                                 </ActivatorContent>
                             </MudFileUpload>
+                            @if (fileNameWrong)
+                            {
+                                <MudAlert Severity="MudBlazor.Severity.Error">File Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
+                            }
                             <MudToolBar Gutters="@false"
                                         Class="relative d-flex justify-end gap-4">
                                 <MudButton Color="Color.Primary"
@@ -164,7 +169,8 @@
                                               Label="Title" For="@(() => InputGame.Title)" Variant="Variant.Outlined" />
                         </MudItem>
                         <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Required="true" @bind-Value="@InputGame.DifficultyLevel"
+                                <MudSelect T="string" Required="true" 
+                                    @bind-Value="@InputGame.DifficultyLevel"
                                            Placeholder="Select a difficulty level"
                                            UserAttributes="@(new() { { "aria-required", "true" } } )"
                                            For="@(() => InputGame.DifficultyLevel)"
@@ -378,6 +384,7 @@
     private bool form3Validate { get; set; }
     private bool formQuestions { get; set; }
     private bool form1IsValid { get; set; }
+    private bool fileNameWrong { get; set; }
     private string getPriorGamesEndpoint { get; set; }
     private CreateMultipleQuestionsViewModel _questionFormInput { get; set; } 
     EditContext InputGameContext;
@@ -396,13 +403,14 @@
     protected override async Task OnInitializedAsync()
     {
         serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
-        InputGameContext = new(InputGame);
         InputGame.Image = new CreateGameImageViewModel();
+        InputGameContext = new(InputGame);
         InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
         InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
         form1Validate = true;
         disabledNext1 = true;
         disabledNext2 = true;
+        fileNameWrong = false;
         if (authenticationStateTask is not null)
         {
             authenticationState = await authenticationStateTask;
@@ -426,7 +434,7 @@
         if (!String.IsNullOrEmpty(InputGame.Title)
         && !String.IsNullOrEmpty(InputGame.DifficultyLevel)
         && !String.IsNullOrEmpty(InputGame.Theme)
-        && !String.IsNullOrEmpty(InputGame.ElligibleSub))
+        && !String.IsNullOrEmpty(InputGame.ElligibleSub) && !fileNameWrong)
             disabledNext1 = false;
         if (!String.IsNullOrEmpty(InputGame.Description))
             disabledNext2 = false;
@@ -523,13 +531,23 @@
 
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
-        var format = e.File.ContentType;
+        var regexItem = new Regex("^[a-zA-Z0-9_.]*$");
         var name = e.File.Name.ToString();
-        var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
-        var buffer = new byte[resizeImage.Size];
-        await resizeImage.OpenReadStream().ReadAsync(buffer);
-        InputGame.Image.Title = name.ToString();
-        InputGame.Image.Content = Convert.ToBase64String(buffer);
+        if (regexItem.IsMatch(name))
+        {
+            fileNameWrong = false;
+            var format = e.File.ContentType;
+            var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            InputGame.Image.Title = name.ToString();
+            InputGame.Image.Content = Convert.ToBase64String(buffer);
+        }
+        else
+        {
+            fileNameWrong = true;
+            disabledNext1 = true;
+        }
     }
 
     private void Upload()
@@ -549,7 +567,11 @@
         => _fileUpload?.OpenFilePickerAsync() ?? Task.CompletedTask;
 
     private Task ClearAsync()
-        => _fileUpload?.ClearAsync() ?? Task.CompletedTask;
+    {
+        fileNameWrong = false;
+        _fileUpload?.ClearAsync(); 
+        return Task.CompletedTask;
+    }
 
     public class ModelFluentValidator : AbstractValidator<Model>
     {
