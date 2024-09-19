@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HopSkills.BackOffice.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71e55bca1b3bfac91af4dec4c5ab7ed153536ad6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a63d2b4fcd69718f790dc64104d979f868d1a106")]
 [assembly: System.Reflection.AssemblyProductAttribute("HopSkills.BackOffice.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HopSkills.BackOffice.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

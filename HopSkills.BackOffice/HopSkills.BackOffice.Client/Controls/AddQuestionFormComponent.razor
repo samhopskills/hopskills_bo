@@ -44,10 +44,17 @@
                                 <MudFab Color="Color.Secondary"
                                         StartIcon="@Icons.Material.Filled.Image"
                                         Label="Load picture" />
-                                @foreach (var file in _files.Select(file => file.Name) ?? Enumerable.Empty<string>())
-                                {
-                                            <MudChip T="string" Color="Color.Dark" Text="@file" OnClose="Closed" />
-                                }
+                                    @if (base64Images.Any())
+                                    {
+                                        @foreach (var file in base64Images)
+                                        {
+                                            <MudItem>
+                                                <MudImage Src="@file"
+                                                          Style="height:100px;width:100px;" />
+                                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                            </MudItem>
+                                        }
+                                    }
                             </ActivatorContent>
                         </MudFileUpload>
                     </MudItem>
@@ -63,12 +70,21 @@
                                 </MudButton>
                             </ActivatorContent>
                         </MudFileUpload>
+                            @if (base64Audios.Any())
+                            {
+                                @foreach (var file in base64Audios)
+                                {
+                                    @if (!string.IsNullOrEmpty(file))
+                                    {
+                                        <MudItem>
+                                            <audio controls src="@file" />
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                            </MudItem>
+                                    }
+                                }
+                            }
                     </MudItem>
                     </MudGrid>
-                @if (fileNameWrong || audioFileNameWrong)
-                {
-                    <MudAlert Severity="MudBlazor.Severity.Error">File(s) Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
-                }
                     <br />
                     <br />
                 @foreach (var item in questionFormInput.PossibleAnswers)
@@ -150,7 +166,8 @@
     private bool fileNameWrong { get; set; }
     private bool audioFileNameWrong { get; set; }
     private bool formDisabled { get; set; }
-
+    private List<string> base64Images = new();
+    private List<string> base64Audios = new();
     private async void Cancel()
     {
         await OnCancelEvent.InvokeAsync();
@@ -173,7 +190,7 @@
             };
     }
 
-    void Closed(MudChip<string> chip)
+    void Closed(MudChip<MudImage> chip)
     {
         // react to chip closed
     }
@@ -204,35 +221,19 @@
 
     private async void UploadFiles(IBrowserFile file)
     {
-        // var regexItem = new Regex("^[a-zA-Z0-9_.]*$");
-        // if (regexItem.IsMatch(name))
-        // {
-        //     var name = file.Name;
-        //     fileNameWrong = false;
-        //     formDisabled = false;
         _files.Add(file);
         var format = "image/png";
-        var resizeImage = await file.RequestImageFileAsync(format, int.MaxValue, int.MaxValue);
+        var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
         var buffer = new byte[resizeImage.Size];
         await resizeImage.OpenReadStream().ReadAsync(buffer);
-        questionFormInput.ImageFiles.Add(Convert.ToBase64String(buffer));
-        // }
-        // else
-        // {
-        //     fileNameWrong = true;
-        //     formDisabled = true;
-        // }
-
+        base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
+        questionFormInput.ImageFiles.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
+        StateHasChanged();
     }
 
     private async void UploadFiles2(IBrowserFile file)
     {
-        // var regexItem = new Regex("^[a-zA-Z0-9_.]*$");
-        // var name = file.Name;
-        // if (regexItem.IsMatch(name))
-        // {
-        //     audioFileNameWrong = false;
-        //     formDisabled = false;
+        
         _audios.Add(file);
         using (var stream = file.OpenReadStream())
         {
@@ -241,15 +242,11 @@
             {
                 var result = new byte[length];
                 await stream.ReadAsync(result);
-                questionFormInput.AudioFiles.Add(Convert.ToBase64String(result));
+                base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
+                questionFormInput.AudioFiles.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
+                StateHasChanged();
             }
         }
-        // }
-        // else
-        // {
-        //     audioFileNameWrong = true;
-        //     formDisabled = true;
-        // }
     }
 
     private async void OnValidSubmit()

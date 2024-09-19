@@ -121,10 +121,17 @@
                                         <MudText Typo="Typo.h6">
                                             Add an image
                                         </MudText>
-                                        @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
+                                        <div class="d-flex justify-center">
+                                        @if (!string.IsNullOrEmpty(InputGame.Image?.Content))
+                                        {
+                                                <MudImage Fluid="true" ObjectFit="ObjectFit.Cover"
+                                                      Src="@base64data" />
+                                        }
+                                        </div>
+                                       @*  @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
                                         {
                                             <MudChip T="string" Color="Color.Dark" Text="@file" />
-                                        }
+                                        } *@
                                     </MudPaper>
                                 </ActivatorContent>
                             </MudFileUpload>
@@ -398,7 +405,7 @@
     private AuthenticationState authenticationState { get; set; }
     private ClaimsPrincipal authenticatedUser { get; set; }
     private List<GameViewModel>? Games;
-
+    private string base64data = "";
     protected override async Task OnInitializedAsync()
     {
         serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
@@ -530,7 +537,7 @@
 
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
-        var regexItem = new Regex("^[a-zA-Z0-9_.]*$");
+        var regexItem = new Regex("^[a-zA-Z0-9_.-]*$");
         if (regexItem.IsMatch(e.File.Name.ToString()))
         {
             fileNameWrong = false;
@@ -539,7 +546,9 @@
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
             InputGame.Image.Title = e.File.Name.ToString();
-            InputGame.Image.Content = Convert.ToBase64String(buffer);
+            base64data = "data:image/png;base64," + Convert.ToBase64String(buffer);
+            InputGame.Image.Content = base64data;
+            StateHasChanged();
         }
         else
         {
@@ -566,8 +575,10 @@
 
     private Task ClearAsync()
     {
+        InputGame.Image = new CreateGameImageViewModel();
         fileNameWrong = false;
-        _fileUpload?.ClearAsync(); 
+        _fileUpload?.ClearAsync();
+                StateHasChanged();
         return Task.CompletedTask;
     }
 
