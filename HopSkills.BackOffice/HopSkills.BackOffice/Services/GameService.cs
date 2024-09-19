@@ -8,6 +8,7 @@ using HopSkills.BackOffice.Model;
 using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BO.CoreBusiness;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 
 namespace HopSkills.BackOffice.Services
@@ -28,10 +29,11 @@ namespace HopSkills.BackOffice.Services
 
         public async Task AddGame(CreateGameModel createGameModel)
         {
-            _logger.LogInformation("Add a game");
+            _logger.LogInformation($"[Game][Create] : {JsonConvert.SerializeObject(createGameModel)}");
             try
             {
-                var creator = _hopSkillsDb.Users.FirstOrDefault(u => u.Email == createGameModel.Creator);
+                var creator = _hopSkillsDb.Users
+                    .FirstOrDefault(u => u.Email == createGameModel.Creator);
                 if (creator != null)
                 {
                     var newAppGame = new ApplicationGame
@@ -54,7 +56,9 @@ namespace HopSkills.BackOffice.Services
                     Guid? gameId = resultGame.Entity.Id;
                     if (gameId != null)
                     {
-                        BlobContainerClient _containerClient = _blobServiceClient.GetBlobContainerClient(ImageContainerName);
+                        _logger.LogInformation("[Game Added To DB OK]");
+                        BlobContainerClient _containerClient = _blobServiceClient
+                            .GetBlobContainerClient(ImageContainerName);
                         var creaMutliQ = createGameModel.multipleQuestions;
                         if (createGameModel.Image is not null)
                         {
@@ -69,9 +73,11 @@ namespace HopSkills.BackOffice.Services
                             };
                             var bytes = Convert.FromBase64String(createGameModel.Image.Content);
                             await blobClient.UploadAsync(BinaryData.FromBytes(bytes), options);
+                            _logger.LogInformation("[Game Image added to container]");
                         }
                         if (creaMutliQ.Count != 0)
                         {
+                            
                             var multiQ = creaMutliQ.Select(
                             e => new ApplicationMultiQuestion
                             {
@@ -107,6 +113,7 @@ namespace HopSkills.BackOffice.Services
                                                 var blobClient = _containerClient.GetBlobClient($"{gameId.Value}/{mutlId.Value}_{count++}.png");
                                                 await blobClient.UploadAsync(BinaryData.FromBytes(b));
                                             }
+                                            _logger.LogInformation("[Multi Form Images Added to Container]");
                                         }
                                         if(audioFiles.Count > 0)
                                         {
@@ -118,18 +125,20 @@ namespace HopSkills.BackOffice.Services
                                                 var blobClient = _containerClient.GetBlobClient($"{gameId.Value}/{mutlId.Value}_{count++}.mp3");
                                                 await blobClient.UploadAsync(BinaryData.FromBytes(b));
                                             }
+                                            _logger.LogInformation("[Multi Form Audios Added to Container]");
                                         }
                                     }
                                 }
                             }
                         }
                         await _hopSkillsDb.SaveChangesAsync();
+                        _logger.LogInformation("[Save Changes]");
                     }
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"[ERROR] : {ex.Message}");
+                _logger.LogError($"[ERROR] : {ex} {ex.Message}");
             }
         }
 

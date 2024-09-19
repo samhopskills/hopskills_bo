@@ -2,27 +2,35 @@
 @using System.Text.RegularExpressions
 <MudGrid>
     <MudItem xs="12" sm="12" md="12">
-        <MudPaper Class="pa-4">
             <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudCard>
                     <MudCardContent>
-                <MudGrid>
-                    <MudItem xs="12" sm="6" md="4">
+                        <MudGrid>
+                            <MudItem xs="12">
                         <MudTextField T="string" Label="Question" 
                             @bind-Value="@questionFormInput.Question"
-                            Required="true"
+                            Required="true" Variant="Variant.Outlined"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                      For="@(() => questionFormInput.Question)" />
+                                      For="@(() => questionFormInput.Question)" 
+                                      InputMode="InputMode.text" AutoGrow="true" Lines="5" />
+
                     </MudItem>
+                        </MudGrid>
+                        <br/>
+                        <br/>
+                <MudGrid>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTimePicker Label="Duration" Required="true" @bind-Time="@questionFormInput.Duration"
+                        <MudTimePicker Label="Duration" Required="true" 
+                            @bind-Time="@questionFormInput.Duration"
                                         TimeEditMode="TimeEditMode.OnlyMinutes"
                                        UserAttributes="@(new() { { "aria-required", "true" } } )"
                                        For="@(() => questionFormInput.Duration)" />
                     </MudItem>
+                            <MudItem xs="12" sm="6" md="4">
+                            </MudItem>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTextField T="int" Label="Xp" Required="true"
+                        <MudTextField T="int"  Label="Xp" Required="true"
                             @bind-Value="@questionFormInput.Xperience"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.Xperience)" />
@@ -122,10 +130,6 @@
                                OnClick="Cancel">Cancel</MudButton>
                 </MudCardActions>
                        </EditForm>
-        </MudPaper>
-        @* <MudPaper Class="pa-4 mt-4">
-            
-        </MudPaper> *@
     </MudItem>
 </MudGrid>
 
