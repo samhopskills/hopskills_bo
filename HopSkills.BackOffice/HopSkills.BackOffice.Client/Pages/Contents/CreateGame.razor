@@ -483,7 +483,7 @@
         _questionFormInput = validQuestionFom;
         InputGame.multipleQuestions.Add(_questionFormInput);
         InputGame.TotalXperience += _questionFormInput.Xperience;
-        InputGame.TotalDuration.Add(_questionFormInput.Duration.Value);
+        InputGame.TotalDuration.Add(TimeSpan.Parse(_questionFormInput.Duration));
         Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
         formQuestions = !formQuestions;
         form3Validate = !form3Validate;

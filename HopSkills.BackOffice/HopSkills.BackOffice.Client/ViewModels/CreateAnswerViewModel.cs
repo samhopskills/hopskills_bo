@@ -11,5 +11,6 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string Answer { get; set; }
         [Required]
         public bool IsCorrect { get; set; }
+        public int Order { get; set; }
     }
 }

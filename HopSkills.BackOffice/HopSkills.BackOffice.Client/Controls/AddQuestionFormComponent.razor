@@ -1,8 +1,14 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Text.RegularExpressions
 <MudGrid>
+    <style>
+        .green-border > .mud-input-control-input-container > 
+        .mud-input.mud-input-outlined > input:focus ~ .mud-input-outlined-border {
+            border-color: lime;
+        }
+    </style>
     <MudItem xs="12" sm="12" md="12">
-            <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
+        <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudCard>
                     <MudCardContent>
@@ -12,8 +18,9 @@
                             @bind-Value="@questionFormInput.Question"
                             Required="true" Variant="Variant.Outlined"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                      For="@(() => questionFormInput.Question)" 
-                                      InputMode="InputMode.text" AutoGrow="true" Lines="5" />
+                                      For="@(() => questionFormInput.Question)"
+                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QuestionMark"
+                                          InputMode="InputMode.text" AutoGrow="true" Lines="5" />
 
                     </MudItem>
                         </MudGrid>
@@ -21,17 +28,19 @@
                         <br/>
                 <MudGrid>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTimePicker Label="Duration" Required="true" 
-                            @bind-Time="@questionFormInput.Duration"
-                                        TimeEditMode="TimeEditMode.OnlyMinutes"
+                            <MudTextField T="string" InputMode="InputMode.numeric" InputType="InputType.Time"
+                            Label="Duration" Required="true"
+                                          @bind-Value="@questionFormInput.Duration"
+                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Timer"
                                        UserAttributes="@(new() { { "aria-required", "true" } } )"
                                        For="@(() => questionFormInput.Duration)" />
                     </MudItem>
                             <MudItem xs="12" sm="6" md="4">
                             </MudItem>
                     <MudItem xs="12" sm="6" md="4">
-                        <MudTextField T="int"  Label="Xp" Required="true"
+                            <MudTextField T="int" InputMode="InputMode.numeric" Label="Xp" Required="true"
                             @bind-Value="@questionFormInput.Xperience"
+                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Star"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.Xperience)" />
                     </MudItem>
@@ -93,31 +102,53 @@
                     </MudGrid>
                     <br />
                     <br />
-                @foreach (var item in questionFormInput.PossibleAnswers)
+                    @if (questionFormInput.PossibleAnswers.Any())
                     {
-                        <MudGrid>
-                        <MudItem xs="9" sm="9" md="9">
-                            <MudTextField InputMode="InputMode.text"
-                                          Required="true"
-                                          T="string" Label="@item.Label" 
-                                          @bind-Value="@item.Answer"
-                                          UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                          For="@(() => item.Label)"
-                                          AutoGrow="true" Variant="Variant.Text" />
-                        </MudItem>
-                        <MudItem>
-                            <MudCheckBox @bind-Value="@item.IsCorrect" T="bool"></MudCheckBox>
-                        </MudItem>
-                        @if(!item.Label.Equals("Answer 1"))
+                        @foreach (var item in questionFormInput.PossibleAnswers)
                         {
-                            <MudItem>
-                                <MudIconButton 
-                                    OnClick="@(e => DeleteAnswer(item.Id-1))" 
-                                    Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
-                            </MudItem>
+                            <MudGrid>
+                                <MudItem xs="9" sm="9" md="9">
+                                    @if(item.IsCorrect)
+                                    {
+                                        <MudTextField InputMode="InputMode.text"
+                                                      Required="true"
+                                                      T="string"
+                                                      @bind-Value="@item.Answer"
+                                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                      For="@(() => item.Label)"
+                                                      Variant="Variant.Outlined"
+                                                      AutoGrow="true" Lines="3"
+                                                      Style="background-color: rgba(11,186,131,1)" />
+                                    }
+                                    else
+                                    {
+                                        <MudTextField InputMode="InputMode.text"
+                                                      Required="true"
+                                                      T="string" Label="@item.Label"
+                                                      @bind-Value="@item.Answer"
+                                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                      For="@(() => item.Label)"
+                                                      Variant="Variant.Outlined"
+                                                      AutoGrow="true" Lines="3"/>
+                                    }
+                                    
+                                </MudItem>
+                                <MudItem>
+                                    <MudSwitch @bind-Value="@item.IsCorrect"
+                                               ThumbIcon="@(item.IsCorrect==true? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                               ThumbIconColor="@(item.IsCorrect==true ? Color.Success : Color.Error)">
+                                        Is Correct?
+                                    </MudSwitch>
+                                    @if (item.Order == 0)
+                                    {
+                                        <MudIconButton OnClick="@(e => DeleteAnswer(item.Order))"
+                                                       Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
+                                    }
+                                </MudItem>
+
+                            </MudGrid>
+                            <br />
                         }
-                        </MudGrid>
-                        <br />
                     }
                     <MudGrid>
                     <MudItem xs="4" sm="4" md="4">
@@ -129,7 +160,7 @@
                 <br />
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="12">
-                        <MudTextField InputMode="InputMode.text"
+                        <MudTextField  InputMode="InputMode.text"
                                       T="string" 
                                       Label="Explain the correct answer" 
                                       Required="true"
@@ -140,17 +171,17 @@
                     </MudItem>
                 </MudGrid>
                     </MudCardContent>
-                </MudCard>
                 <br />
                 <MudCardActions>
                     <MudButton ButtonType="ButtonType.Submit"
                                Variant="Variant.Filled"
-                               Color="Color.Primary" OnClick="OnValidSubmit"
+                               Color="Color.Primary"
                                DropShadow="false">Validate</MudButton>
                     <MudButton ButtonType="ButtonType.Submit"
-                               Variant="Variant.Filled" DropShadow="false" 
+                               Variant="Variant.Filled" DropShadow="false"
                                OnClick="Cancel">Cancel</MudButton>
                 </MudCardActions>
+                </MudCard>
                        </EditForm>
     </MudItem>
 </MudGrid>
@@ -178,15 +209,17 @@
     {
         await OnCancelEvent.InvokeAsync();
     }
-
+    
     protected override async Task OnInitializedAsync()
     {
         questionFormInput = new CreateMultipleQuestionsViewModel
             {
                 PossibleAnswers = new List<CreateAnswerViewModel>
                 {
-                    new CreateAnswerViewModel { Id = 1, Label = "Answer 1",Answer = string.Empty,
-                    IsCorrect = false}
+                    new CreateAnswerViewModel { Id = 1, 
+                        Label = "Answer 1",
+                        Answer = string.Empty,
+                    IsCorrect = false, Order = 0}
                 },
                 ImageFiles = new List<string>(),
                 AudioFiles = new List<string>()
@@ -207,7 +240,8 @@
                 Id = questionFormInput.PossibleAnswers.Count + 1,
                 Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
             Answer = string.Empty,
-            IsCorrect = false
+            IsCorrect = false,
+                Order = questionFormInput.PossibleAnswers.Count + 1
         });
     }
 
