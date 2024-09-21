@@ -12,10 +12,10 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string Description { get; set; }
         [Required]
         public string Theme { get; set; }
-        //[Required]
+        [Required]
         public string ElligibleSub { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string Status { get; set; } = "Draft";
         [Required]
         public string DifficultyLevel { get; set; }
         //[Required]
@@ -33,7 +33,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
     public class CreateGameImageViewModel
     {
         [MaxLength(255)]
-        [RegularExpression(@"^[a-zA-Z\s.\-']{2,}$")]
+        [RegularExpression(@"^[a-zA-Z0-9_.-]*$")]
         [AllowNull]
         public string? Title { get; set; }
         public string? Content { get; set; }

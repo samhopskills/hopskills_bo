@@ -1,30 +1,34 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+<MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-<MudLayout >
+<MudLayout Style="background-color:#F8F9FB">
     <AuthorizeView>
         <Authorized>
-            <MudAppBar Elevation="1">
+            <MudAppBar Elevation="1" Style="background-color:#7C4DFF">
                 <MudIconButton Icon="@Icons.Material.Filled.AllInclusive"
-                               Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                <MudText Typo="Typo.h5" Class="ml-3">HopSkills</MudText>
+                                Edge="Edge.Start"
+                               OnClick="@((e) => DrawerToggle())" />
+                               <MudImage Width="130"  Src="Images/Picture3.svg"></MudImage>
+                @* <MudText Typo="Typo.h5" Class="ml-3">HopSkills</MudText> *@
                 <MudSpacer />
-                <MudSwitch @bind-Value="_isDarkMode" 
-                Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
+                @* <MudSwitch @bind-Value="_isDarkMode" 
+                Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
             </MudAppBar>
             <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
             </MudDrawer>
         </Authorized>
     </AuthorizeView>
-    <MudMainContent >
-        <br />
-        <br />
-        <br />
-        @Body
+    <MudMainContent>
+        <MudContainer Gutters="true" >
+            <br />
+            <br />
+            <br />
+            @Body
+        </MudContainer>
     </MudMainContent>
 </MudLayout>
 
@@ -38,7 +42,6 @@
 @code {
     private bool _drawerOpen = true;
     private MudTheme _theme = new();
-    private bool _isDarkMode;
 
     private void DrawerToggle()
     {

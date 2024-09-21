@@ -9,6 +9,14 @@
       "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
     },
     {
+      "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\Picture1.png",
+      "PackagePath": "staticwebassets\\Images\\Picture1.png"
+    },
+    {
+      "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\Picture3.svg",
+      "PackagePath": "staticwebassets\\Images\\Picture3.svg"
+    },
+    {
       "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.Development.json",
       "PackagePath": "staticwebassets\\appsettings.Development.json"
     },

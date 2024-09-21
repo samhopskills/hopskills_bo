@@ -89,144 +89,152 @@
 
 <MudGrid>
     <MudItem xs="12" sm="7">
-        
             <MudPaper Class="pa-4">
                 <MudStack Style="width: 100%">
-                <EditForm EditContext="InputGameContext" FormName="FormGame" 
-                    OnValidSubmit="OnValidSubmit">
-                    <DataAnnotationsValidator />
                     @if (form1Validate)
                     {
-                        <MudItem xs="12">
-                            <MudFileUpload T="IReadOnlyList<IBrowserFile>"
-                                           @ref="@_fileUpload"
-                                           @bind-Files="_model.Files"
-                                           For="@(() => _model.Files)"
-                                           AppendMultipleFiles="false"
-                                           Hidden="@false"
-                                           InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
-                                           InputStyle="opacity:0"
-                                           ErrorText="@string.Empty"
-                                           tabindex="-1"
-                                           Accept=".png, .jpg"
-                                           @ondrop="@ClearDragClass"
-                                           @ondragenter="@SetDragClass"
-                                           @ondragleave="@ClearDragClass"
-                                           @ondragend="@ClearDragClass"
-                                           OnFilesChanged="LoadFiles">
-                                <ActivatorContent>
-                                    <MudPaper 
-                                              Outlined="true"
-                                              Class="@_dragClass">
-                                        <MudText Typo="Typo.h6">
-                                            Add an image
-                                        </MudText>
-                                        <div class="d-flex justify-center">
-                                        @if (!string.IsNullOrEmpty(InputGame.Image?.Content))
-                                        {
-                                                <MudImage Fluid="true" ObjectFit="ObjectFit.Cover"
-                                                      Src="@base64data" />
-                                        }
-                                        </div>
-                                       @*  @foreach (var file in _model.Files?.Select(file => file.Name) ?? Enumerable.Empty<string>())
-                                        {
-                                            <MudChip T="string" Color="Color.Dark" Text="@file" />
-                                        } *@
-                                    </MudPaper>
-                                </ActivatorContent>
-                            </MudFileUpload>
-                            @if (fileNameWrong)
-                            {
-                                <MudAlert Severity="MudBlazor.Severity.Error">File Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
-                            }
-                            <MudToolBar Gutters="@false"
-                                        Class="relative d-flex justify-end gap-4">
-                                <MudButton Color="Color.Primary"
-                                           OnClick="@OpenFilePickerAsync"
-                                           Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Image">
-                                    Upload
-                                </MudButton>
-                                <MudButton Color="Color.Error"
-                                           Disabled="@(_model.Files is null || !_model.Files.Any())"
-                                           OnClick="@ClearAsync"
-                                           Variant="Variant.Filled">
-                                    Clear
-                                </MudButton>
-                            </MudToolBar>
-                        </MudItem>
-                        <MudItem>
-                            @if (_fileUpload?.ValidationErrors.Any() ?? false)
-                            {
-                                <MudText Color="Color.Error"
-                                         Typo="@Typo.caption">
-                                    @_fileUpload?.ValidationErrors[0]
-                                </MudText>
-                            }
-                        </MudItem>
-                        <MudItem xs="12">
-                        </MudItem>
-                        <MudCard>
-                            <MudCardContent>
-                        <MudForm @ref="form1"  @bind-IsValid="@success">
-                    <MudGrid>
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudTextField T="string" Required="true" @bind-Value="@InputGame.Title"
-                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                              Label="Title" For="@(() => InputGame.Title)" Variant="Variant.Outlined" />
-                        </MudItem>
-                        <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Required="true" 
-                                    @bind-Value="@InputGame.DifficultyLevel"
-                                           Placeholder="Select a difficulty level"
-                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                           For="@(() => InputGame.DifficultyLevel)"
-                                       Label="Difficulty level" Variant="Variant.Outlined"
-                                       AnchorOrigin="Origin.BottomCenter">
-                                    <MudSelectItem T="string" Value="@("Easy")" />
-                                    <MudSelectItem T="string" Value="@("Medium")" />
-                                    <MudSelectItem T="string" Value="@("Hard")" />
-                            </MudSelect>
-                        </MudItem>
-                        <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Required="false"
-                                    @bind-Value="@InputGame.PriorGame" Placeholder="Select a game"
-                                       Label="Game to complete before" Variant="Variant.Outlined"
-                                       AnchorOrigin="Origin.BottomCenter">
-                                       @foreach (var item in Games)
-                                       {
-                                          <MudSelectItem T="string" Value="@(item.Title)" />
-                                       }
-                            </MudSelect>
-                        </MudItem>
-                    </MudGrid>
-                    <MudGrid>
-                        <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)" @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
-                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                           Label="Theme related to" Variant="Variant.Outlined"
-                                       AnchorOrigin="Origin.BottomCenter">
-                                    <MudSelectItem T="string" Value="@("Theme A")" />
-                                    <MudSelectItem T="string" Value="@("Theme B")" />
-                                    <MudSelectItem T="string" Value="@("Theme C")" />
-                            </MudSelect>
-                        </MudItem>
-                        <MudItem xs="12" sm="6" md="4">
-                                <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)" @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
-                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                           Label="Eligible subscription" Variant="Variant.Outlined"
-                                       AnchorOrigin="Origin.BottomCenter">
-                                    <MudSelectItem T="string" Value="@("Sub A")" />
-                                    <MudSelectItem T="string" Value="@("Sub B")" />
-                                    <MudSelectItem T="string" Value="@("Sub C")" />
-                            </MudSelect>
-                        </MudItem>
-                    </MudGrid>
-                        </MudForm>
-                        </MudCardContent>
-                        </MudCard>
+                    <EditForm Model="@InputGame" OnValidSubmit="OnValidSubmit">
+                        <DataAnnotationsValidator />
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudCard>
+                                    <MudCardContent>
+                                        <MudItem xs="12">
+                                            <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                                                           @ref="@_fileUpload"
+                                                           @bind-Files="_model.Files"
+                                                           For="@(() => _model.Files)"
+                                                           AppendMultipleFiles="false"
+                                                           Hidden="@false"
+                                                           InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
+                                                           InputStyle="opacity:0"
+                                                           ErrorText="@string.Empty"
+                                                           tabindex="-1"
+                                                           Accept=".png, .jpg"
+                                                           @ondrop="@ClearDragClass"
+                                                           @ondragenter="@SetDragClass"
+                                                           @ondragleave="@ClearDragClass"
+                                                           @ondragend="@ClearDragClass"
+                                                           OnFilesChanged="LoadFiles">
+                                                <ActivatorContent>
+                                                    <MudPaper Outlined="true"
+                                                              Class="@_dragClass">
+                                                        <MudText Typo="Typo.h6">
+                                                            Add an image
+                                                        </MudText>
+                                                        <div class="d-flex justify-center">
+                                                            @if (!string.IsNullOrEmpty(InputGame.Image?.Content))
+                                                            {
+                                                                <MudImage Fluid="true"
+                                                                          ObjectFit="ObjectFit.Cover"
+                                                                          Src="@base64data" />
+                                                            }
+                                                        </div>
+                                                    </MudPaper>
+                                                </ActivatorContent>
+                                            </MudFileUpload>
+                                            @if (fileNameWrong)
+                                            {
+                                                <MudAlert Severity="MudBlazor.Severity.Error">File Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
+                                            }
+                                            <MudToolBar Gutters="@false"
+                                                        Class="relative d-flex justify-end gap-4">
+                                                <MudButton Color="Color.Primary"
+                                                           OnClick="@OpenFilePickerAsync"
+                                                           Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Image">
+                                                    Upload
+                                                </MudButton>
+                                                <MudButton Color="Color.Error"
+                                                           Disabled="@(_model.Files is null || !_model.Files.Any())"
+                                                           OnClick="@ClearAsync"
+                                                           Variant="Variant.Filled">
+                                                    Clear
+                                                </MudButton>
+                                            </MudToolBar>
+                                        </MudItem>
+                                        <MudItem>
+                                            @if (_fileUpload?.ValidationErrors.Any() ?? false)
+                                            {
+                                                <MudText Color="Color.Error"
+                                                         Typo="@Typo.caption">
+                                                    @_fileUpload?.ValidationErrors[0]
+                                                </MudText>
+                                            }
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                        </MudItem>
+                                        <MudGrid>
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudTextField T="string" Required="true" @bind-Value="@InputGame.Title"
+                                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                              Label="Title" For="@(() => InputGame.Title)" Variant="Variant.Outlined" />
+                                            </MudItem>
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudSelect T="string" Required="true"
+                                                           @bind-Value="@InputGame.DifficultyLevel"
+                                                           Placeholder="Select a difficulty level"
+                                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                           For="@(() => InputGame.DifficultyLevel)"
+                                                           Label="Difficulty level" Variant="Variant.Outlined"
+                                                           AnchorOrigin="Origin.BottomCenter">
+                                                    <MudSelectItem T="string" Value="@("Easy")" />
+                                                    <MudSelectItem T="string" Value="@("Medium")" />
+                                                    <MudSelectItem T="string" Value="@("Hard")" />
+                                                </MudSelect>
+                                            </MudItem>
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudSelect T="string" Required="false"
+                                                           @bind-Value="@InputGame.PriorGame" Placeholder="Select a game"
+                                                           Label="Game to complete before" Variant="Variant.Outlined"
+                                                           AnchorOrigin="Origin.BottomCenter">
+                                                    @foreach (var item in Games)
+                                                    {
+                                                        <MudSelectItem T="string" Value="@(item.Title)" />
+                                                    }
+                                                </MudSelect>
+                                            </MudItem>
+                                        </MudGrid>
+                                        <MudGrid>
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)"
+                                                           @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
+                                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                           Label="Theme related to" Variant="Variant.Outlined"
+                                                           AnchorOrigin="Origin.BottomCenter">
+                                                    <MudSelectItem T="string" Value="@("Theme A")" />
+                                                    <MudSelectItem T="string" Value="@("Theme B")" />
+                                                    <MudSelectItem T="string" Value="@("Theme C")" />
+                                                </MudSelect>
+                                            </MudItem>
+                                            <MudItem xs="12" sm="6" md="4">
+                                                <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)"
+                                                           @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
+                                                           UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                           Label="Eligible subscription" Variant="Variant.Outlined"
+                                                           AnchorOrigin="Origin.BottomCenter">
+                                                    <MudSelectItem T="string" Value="@("Sub A")" />
+                                                    <MudSelectItem T="string" Value="@("Sub B")" />
+                                                    <MudSelectItem T="string" Value="@("Sub C")" />
+                                                </MudSelect>
+                                            </MudItem>
+                                        </MudGrid>
+                                    </MudCardContent>
+                                    <MudCardActions>
+                                        <MudButton 
+                                            ButtonType="ButtonType.Submit" 
+                                            Variant="Variant.Filled" Color="Color.Primary"
+                                                   Class="ml-auto" EndIcon="@Icons.Material.Filled.NavigateNext">Next</MudButton>
+                                    </MudCardActions>
+                                </MudCard>
+                            </MudItem>
+                        </MudGrid>
+                    </EditForm>
                     }
                     @if (form2Validate)
                     {
+                        <EditForm Model="@InputGame"
+                              OnValidSubmit="OnValidSubmit">
+                        <DataAnnotationsValidator />
                         <MudCard>
                             <MudCardContent>
                                 <MudItem xs="12">
@@ -237,9 +245,18 @@
                                 </MudItem>
                             </MudCardContent>
                             <MudCardActions>
+                                <MudButton 
+                                 ButtonType="ButtonType.Button" OnClick="NavigateToPreviousGameForm"
+                                           Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.NavigateBefore">
+                                    Back
+                                </MudButton>
+                                <MudButton Class="ml-auto" ButtonType="ButtonType.Submit"
+                                           Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.NavigateNext">
+                                    Next
+                                </MudButton>
                             </MudCardActions>
                         </MudCard>
-                       
+                        </EditForm>
                     }
                     @if (form3Validate)
                     {
@@ -261,7 +278,6 @@
                                 </MudCard>
                             </MudItem>
                             <MudItem xs="12" sm="6" md="4">
-
                                 <MudCard>
                                     <MudCardMedia Image="images/truefalse.svg" Height="200" />
 
@@ -295,6 +311,15 @@
                                 </MudCard>
                         </MudItem>
                         </MudGrid>
+                    <div class="object-left">
+                            <MudButton   Size="Size.Medium" ButtonType="ButtonType.Button"
+                               OnClick="NavigateToPreviousGameForm"
+                    Color="Color.Error" StartIcon="@Icons.Material.Filled.NavigateBefore"
+                               Variant="Variant.Filled">
+                        Back
+                    </MudButton>
+                        </div>
+                    
                     }
                     @if(formQuestions)
                     {
@@ -302,23 +327,8 @@
                                                   OnValidEvent="CreateFormValid"
                             OnCancelEvent="CreateFormCanceled"></AddQuestionFormComponent>
                     }
-                </EditForm>
                 </MudStack>
             </MudPaper>
-        @if (!formQuestions)
-        {
-            <MudPaper Class="pa-4 mt-4">
-                @if (form1Validate)
-                {
-                    <MudButton Disabled="@disabledNext1" Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
-                }
-                @if(form2Validate || form3Validate)
-                {
-                    <MudButton Disabled="@disabledNext2" Variant="Variant.Filled" Color="Color.Primary" DropShadow="false" OnClick="NavigateToNextGameForm">Next</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" DropShadow="false" OnClick="NavigateToPreviousGameForm" Class="mx-2">Previous</MudButton>
-                }
-            </MudPaper>
-        }
     </MudItem>
     <MudItem>
         <MudPaper Class="gap-4 pa-4 mud-height-full">
@@ -393,9 +403,10 @@
     private bool fileNameWrong { get; set; }
     private string getPriorGamesEndpoint { get; set; }
     private CreateMultipleQuestionsViewModel _questionFormInput { get; set; } 
-    EditContext InputGameContext;
-    [SupplyParameterFromForm]
-    private CreateGameViewModel InputGame { get; set; } = new CreateGameViewModel();
+    EditContext InputGameContext1;
+    EditContext InputGameContext2;
+    EditContext InputGameContext3;
+    private CreateGameViewModel InputGame = new CreateGameViewModel();
     string[] errors = { };
     MudForm form1 = new MudForm() { IsValid = false };
     MudButton next1 = new MudButton() { Disabled = true };
@@ -410,8 +421,12 @@
     {
         serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
         InputGame.Image = new CreateGameImageViewModel();
-        InputGameContext = new(InputGame);
-        InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
+        InputGameContext1 = new(InputGame);
+        InputGameContext2 = new(InputGame);
+        InputGameContext3 = new(InputGame);
+        InputGameContext1.OnFieldChanged += InputGameContext1_OnFieldChanged;
+        InputGameContext2.OnFieldChanged += InputGameContext2_OnFieldChanged;
+        InputGameContext3.OnFieldChanged += InputGameContext3_OnFieldChanged;
         InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
         form1Validate = true;
         disabledNext1 = true;
@@ -435,7 +450,7 @@
             Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
     }
 
-    private void InputGameContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    private void InputGameContext1_OnFieldChanged(object sender, FieldChangedEventArgs e)
     {
         if (!String.IsNullOrEmpty(InputGame.Title)
         && !String.IsNullOrEmpty(InputGame.DifficultyLevel)
@@ -444,6 +459,16 @@
             disabledNext1 = false;
         if (!String.IsNullOrEmpty(InputGame.Description))
             disabledNext2 = false;
+        StateHasChanged();
+    }
+
+    private void InputGameContext2_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    private void InputGameContext3_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
         StateHasChanged();
     }
 
@@ -467,17 +492,6 @@
 
     private void OnValidSubmit(EditContext context)
     {
-        StateHasChanged();
-    }
-
-    private void DisplayFormQuestions()
-    {
-        form3Validate = false;
-        formQuestions = !formQuestions;
-    }
-
-    private void NavigateToNextGameForm()
-    {
         if (form1Validate)
         {
             form1Validate = false;
@@ -488,6 +502,13 @@
             form2Validate = false;
             form3Validate = true;
         }
+        StateHasChanged();
+    }
+
+    private void DisplayFormQuestions()
+    {
+        form3Validate = false;
+        formQuestions = !formQuestions;
     }
 
     private void NavigateToPreviousGameForm()
@@ -538,6 +559,7 @@
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
         var regexItem = new Regex("^[a-zA-Z0-9_.-]*$");
+        InputGame.Image.Title = e.File.Name.ToString();
         if (regexItem.IsMatch(e.File.Name.ToString()))
         {
             fileNameWrong = false;
@@ -545,7 +567,6 @@
             var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
-            InputGame.Image.Title = e.File.Name.ToString();
             base64data = "data:image/png;base64," + Convert.ToBase64String(buffer);
             InputGame.Image.Content = base64data;
             StateHasChanged();
@@ -598,4 +619,25 @@
         };
     }
 
+    RegisterAccountForm model = new RegisterAccountForm();
+
+    public class RegisterAccountForm
+    {
+        [Required]
+        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
+        public string Username { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare(nameof(Password))]
+        public string Password2 { get; set; }
+
+    }
 }

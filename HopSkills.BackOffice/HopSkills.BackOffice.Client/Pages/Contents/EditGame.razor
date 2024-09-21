@@ -452,6 +452,8 @@
     private List<GameViewModel>? Games;
     [Parameter]
     public string selectedId { get; set; }
+    private string base64data = "";
+
     public class Model
     {
         public IReadOnlyList<IBrowserFile>? Files { get; set; } = new List<IBrowserFile>();

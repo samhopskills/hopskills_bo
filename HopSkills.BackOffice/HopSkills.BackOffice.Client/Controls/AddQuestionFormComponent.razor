@@ -44,19 +44,23 @@
                                 <MudFab Color="Color.Secondary"
                                         StartIcon="@Icons.Material.Filled.Image"
                                         Label="Load picture" />
-                                    @if (base64Images.Any())
-                                    {
-                                        @foreach (var file in base64Images)
-                                        {
-                                            <MudItem>
-                                                <MudImage Src="@file"
-                                                          Style="height:100px;width:100px;" />
-                                                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-                                            </MudItem>
-                                        }
-                                    }
                             </ActivatorContent>
                         </MudFileUpload>
+                        <MudItem>
+                                @if (base64Images.Any())
+                                {
+                                    @foreach (var file in base64Images)
+                                    {
+                                        <MudItem>
+                                            <MudIconButton OnClick="DeleteImg(file)"
+                                                           Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                                            <MudImage Src="@file"
+                                                      Style="height:100px;width:100px;" />
+                                        </MudItem>
+                                    }
+                                }
+                        </MudItem>
+                           
                     </MudItem>
                     <MudItem xs="4" sm="4" md="4"></MudItem>
                     <MudItem xs="4" sm="4" md="4">
@@ -68,21 +72,23 @@
                                            StartIcon="@Icons.Material.Filled.AudioFile">
                                     Upload audio files (mp3)
                                 </MudButton>
+                                    @if (base64Audios.Any())
+                                    {
+                                        @foreach (var file in base64Audios)
+                                        {
+                                            @if (!string.IsNullOrEmpty(file))
+                                            {
+                                                <MudItem>
+                                                    <audio controls src="@file" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" 
+                                                    aria-label="delete" />
+                                                </MudItem>
+                                            }
+                                        }
+                                    }
                             </ActivatorContent>
                         </MudFileUpload>
-                            @if (base64Audios.Any())
-                            {
-                                @foreach (var file in base64Audios)
-                                {
-                                    @if (!string.IsNullOrEmpty(file))
-                                    {
-                                        <MudItem>
-                                            <audio controls src="@file" />
-                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-                                            </MudItem>
-                                    }
-                                }
-                            }
+                           
                     </MudItem>
                     </MudGrid>
                     <br />
@@ -175,9 +181,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // fileNameWrong = false;
-        // audioFileNameWrong = false;
-        // formDisabled = true;
         questionFormInput = new CreateMultipleQuestionsViewModel
             {
                 PossibleAnswers = new List<CreateAnswerViewModel>
@@ -190,9 +193,11 @@
             };
     }
 
-    void Closed(MudChip<MudImage> chip)
+    private EventCallback DeleteImg(string img)
     {
-        // react to chip closed
+        base64Images.Remove(img);
+        StateHasChanged();
+        return EventCallback.Empty;
     }
 
     private void AddAnswer()
@@ -227,13 +232,12 @@
         var buffer = new byte[resizeImage.Size];
         await resizeImage.OpenReadStream().ReadAsync(buffer);
         base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
-        questionFormInput.ImageFiles.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
         StateHasChanged();
     }
 
     private async void UploadFiles2(IBrowserFile file)
     {
-        
+
         _audios.Add(file);
         using (var stream = file.OpenReadStream())
         {
@@ -243,7 +247,6 @@
                 var result = new byte[length];
                 await stream.ReadAsync(result);
                 base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
-                questionFormInput.AudioFiles.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
                 StateHasChanged();
             }
         }
@@ -251,6 +254,8 @@
 
     private async void OnValidSubmit()
     {
+        questionFormInput.ImageFiles = base64Images;
+        questionFormInput.AudioFiles = base64Audios;
         await OnValidEvent.InvokeAsync(questionFormInput);
     }
 

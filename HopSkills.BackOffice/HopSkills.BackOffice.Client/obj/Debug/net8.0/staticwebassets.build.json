@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Uuurs5FnwGWQeVm6CptF6HzW1HnyzlNAQAb0cfXI0CM=",
+  "Hash": "j+6s8YJc46X19d61uhWl8NP8HtQhpZhb3WwnLD3UbZM=",
   "Source": "HopSkills.BackOffice.Client",
   "BasePath": "/",
   "Mode": "Default",
@@ -8527,6 +8527,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\appsettings.Staging.json"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\Picture1.png",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "Images/Picture1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Picture1.png"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\Picture3.svg",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "Images/Picture3.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Picture3.svg"
     }
   ]
 }
