@@ -19,5 +19,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public List<string> ImageFiles { get; set; }
         [MaxLength(255)]
         public List<string> AudioFiles { get; set; }
+        public string Zone { get; set; }
+
     }
 }

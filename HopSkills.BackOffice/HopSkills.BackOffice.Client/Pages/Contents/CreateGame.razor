@@ -6,6 +6,7 @@
 @using FluentValidation
 @using Microsoft.AspNetCore.Components.Forms;
 @using System.Security.Claims
+@using MudBlazor.Utilities
 @using static HopSkills.BackOffice.Client.Controls.AddQuestionFormComponent
 @inject Microsoft.Extensions.Configuration.IConfiguration config;
 
@@ -348,7 +349,7 @@
             <MudDivider DividerType="DividerType.FullWidth" />
             <MudGrid Style="object-position:bottom">
                 <MudItem xs="12" sm="12" md="12" xl="12">
-                    <MudPaper>
+                    @* <MudPaper>
                             @foreach(var item in InputGame.multipleQuestions)
                             {
                             <MudPaper Class=" gap-x-10 d-flex pa-4 ">
@@ -359,12 +360,48 @@
                                 <MudText Class="d-inline-flex justify-end pa-4">
                                     <MudIcon Icon="@Icons.Material.Outlined.Timer" />@item.Duration
                                 </MudText>
-                                   @*  <MudIconButton Class="d-flex justify-end" 
-                                    Icon="@Icons.Material.Filled.Edit"/> *@
                             </MudPaper>
 
                             }
-                    </MudPaper>
+                    </MudPaper> *@
+                    <MudDropContainer T="CreateMultipleQuestionsViewModel" 
+                        Items="InputGame.multipleQuestions"
+                                      ItemsSelector="@((item, dropzone) => item.Zone == dropzone)" 
+                        ItemDropped="ItemUpdated" 
+                        Class="4 flex-grow-1">
+                        <ChildContent>
+                            <MudDropContainer T="DropZone" 
+                                Items="_zones" ItemsSelector="@((item, dropzone) => true)" 
+                                Class="5">
+                                <ChildContent>
+                                    <MudDropZone T="DropZone" AllowReorder 
+                                        Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
+                                </ChildContent>
+                                <ItemRenderer>
+                                    <MudDropZone T="CreateMultipleQuestionsViewModel"
+                                                 Identifier="@context.Name" 
+                                            AllowReorder 
+                                            Class="rounded mud-background-gray px-4 py-1 ma-4" />
+                                </ItemRenderer>
+                            </MudDropContainer>
+                        </ChildContent>
+                        <ItemRenderer>
+                            <MudExpansionPanels>
+                                <MudExpansionPanel Text="@context.Question" 
+                                MaxHeight="150" Expanded="true">
+                                    <MudText Class="d-inline-flex justify-end pa-4">
+                                        <MudIcon Icon="@Icons.Material.Outlined.Star" />
+                                        @context.Xperience
+                                    </MudText>
+                                    <MudText Class="d-inline-flex justify-end pa-4">
+                                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />
+                                        @context.Duration
+                                    </MudText>
+                                </MudExpansionPanel>
+                                <MudDivider/>
+                            </MudExpansionPanels>
+                        </ItemRenderer>
+                    </MudDropContainer>
                     
                 </MudItem>
                 
@@ -639,5 +676,29 @@
         [Compare(nameof(Password))]
         public string Password2 { get; set; }
 
+    }
+
+    private void ItemUpdated(MudItemDropInfo<CreateMultipleQuestionsViewModel> dropItem) => dropItem.Item.Zone = dropItem.DropzoneIdentifier;
+
+    private List<DropZone> _zones = new()
+    {
+        new() { Name = "Drop Zone 1" },
+    };
+
+    private List<DropZoneItem> _items = new()
+    {
+        new() { Zone = "Drop Zone 1", Name = "Item 1" },
+        new() { Zone = "Drop Zone 1", Name = "Item 2" },
+    };
+
+    private class DropZone
+    {
+        public string Name { get; init; }
+    }
+
+    private class DropZoneItem
+    {
+        public string Zone { get; set; }
+        public string Name { get; init; }
     }
 }
