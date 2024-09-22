@@ -8,7 +8,7 @@
 <MudContainer Fixed="true">
     <MudSpacer />
     <MudSpacer />
-    <MudDataGrid T="GameViewModel" Items="@Games"
+    <MudDataGrid Loading="@isLoading" LoadingProgressColor="Color.Primary" T="GameViewModel" Items="@Games"
                  MultiSelection="true"
                  Virtualize="true"
                  SortMode="SortMode.Multiple"
@@ -123,6 +123,7 @@
     private string? deleteServiceEndpoint;
     private string? updateStatusServiceEndpoint;
     private HttpClient Http = new HttpClient();
+    bool isLoading = true;
     // quick filter - filter globally across multiple columns with the same input
     private Func<GameViewModel, bool> _quickFilter => x =>
     {
@@ -162,7 +163,7 @@
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
-        Console.WriteLine(Games.Count);
+        isLoading = false;
     }
 
     private List<string> _events = new();

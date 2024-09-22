@@ -109,6 +109,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/samyd/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/LoadingScreen.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9hZGluZ1NjcmVlbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/samyd/source/hopskills_bo/HopSkills.BackOffice/HopSkills.BackOffice.Client/Pages/Users/GroupList.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcR3JvdXBMaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

@@ -15,7 +15,7 @@
                    Color="@Color.Primary" @onclick="OpenCreateDialogAsync">Add a new customer</MudButton>
         <br />
         <br />
-        <MudDataGrid ReadOnly="false" T="CustomerViewModel" Items="@Customers"
+        <MudDataGrid Loading="@isLoading" LoadingProgressColor="Color.Primary" ReadOnly="false" T="CustomerViewModel" Items="@Customers"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
                      Filterable="true" StartedEditingItem="@StartedEditingItem" 
@@ -66,6 +66,7 @@
 @code {
     private string? serviceEndpoint;
     private string? backendUrl;
+    bool isLoading = true;
 
     List<CustomerViewModel>? Customers = new List<CustomerViewModel>();
     private bool _readOnly;
@@ -112,7 +113,7 @@
         var result = await dialog.Result;
 
         if (!result.Canceled)
-            await OnInitializedAsync();
+            StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
@@ -124,6 +125,7 @@
         {
             Customers = await Http.GetFromJsonAsync<List<CustomerViewModel>>(serviceEndpoint);
         }
+        isLoading = false;
         // Customers = await ViewCustomerListUseCase.ExecuteAsync();
     }
 }

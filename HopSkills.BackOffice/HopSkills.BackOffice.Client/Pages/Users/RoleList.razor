@@ -9,7 +9,7 @@
 <MudContainer Fixed="true">
     <MudSpacer />
     <MudSpacer />
-    <MudDataGrid T="RoleViewModel" Items="@Roles"
+    <MudDataGrid Loading="@isLoading" T="RoleViewModel" Items="@Roles"
                  MultiSelection="true"
                  Virtualize="true"
                  SortMode="SortMode.Multiple"
@@ -80,6 +80,8 @@
     private bool disabledDelete;
     private string _searchString;
     private string? serviceEndpoint;
+    bool isLoading = true;
+
     // quick filter - filter globally across multiple columns with the same input
     private Func<RoleViewModel, bool> _quickFilter => x =>
     {
@@ -100,6 +102,7 @@
         {
             Roles = await Http.GetFromJsonAsync<List<RoleViewModel>>(serviceEndpoint);
         }
+        isLoading = false;
     }
 
     private List<string> _events = new();

@@ -7,7 +7,7 @@
     <MudContainer Fixed="true">
         <MudSpacer />
         <MudSpacer />
-    <MudDataGrid T="UserViewModel" Items="@Users"
+    <MudDataGrid Loading="@isLoading" LoadingProgressColor="Color.Primary" T="UserViewModel" Items="@Users"
                      MultiSelection="true"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
@@ -90,6 +90,8 @@
     private string _searchString;
     private string? serviceEndpoint;
     private HttpClient Http = new HttpClient();
+    bool isLoading = true;
+
     // quick filter - filter globally across multiple columns with the same input
     private Func<UserViewModel, bool> _quickFilter => x =>
     {
@@ -128,6 +130,8 @@
         }
         if (!string.IsNullOrEmpty(serviceEndpoint))
             Users = await Http.GetFromJsonAsync<List<UserViewModel>>(serviceEndpoint);
+        isLoading = false;
+
     }
 
     private List<string> _events = new();

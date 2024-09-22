@@ -7,7 +7,7 @@
 
 
     <MudContainer Fixed="true">
-        <MudDataGrid T="GroupViewModel" Items="@Teams"
+    <MudDataGrid Loading="@isLoading" T="GroupViewModel" Items="@Teams"
                      MultiSelection="true"
                      Virtualize="true"
                      SortMode="SortMode.Multiple"
@@ -74,7 +74,7 @@
     private string _searchString;
     private List<GroupViewModel> selectedTeams = new List<GroupViewModel>();
     private string? serviceEndpoint;
-
+    bool isLoading = true;
     // quick filter - filter globally across multiple columns with the same input
     private Func<GroupViewModel, bool> _quickFilter => x =>
     {
@@ -96,6 +96,7 @@
         {
             Teams = await Http.GetFromJsonAsync<List<GroupViewModel>>(serviceEndpoint);
         }
+        isLoading = false;
     }
 
     private List<string> _events = new();
