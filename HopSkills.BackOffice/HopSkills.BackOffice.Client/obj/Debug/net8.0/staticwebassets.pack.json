@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\Images\\Picture3.svg"
     },
     {
+      "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\SVG.svg",
+      "PackagePath": "staticwebassets\\Images\\SVG.svg"
+    },
+    {
       "Id": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\appsettings.Development.json",
       "PackagePath": "staticwebassets\\appsettings.Development.json"
     },

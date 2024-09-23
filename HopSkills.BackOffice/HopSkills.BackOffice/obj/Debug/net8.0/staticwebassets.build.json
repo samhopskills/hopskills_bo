@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0+zxC7EljgaEiPVjhjUzDqEf4i4mMSt+l/Q2XOb3Fu4=",
+  "Hash": "esuveeX2jNevqM3a+AbCIfjy5lKYuYlTgfMUm7LCY2M=",
   "Source": "HopSkills.BackOffice",
   "BasePath": "_content/HopSkills.BackOffice",
   "Mode": "Default",
@@ -8603,6 +8603,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Picture3.svg"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\SVG.svg",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Project",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "Images/SVG.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\SVG.svg"
     },
     {
       "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice\\wwwroot\\favicon.ico",

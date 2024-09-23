@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "j+6s8YJc46X19d61uhWl8NP8HtQhpZhb3WwnLD3UbZM=",
+  "Hash": "b0rlBF0B4WBcGoofq3wlSYC0HmBkZUWN3aFO0tUzmqM=",
   "Source": "HopSkills.BackOffice.Client",
   "BasePath": "/",
   "Mode": "Default",
@@ -8565,6 +8565,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Picture3.svg"
+    },
+    {
+      "Identity": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\Images\\SVG.svg",
+      "SourceId": "HopSkills.BackOffice.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "Images/SVG.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\SVG.svg"
     }
   ]
 }

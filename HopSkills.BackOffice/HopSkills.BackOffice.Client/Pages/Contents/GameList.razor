@@ -5,9 +5,6 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration config;
 @inject NavigationManager Navigation
 
-<MudContainer Fixed="true">
-    <MudSpacer />
-    <MudSpacer />
     <MudDataGrid Loading="@isLoading" LoadingProgressColor="Color.Primary" T="GameViewModel" Items="@Games"
                  MultiSelection="true"
                  Virtualize="true"
@@ -99,7 +96,6 @@
             <MudDataGridPager T="GameViewModel" />
         </PagerContent>
     </MudDataGrid>
-</MudContainer>
 
 
 

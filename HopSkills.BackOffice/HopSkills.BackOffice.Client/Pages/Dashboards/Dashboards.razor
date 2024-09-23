@@ -1,23 +1,5 @@
-﻿<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+﻿@* <MudContainer Fixed="true" Style="height: 100vh;" Class="mt-16 px-8"> *@
     <MudGrid>
-        <MudPaper Class="pa-4">
-            <MudChart ChartType="ChartType.Donut" Width="300px" Height="300px" @bind-SelectedIndex="Index" InputData="@data" InputLabels="@labels"></MudChart>
-        </MudPaper>
-        <MudPaper Class="pa-4 mt-2 d-flex justify-center">
-            <MudButton OnClick="AddDataSize" Variant="Variant.Filled" Color="Color.Primary">Add</MudButton>
-            <MudButton @onclick="RandomizeData" Variant="Variant.Filled" Class="mx-4">Randomize</MudButton>
-            <MudButton OnClick="RemoveDataSize" Variant="Variant.Filled" Color="Color.Secondary">Remove</MudButton>
-        </MudPaper>
-        <div>
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%" Height="350" ChartOptions="options"></MudChart>
-            <MudButton @onclick="RandomizeData">Randomize Data</MudButton>
-            <MudMenu Label="Interpolation Algorithm" FullWidth="true">
-                <MudMenuItem OnClick="() => OnClickMenu(InterpolationOption.Straight)">Straight</MudMenuItem>
-                <MudMenuItem OnClick="() => OnClickMenu(InterpolationOption.NaturalSpline)">Natural Spline</MudMenuItem>
-                <MudMenuItem OnClick="() => OnClickMenu(InterpolationOption.EndSlope)">End Slope</MudMenuItem>
-                <MudMenuItem OnClick="() => OnClickMenu(InterpolationOption.Periodic)">Periodic</MudMenuItem>
-            </MudMenu>
-        </div>
         <MudItem xs="12" sm="12" md="4">
             <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
         </MudItem>
@@ -44,7 +26,7 @@
             <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
         </MudItem>
     </MudGrid>
-</MudContainer>
+@* </MudContainer> *@
 
 @code {
     private int Index = -1; //default value cannot be 0 -> first selectedindex is 0.

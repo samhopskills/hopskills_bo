@@ -1,17 +1,22 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+<style>
+    .mud-input-outlined-border {
+        border-radius: 24px !important;
+    }
+</style>
 <MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-<MudLayout>
+<MudLayout >
     <AuthorizeView>
         <Authorized>
-            <MudAppBar Elevation="1" Style="background-color:#7C4DFF">
+            <MudAppBar Elevation="1" Style="background-color:white">
                 <MudIconButton Icon="@Icons.Material.Filled.AllInclusive"
                                 Edge="Edge.Start"
                                OnClick="@((e) => DrawerToggle())" />
-                               <MudImage Width="130"  Src="Images/Picture3.svg"></MudImage>
+                               <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
                 @* <MudText Typo="Typo.h5" Class="ml-3">HopSkills</MudText> *@
                 <MudSpacer />
                 @* <MudSwitch @bind-Value="_isDarkMode" 
@@ -23,10 +28,10 @@
         </Authorized>
     </AuthorizeView>
     <MudMainContent>
-            <br />
-            <br />
-            <br />
+        <MudContainer Class="align-content-center" Style="min-height:100vh;
+min-width:100vw; background-color: #F3FBFF">
             @Body
+        </MudContainer>
     </MudMainContent>
 </MudLayout>
 
@@ -46,6 +51,8 @@
     }
 
 }
+
+
 
 
 
