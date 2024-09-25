@@ -241,8 +241,8 @@
                 </MudStack>
             </MudPaper>
     </MudItem>
-    <MudItem>
-        <MudPaper Class="gap-4 pa-4 mud-height-full">
+    <MudItem >
+        @* <MudPaper Class="gap-4 pa-4 mud-height-full">
             <MudGrid>
                 <MudItem Class="d-flex justify-start flex-grow-1 gap-4">
                     <MudText>Title:@InputGame.Title </MudText>
@@ -258,8 +258,13 @@
             </MudGrid>
             <MudDivider DividerType="DividerType.FullWidth" />
             <MudGrid Style="object-position:bottom">
+<<<<<<< HEAD
                 <MudItem xs="12" sm="12" md="12" xl="12">
                     <MudPaper>
+=======
+                <MudItem xs="12" sm="12" md="12" xl="12"> *@
+                    @* <MudPaper>
+>>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
                             @foreach(var item in InputGame.multipleQuestions)
                             {
                             <MudPaper Class=" gap-x-10 d-flex pa-4 ">
@@ -272,7 +277,63 @@
                                 </MudText>
                             </MudPaper>
                             }
+<<<<<<< HEAD
                     </MudPaper>
+=======
+                    </MudPaper> *@
+                   @*  <MudDropContainer T="CreateMultipleQuestionsViewModel" App
+                        Items="@InputGame.multipleQuestions" @ref="_container"
+                                      ItemsSelector="@((item, dropzone) => item.Zone == dropzone)" 
+                        ItemDropped="ItemUpdated"
+                                      Class="d-flex flex-wrap flex-grow-1">
+                        <ChildContent>
+                            <MudDropZone T="CreateMultipleQuestionsViewModel" AllowReorder="true" 
+                                         Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
+                                </ChildContent>
+                                <ItemRenderer> *@
+                            @* <MudListItem T="CreateMultipleQuestionsViewModel"
+                                         Text="@($"{context.Question}")" /> *@
+                            @* <div class="mud-elevation-25 pa-4 my-4">@context.Question</div> *@
+                                   @*  <MudExpansionPanels>
+                                        <MudExpansionPanel Text="@context.Question"
+                                                           MaxHeight="150" Expanded="false">
+                                            <TitleContent>
+                                                <div class="d-flex">
+                                                    <MudIcon Icon="@Icons.Material.Filled.Info" class="mr-3"></MudIcon>
+                                                    <MudText><strong>@context.Question</strong></MudText>
+                                                </div>
+                                            </TitleContent>
+                                            <ChildContent>
+                                                <MudText Class="d-inline-flex justify-end pa-4">
+                                                    <MudIcon Icon="@Icons.Material.Outlined.Star" />
+                                                    @context.Xperience
+                                                </MudText>
+                                                <MudText Class="d-inline-flex justify-end pa-4">
+                                                    <MudIcon Icon="@Icons.Material.Outlined.Timer" />
+                                                    @context.Duration
+                                                </MudText>
+                                            </ChildContent>
+                                        </MudExpansionPanel>
+                                        <MudDivider />
+                                    </MudExpansionPanels> *@
+                               @*  </ItemRenderer>
+                    </MudDropContainer> *@
+            <MudDropContainer T="DropZoneItem" Items="_items" ItemDropped="ItemUpdated"
+                              ItemsSelector="@((item, dropzone) => true)" 
+                              Class="d-flex flex-wrap flex-grow-1">
+                        <ChildContent>
+                    <MudDropZone T="DropZoneItem"
+                                 AllowReorder Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
+                        </ChildContent>
+                        <ItemRenderer>
+                            <MudPaper Class=" gap-x-10 d-flex pa-4 ">
+                                <MudText Typo="Typo.h6">@context.Name</MudText>
+                                <MudDropZone T="DropZoneItem" Identifier="@context.Name" AllowReorder Class="rounded mud-background-gray px-4 py-1 ma-4" />
+                            </MudPaper>
+                        </ItemRenderer>
+                    </MudDropContainer>
+                    
+>>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
                 </MudItem>
             </MudGrid>
             @* @if (InputGame.multipleQuestions.Any())
@@ -289,11 +350,20 @@
                     </MudPaper>
                 </MudItem>
                 </MudGrid>
+<<<<<<< HEAD
             } *@
             </MudPaper>
             </MudItem>
 </MudGrid>
 @* </MudPaper> *@
+=======
+            }
+        </MudPaper>
+    </MudItem>
+</MudGrid> *@
+
+
+>>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
 @code {
     private string? serviceEndpoint;
     private string? backendUrl;
@@ -545,7 +615,7 @@
 
     }
 
-    private void ItemUpdated(MudItemDropInfo<CreateMultipleQuestionsViewModel> dropItem) => dropItem.Item.Zone = dropItem.DropzoneIdentifier;
+    private void ItemUpdated(MudItemDropInfo<DropZoneItem> dropItem) => dropItem.Item.Zone = dropItem.DropzoneIdentifier;
 
     private List<DropZone> _zones = new()
     {
