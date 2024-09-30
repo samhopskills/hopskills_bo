@@ -255,7 +255,8 @@
         var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
         var buffer = new byte[resizeImage.Size];
         await resizeImage.OpenReadStream().ReadAsync(buffer);
-        base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
+        base64Images.Add(Convert.ToBase64String(buffer));
+        // base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
         StateHasChanged();
     }
 
@@ -270,7 +271,8 @@
             {
                 var result = new byte[length];
                 await stream.ReadAsync(result);
-                base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
+                base64Audios.Add(Convert.ToBase64String(result));
+                // base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
                 StateHasChanged();
             }
         }

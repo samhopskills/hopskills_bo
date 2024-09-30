@@ -232,44 +232,35 @@
                         </div>
                     
                     }
-                   @*  @if(formQuestions)
-                    {
-                        <AddQuestionFormComponent questionFormInput="@_questionFormInput"
-                                                  OnValidEvent="CreateFormValid"
-                            OnCancelEvent="CreateFormCanceled"></AddQuestionFormComponent>
-                    } *@
                 </MudStack>
             </MudPaper>
     </MudItem>
-    <MudItem >
-        @* <MudPaper Class="gap-4 pa-4 mud-height-full">
+    <MudItem>
+        <MudPaper Class="gap-4 pa-4 mud-height-full">
             <MudGrid>
                 <MudItem Class="d-flex justify-start flex-grow-1 gap-4">
-                    <MudText>Title:@InputGame.Title </MudText>
-                    <MudText>
-                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />
-                        Duration: @InputGame.TotalDuration.Minutes </MudText>
+                    <MudText Class="d-inline-flex pa-4">Title:@InputGame.Title </MudText>
+                    <MudText Class="d-inline-flex justify-end pa-4">
+                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@InputGame.TotalDuration.Minutes
+                    </MudText>
                 </MudItem>
                 <MudItem Class="d-flex justify-end flex-grow-1 gap-4">
-                    <MudText>Theme:@InputGame.Theme</MudText>
-                    <MudText ><MudIcon Icon="@Icons.Material.Outlined.Star"/>
-                        Xp:@InputGame.TotalXperience </MudText>
+                    <MudText Class="d-inline-flex pa-4">Theme:@InputGame.Theme</MudText>
+                    <MudText Class="d-inline-flex pa-4">
+                        <MudIcon Icon="@Icons.Material.Outlined.Star" />@InputGame.TotalXperience
+                    </MudText>
                 </MudItem>
             </MudGrid>
             <MudDivider DividerType="DividerType.FullWidth" />
             <MudGrid Style="object-position:bottom">
-<<<<<<< HEAD
                 <MudItem xs="12" sm="12" md="12" xl="12">
                     <MudPaper>
-=======
-                <MudItem xs="12" sm="12" md="12" xl="12"> *@
-                    @* <MudPaper>
->>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
+                        <MudPaper Style="border-radius: 24px !important;">
                             @foreach(var item in InputGame.multipleQuestions)
                             {
-                            <MudPaper Class=" gap-x-10 d-flex pa-4 ">
+                                <MudPaper  Class="gap-x-10 d-flex pa-4 ">
                                 <MudText Class="d-inline-flex pa-4">@item.Question</MudText>
-                                <MudText Class="d-inline-flex justify-end pa-4">
+                                <MudText Class="d-inline-flex pa-4">
                                     <MudIcon Icon="@Icons.Material.Outlined.Star" />@item.Xperience
                                 </MudText>
                                 <MudText Class="d-inline-flex justify-end pa-4">
@@ -277,11 +268,24 @@
                                 </MudText>
                             </MudPaper>
                             }
-<<<<<<< HEAD
                     </MudPaper>
-=======
-                    </MudPaper> *@
-                   @*  <MudDropContainer T="CreateMultipleQuestionsViewModel" App
+                        @if (InputGame.multipleQuestions.Any())
+                        {
+                            <MudGrid>
+                                <MudItem>
+                                    <MudPaper>
+                                        <MudButton Variant="Variant.Filled"
+                                                   Color="Color.Primary"
+                                                   DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
+                                        <MudButton Variant="Variant.Filled"
+                                                   Color="Color.Primary"
+                                                   DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
+                                    </MudPaper>
+                                </MudItem>
+                            </MudGrid>
+                        }
+                    </MudPaper>
+                    @* <MudDropContainer T="CreateMultipleQuestionsViewModel" App
                         Items="@InputGame.multipleQuestions" @ref="_container"
                                       ItemsSelector="@((item, dropzone) => item.Zone == dropzone)" 
                         ItemDropped="ItemUpdated"
@@ -290,11 +294,11 @@
                             <MudDropZone T="CreateMultipleQuestionsViewModel" AllowReorder="true" 
                                          Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
                                 </ChildContent>
-                                <ItemRenderer> *@
-                            @* <MudListItem T="CreateMultipleQuestionsViewModel"
-                                         Text="@($"{context.Question}")" /> *@
-                            @* <div class="mud-elevation-25 pa-4 my-4">@context.Question</div> *@
-                                   @*  <MudExpansionPanels>
+                                <ItemRenderer>
+                            <MudListItem T="CreateMultipleQuestionsViewModel"
+                                         Text="@($"{context.Question}")" />
+                            <div class="mud-elevation-25 pa-4 my-4">@context.Question</div>
+                                    <MudExpansionPanels>
                                         <MudExpansionPanel Text="@context.Question"
                                                            MaxHeight="150" Expanded="false">
                                             <TitleContent>
@@ -315,10 +319,10 @@
                                             </ChildContent>
                                         </MudExpansionPanel>
                                         <MudDivider />
-                                    </MudExpansionPanels> *@
-                               @*  </ItemRenderer>
+                                    </MudExpansionPanels>
+                                </ItemRenderer>
                     </MudDropContainer> *@
-            <MudDropContainer T="DropZoneItem" Items="_items" ItemDropped="ItemUpdated"
+            @* <MudDropContainer T="DropZoneItem" Items="_items" ItemDropped="ItemUpdated"
                               ItemsSelector="@((item, dropzone) => true)" 
                               Class="d-flex flex-wrap flex-grow-1">
                         <ChildContent>
@@ -331,39 +335,19 @@
                                 <MudDropZone T="DropZoneItem" Identifier="@context.Name" AllowReorder Class="rounded mud-background-gray px-4 py-1 ma-4" />
                             </MudPaper>
                         </ItemRenderer>
-                    </MudDropContainer>
-                    
->>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
+                    </MudDropContainer> *@
                 </MudItem>
             </MudGrid>
-            @* @if (InputGame.multipleQuestions.Any())
-            {
-                <MudGrid>
-                <MudItem>
-                    <MudPaper>
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
-                    </MudPaper>
-                </MudItem>
-                </MudGrid>
-<<<<<<< HEAD
-            } *@
-            </MudPaper>
+           
+            @* </MudPaper>
             </MudItem>
 </MudGrid>
-@* </MudPaper> *@
-=======
-            }
+</MudPaper> *@
         </MudPaper>
     </MudItem>
-</MudGrid> *@
+</MudGrid>
 
 
->>>>>>> d18bcda6125ccb04bc78c2e7699770b2c371bcd7
 @code {
     private string? serviceEndpoint;
     private string? backendUrl;
@@ -461,7 +445,7 @@
         Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
         formQuestions = !formQuestions;
         form3Validate = !form3Validate;
-        RefreshContainer();
+        // RefreshContainer();
     }
 
     private void OnValidSubmit(EditContext context)
@@ -541,8 +525,8 @@
             var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
-            base64data = "data:image/png;base64," + Convert.ToBase64String(buffer);
-            InputGame.Image.Content = base64data;
+            InputGame.Image.Content = Convert.ToBase64String(buffer);
+            base64data = "data:image/png;base64," + InputGame.Image.Content;
             StateHasChanged();
         }
         else

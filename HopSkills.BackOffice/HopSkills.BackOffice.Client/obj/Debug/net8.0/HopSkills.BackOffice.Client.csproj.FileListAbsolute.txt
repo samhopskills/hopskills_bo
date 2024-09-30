@@ -3320,18 +3320,16 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\refint\HopSkills.BackOffice.Client.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\HopSkills.BackOffice.Client.pdb
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\ref\HopSkills.BackOffice.Client.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\7sg324t0br.gz
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.boot.json
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.webassembly.js
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorAuthorizeRoleView.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.js
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.js.map
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.native.wasm
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.runtime.js.map
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_CJK.dat
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_EFIGS.dat
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_no_CJK.dat
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.boot.json
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorAuthorizeRoleView.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.native.8.0.7.z0gkbd1vjm.js
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.native.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.runtime.8.0.7.83nlaq5s4u.js
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\dotnet.runtime.js.map
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\FluentValidation.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BackOffice.Client.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BackOffice.Client.wasm
@@ -3341,6 +3339,9 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BO.Plugins.InMemory.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BO.UseCases.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BO.UseCases.wasm
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_CJK.dat
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_EFIGS.dat
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\icudt_no_CJK.dat
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.wasm
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.wasm
@@ -3560,6 +3561,7 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Text.Encoding.CodePages.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BackOffice.Client.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Configuration.wasm.gz
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.IO.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\HopSkills.BackOffice.Client.pdb.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Runtime.Serialization.Json.wasm.gz
@@ -3585,7 +3587,6 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\WindowsBase.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.Configuration.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Diagnostics.FileVersionInfo.wasm.gz
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Net.WebProxy.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\Microsoft.Extensions.Diagnostics.wasm.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\System.Security.Cryptography.Primitives.wasm.gz
@@ -4207,6 +4208,7 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.HopSkills.BackOffice.Client.props
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\scopedcss\bundle\HopSkills.BackOffice.Client.styles.css
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\34rdsqbsy5.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\gppmzkdzuf.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\i10ob1wwaq.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\kyvej5r7mq.gz
@@ -4432,5 +4434,3 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\refint\HopSkills.BackOffice.Client.dll
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\HopSkills.BackOffice.Client.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\ref\HopSkills.BackOffice.Client.dll
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\34rdsqbsy5.gz
-C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\7sg324t0br.gz

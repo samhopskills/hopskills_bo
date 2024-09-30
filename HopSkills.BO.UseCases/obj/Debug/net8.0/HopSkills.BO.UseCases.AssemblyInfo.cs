@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HopSkills.BO.UseCases")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffa446280541b1be61e0a98ddfb9c06ef1c99f65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e5c611ae8e41bd970cfea6a918faf2a8b8ea512")]
 [assembly: System.Reflection.AssemblyProductAttribute("HopSkills.BO.UseCases")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HopSkills.BO.UseCases")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
