@@ -1,7 +1,15 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Text.RegularExpressions
+<br />
+<br />
+<MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
+    @(_expanded ? "Collapse" : $"Expand {questionFormInput.Question}")
+</MudButton>
+<MudDivider />
 <MudGrid>
+    <MudIconButton OnClick="OnCancelSubmit" Color="Color.Error" Icon="@Icons.Material.Filled.Cancel"/>
     <MudItem xs="12" sm="12" md="12">
+                    <MudCollapse Expanded="_expanded">
         <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudCard>
@@ -96,7 +104,7 @@
                     </MudGrid>
                     <br />
                     <br />
-                    @if (questionFormInput.PossibleAnswers.Any())
+                        @if (questionFormInput.PossibleAnswers is not null && questionFormInput.PossibleAnswers.Count != 0)
                     {
                         @foreach (var item in questionFormInput.PossibleAnswers)
                         {
@@ -129,8 +137,8 @@
                                 </MudItem>
                                 <MudItem>
                                     <MudSwitch @bind-Value="@item.IsCorrect"
-                                               ThumbIcon="@(item.IsCorrect==true? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
-                                               ThumbIconColor="@(item.IsCorrect==true ? Color.Success : Color.Error)">
+                                               ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                               ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)">
                                     </MudSwitch>
                                     @if (item.Order == 0)
                                     {
@@ -169,10 +177,11 @@
                     <MudButton ButtonType="ButtonType.Submit"
                                Variant="Variant.Filled"
                                Color="Color.Primary"
-                               DropShadow="false">Validate</MudButton>
+                                   DropShadow="false" Class="ml-auto">Validate</MudButton>
                 </MudCardActions>
                 </MudCard>
                        </EditForm>
+                       </MudCollapse>
     </MudItem>
 </MudGrid>
 
@@ -195,11 +204,22 @@
     private bool formDisabled { get; set; }
     private List<string> base64Images = new();
     private List<string> base64Audios = new();
+    public bool Expanded { get; set; }
+    public bool IsValid { get; set; }
+    public int Id { get; set; }
+
     private async void Cancel()
     {
         await OnCancelEvent.InvokeAsync();
     }
-    
+
+    bool _expanded = true;
+
+    private void OnExpandCollapseClick()
+    {
+        _expanded = !_expanded;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         questionFormInput = new CreateMultipleQuestionsViewModel
@@ -247,7 +267,6 @@
         return EventCallback.Empty;
     }
 
-
     private async void UploadFiles(IBrowserFile file)
     {
         _files.Add(file);
@@ -276,6 +295,11 @@
                 StateHasChanged();
             }
         }
+    }
+
+    private async void OnCancelSubmit()
+    {
+        await OnCancelEvent.InvokeAsync(Id);
     }
 
     private async void OnValidSubmit()
