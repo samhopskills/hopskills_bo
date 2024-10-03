@@ -15,7 +15,6 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager Navigation
 
-@* <MudPaper Style="background-color:transparent;"> *@
 <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Bottom">
 
     @if (form1Validate)
@@ -56,9 +55,7 @@
             </MudTimelineItem>
         }
     }
-
 </MudTimeline>
-
     <MudGrid Class="justify-center">
     <MudItem xs="12" sm="7">
             <MudPaper Class="pa-4">
@@ -107,7 +104,11 @@
                                             </MudFileUpload>
                                             @if (fileNameWrong)
                                             {
-                                                <MudAlert Severity="MudBlazor.Severity.Error">File Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
+                                                <MudAlert Severity="MudBlazor.Severity.Error">
+                                                    File Name contains special characters. 
+                                                    Please Upload a file with no special 
+                                                    characters and less than 255 characters.
+                                                </MudAlert>
                                             }
                                             <MudToolBar Gutters="@false"
                                                         Class="relative d-flex justify-end gap-4">
@@ -228,7 +229,6 @@
                                                       OnValidEvent="CreateFormValid"
                                                       OnCancelEvent="CreateFormCanceled">
                             </AddQuestionFormComponent>
-
                         }
                     }
                     }
@@ -303,10 +303,6 @@
                     </MudGrid>
                 }
             }
-            @* </MudPaper>
-            </MudItem>
-</MudGrid>
-</MudPaper> *@
         </MudPaper>
     </MudItem>
 </MudGrid>

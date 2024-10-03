@@ -7,7 +7,6 @@
 </MudButton>
 <MudDivider />
 <MudGrid>
-    <MudIconButton OnClick="OnCancelSubmit" Color="Color.Error" Icon="@Icons.Material.Filled.Cancel"/>
     <MudItem xs="12" sm="12" md="12">
                     <MudCollapse Expanded="_expanded">
         <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
@@ -15,6 +14,8 @@
                 <MudCard>
                     <MudCardContent>
                         <MudGrid>
+                            <MudIconButton OnClick="OnCancelSubmit" 
+                                Color="Color.Error" Icon="@Icons.Material.Filled.Delete" />
                             <MudItem xs="12">
                         <MudTextField T="string" Label="Question" 
                             @bind-Value="@questionFormInput.Question"
@@ -281,7 +282,6 @@
 
     private async void UploadFiles2(IBrowserFile file)
     {
-
         _audios.Add(file);
         using (var stream = file.OpenReadStream())
         {

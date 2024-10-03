@@ -29,14 +29,12 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         private string getPriorGamesEndpoint { get; set; }
         private CreateMultipleQuestionsViewModel _questionFormInput { get; set; }
         EditContext InputGameContext1;
-        EditContext InputGameContext2;
-        EditContext InputGameContext3;
         private List<AddQuestionFormComponent> addQuestionForms { get; set; }
         private CreateGameViewModel InputGame = new();
         string[] errors = { };
-        MudForm form1 = new MudForm() { IsValid = false };
-        MudButton next1 = new MudButton() { Disabled = true };
-        MudButton next2 = new MudButton() { Disabled = true };
+        MudForm form1 = new() { IsValid = false };
+        MudButton next1 = new() { Disabled = true };
+        MudButton next2 = new() { Disabled = true };
         [CascadingParameter]
         private Task<AuthenticationState> authenticationStateTask { get; set; }
         private AuthenticationState authenticationState { get; set; }
@@ -57,17 +55,12 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
                         Label = "Answer 1",
                         Answer = string.Empty,
                     IsCorrect = false, Order = 0}
-                ],
-                ImageFiles = new List<string>(),
-                AudioFiles = new List<string>()
-                }
-                }
-            ];
+                ],ImageFiles = [],
+                AudioFiles = []
+                }}];
             serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
             InputGame.Image = new CreateGameImageViewModel();
             InputGameContext1 = new(InputGame);
-            InputGameContext2 = new(InputGame);
-            InputGameContext3 = new(InputGame);
             InputGameContext1.OnFieldChanged += InputGameContext1_OnFieldChanged;
             InputGame.multipleQuestions = [];
             form1Validate = true;
@@ -77,8 +70,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
             if (authenticationStateTask is not null)
             {
                 authenticationState = await authenticationStateTask;
-                if (authenticatedUser is null)
-                    authenticatedUser = authenticationState?.User;
+                authenticatedUser ??= authenticationState?.User;
             }
             Games = new List<GameViewModel>();
             if (authenticatedUser.IsInRole("Admin"))
@@ -107,8 +99,6 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         protected async Task CreateFormCanceled(int Id)
         {
             addQuestionForms.Remove(addQuestionForms[Id]);
-            //formQuestions = !formQuestions;
-            //form3Validate = !form3Validate;
             StateHasChanged();
         }
 
@@ -116,7 +106,6 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         {
             //update the binding to the container
             StateHasChanged();
-
             //the container refreshes the internal state
             _container.Refresh();
         }
@@ -134,6 +123,13 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
             form3Validate = !form3Validate;
         }
 
+        private EventCallback OnCancelSubmit(int Id)
+        {
+            InputGame.multipleQuestions.Remove(InputGame.multipleQuestions[Id]);
+            StateHasChanged();
+            return EventCallback.Empty;
+        }
+
         private void AddQuizz()
         {
             if(addQuestionForms is not null && addQuestionForms.Count != 0)
@@ -142,16 +138,18 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
                 {
                     addQuestionForms.LastOrDefault().Expanded = false;
                     addQuestionForms.Add(new AddQuestionFormComponent()
-                    { Id = addQuestionForms.Count+1,
+                    {
+                        Id = addQuestionForms.Count + 1,
                         questionFormInput = new CreateMultipleQuestionsViewModel
                         {
+                            Id = InputGame.multipleQuestions.Count + 1,
                             PossibleAnswers =
-                [
-                    new CreateAnswerViewModel { Id = 1,
-                        Label = "Answer 1",
-                        Answer = string.Empty,
-                    IsCorrect = false, Order = 0}
-                ],
+                            [
+                                new CreateAnswerViewModel { Id = 1,
+                                Label = "Answer 1",
+                                Answer = string.Empty,
+                                IsCorrect = false, Order = 0}
+                            ],
                             ImageFiles = [],
                             AudioFiles = []
                         }
@@ -199,16 +197,23 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
 
         private async void SaveGame(int Id)
         {
-            InputGame.Status = Id == 0 ? "Draft" : "Published";
-            InputGame.Creator = authenticatedUser.Identity.Name; ;
-            var result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
-            Navigation.NavigateTo("/games");
+            if (addQuestionForms is not null && addQuestionForms.Count != 0)
+            {
+                if (addQuestionForms.LastOrDefault().IsValid)
+                {
+                    InputGame.Status = Id == 0 ? "Draft" : "Published";
+                    InputGame.Creator = authenticatedUser.Identity.Name; ;
+                    HttpResponseMessage result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
+                    Navigation.NavigateTo("/games");
+                }
+                else
+                    Snackbar.Add("Please fill or delete the last quiz first", MudBlazor.Severity.Error);
+            }
         }
 
-#nullable enable
         public class Model
         {
-            public IReadOnlyList<IBrowserFile>? Files { get; set; } = new List<IBrowserFile>();
+            public IReadOnlyList<IBrowserFile>? Files { get; set; } = [];
         }
 
         private Model _model = new();
