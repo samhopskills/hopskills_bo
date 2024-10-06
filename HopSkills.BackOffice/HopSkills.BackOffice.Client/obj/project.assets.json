@@ -2,6 +2,24 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Blazor.Bootstrap/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.4"
+        },
+        "compile": {
+          "lib/net8.0/BlazorBootstrap.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/BlazorBootstrap.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor.Bootstrap.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor.Bootstrap.props": {}
+        }
+      },
       "BlazorAuthorizeRoleView/1.0.1": {
         "type": "package",
         "dependencies": {
@@ -754,6 +772,24 @@
       }
     },
     "net8.0/browser-wasm": {
+      "Blazor.Bootstrap/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.4"
+        },
+        "compile": {
+          "lib/net8.0/BlazorBootstrap.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/BlazorBootstrap.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor.Bootstrap.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor.Bootstrap.props": {}
+        }
+      },
       "BlazorAuthorizeRoleView/1.0.1": {
         "type": "package",
         "dependencies": {
@@ -1501,6 +1537,33 @@
     }
   },
   "libraries": {
+    "Blazor.Bootstrap/3.0.0": {
+      "sha512": "ZfVF0D+Ey33QKcyyZNHgK2WrHYnyqJMBPuBOKPqEO9Io4n24YPDi0RVzcrnTOe1B3YdBAisCofOqlF8Gleky8g==",
+      "type": "package",
+      "path": "blazor.bootstrap/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "128X128.png",
+        "README.md",
+        "blazor.bootstrap.3.0.0.nupkg.sha512",
+        "blazor.bootstrap.nuspec",
+        "build/Blazor.Bootstrap.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Blazor.Bootstrap.props",
+        "buildTransitive/Blazor.Bootstrap.props",
+        "lib/net6.0/BlazorBootstrap.dll",
+        "lib/net8.0/BlazorBootstrap.dll",
+        "staticwebassets/Blazor.Bootstrap.bundle.scp.css",
+        "staticwebassets/blazor.bootstrap.css",
+        "staticwebassets/blazor.bootstrap.js",
+        "staticwebassets/blazor.bootstrap.pdf.js",
+        "staticwebassets/blazor.bootstrap.sortable-list.js",
+        "staticwebassets/icon/128X128.png",
+        "staticwebassets/pdfjs-4.0.379.min.js",
+        "staticwebassets/pdfjs-4.0.379.worker.min.js"
+      ]
+    },
     "BlazorAuthorizeRoleView/1.0.1": {
       "sha512": "cU3UmI5iQERFrIJRHtSIrwWhx9Sf42XcJSNDGj1FbdL528uNdDQj+ouTofNuu/Ce0hhB1wW0Bjn9ZW5m0kMOOw==",
       "type": "package",
@@ -2705,6 +2768,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Blazor.Bootstrap >= 3.0.0",
       "BlazorAuthorizeRoleView >= 1.0.1",
       "FluentValidation >= 11.9.2",
       "HopSkills.BO.Plugins.InMemory >= 1.0.0",
@@ -2718,19 +2782,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\": {}
+    "C:\\Users\\samyd\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "projectUniqueName": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
       "projectName": "HopSkills.BackOffice.Client",
-      "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
-      "packagesPath": "C:\\Users\\s.dakhlaoui\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
+      "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\HopSkills.BackOffice.Client.csproj",
+      "packagesPath": "C:\\Users\\samyd\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BackOffice\\HopSkills.BackOffice.Client\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\s.dakhlaoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\samyd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2745,11 +2814,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
+            "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.Plugins\\HopSkills.BO.Plugins.InMemory\\HopSkills.BO.Plugins.InMemory.csproj"
             },
-            "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
-              "projectPath": "C:\\Users\\s.dakhlaoui\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
+            "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj": {
+              "projectPath": "C:\\Users\\samyd\\source\\hopskills_bo\\HopSkills.BO.UseCases\\HopSkills.BO.UseCases.csproj"
             }
           }
         }
@@ -2769,6 +2838,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Blazor.Bootstrap": {
+            "target": "Package",
+            "version": "[3.0.0, )"
+          },
           "BlazorAuthorizeRoleView": {
             "target": "Package",
             "version": "[1.0.1, )"

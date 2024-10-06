@@ -1,14 +1,16 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Text.RegularExpressions
+@inject ISnackbar Snackbar
+
 <br />
 <br />
-<MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
+@* <MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
     @(_expanded ? "Collapse" : $"Expand {questionFormInput.Question}")
 </MudButton>
-<MudDivider />
+<MudDivider /> *@
 <MudGrid>
     <MudItem xs="12" sm="12" md="12">
-                    <MudCollapse Expanded="_expanded">
+                    @* <MudCollapse Expanded="_expanded"> *@
         <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudCard>
@@ -31,13 +33,29 @@
                         <br/>
                 <MudGrid>
                     <MudItem xs="12" sm="6" md="4">
-                            <MudTextField T="string" InputMode="InputMode.numeric" InputType="InputType.Time"
-                            Label="Duration" Required="true"
-                                          @bind-Value="@questionFormInput.Duration"
-                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Timer"
-                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                       For="@(() => questionFormInput.Duration)" />
-                    </MudItem>
+                            <MudGrid Spacing="1" Justify="Justify.FlexStart">
+                            <MudItem>
+                                    <MudTextField Style="width:35px" T="int"
+                                          InputMode="InputMode.numeric" 
+                                          Placeholder="00"
+                                          Required="true"
+                                          @bind-Value="@questionFormInput.Min"
+                                          UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                  For="@(() => questionFormInput.Min)" />
+                            </MudItem>
+                            <MudItem>
+                                    <MudText>:</MudText>
+                            </MudItem>
+                            <MudItem>
+                                    <MudTextField Style="width:35px" T="int"
+                                          InputMode="InputMode.numeric" Placeholder="00"
+                                          Required="true"
+                                                  @bind-Value="@questionFormInput.Sec"
+                                                  UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                  For="@(() => questionFormInput.Sec)" />
+                                          </MudItem>
+                            </MudGrid>
+                        </MudItem>
                             <MudItem xs="12" sm="6" md="4">
                             </MudItem>
                     <MudItem xs="12" sm="6" md="4">
@@ -141,11 +159,8 @@
                                                ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
                                                ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)">
                                     </MudSwitch>
-                                    @if (item.Order == 0)
-                                    {
                                         <MudIconButton OnClick="@(e => DeleteAnswer(item.Order))"
                                                        Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
-                                    }
                                 </MudItem>
 
                             </MudGrid>
@@ -175,14 +190,18 @@
                     </MudCardContent>
                 <br />
                 <MudCardActions>
-                    <MudButton ButtonType="ButtonType.Submit"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
+                    @if(!hasBeenValidated)
+                    {
+                        <MudButton ButtonType="ButtonType.Submit"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
                                    DropShadow="false" Class="ml-auto">Validate</MudButton>
-                </MudCardActions>
+
+                    }
+                    </MudCardActions>
                 </MudCard>
                        </EditForm>
-                       </MudCollapse>
+                       @* </MudCollapse> *@
     </MudItem>
 </MudGrid>
 
@@ -208,7 +227,11 @@
     public bool Expanded { get; set; }
     public bool IsValid { get; set; }
     public int Id { get; set; }
-
+    // [Required]
+    private int min { get; set; }
+    // [Required]
+    private int sec { get; set; }
+    private bool hasBeenValidated { get; set; }
     private async void Cancel()
     {
         await OnCancelEvent.InvokeAsync();
@@ -227,14 +250,15 @@
             {
                 PossibleAnswers = new List<CreateAnswerViewModel>
                 {
-                    new CreateAnswerViewModel { Id = 1, 
+                    new CreateAnswerViewModel { 
                         Label = "Answer 1",
                         Answer = string.Empty,
-                    IsCorrect = false, Order = 0}
+                    IsCorrect = false}
                 },
                 ImageFiles = new List<string>(),
                 AudioFiles = new List<string>()
             };
+        questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
     private EventCallback DeleteImg(string img)
@@ -248,12 +272,11 @@
     {
         questionFormInput.PossibleAnswers.Add(new CreateAnswerViewModel
         {
-                Id = questionFormInput.PossibleAnswers.Count + 1,
                 Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
             Answer = string.Empty,
-            IsCorrect = false,
-                Order = questionFormInput.PossibleAnswers.Count + 1
+            IsCorrect = false
         });
+        questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
     private EventCallback CorrectAnswer(int Id)
@@ -304,9 +327,23 @@
 
     private async void OnValidSubmit()
     {
-        questionFormInput.ImageFiles = base64Images;
-        questionFormInput.AudioFiles = base64Audios;
-        await OnValidEvent.InvokeAsync(questionFormInput);
+        if (questionFormInput.PossibleAnswers is not null 
+            && questionFormInput.PossibleAnswers.Count() != 0)
+        {
+            var correctCount = questionFormInput.PossibleAnswers.Where(p => p.IsCorrect == true).Count();
+            if(correctCount > 0)
+            {
+                questionFormInput.Duration = new TimeOnly(00, questionFormInput.Min, questionFormInput.Sec);
+                hasBeenValidated = true;
+                questionFormInput.ImageFiles = base64Images;
+                questionFormInput.AudioFiles = base64Audios;
+                await OnValidEvent.InvokeAsync(questionFormInput);
+            }
+           else
+                Snackbar.Add("Please add at least one correct answer", MudBlazor.Severity.Error);
+        }
+        else
+            Snackbar.Add("Please add at least two answers", MudBlazor.Severity.Error);
     }
 
     

@@ -231,6 +231,18 @@
                             </AddQuestionFormComponent>
                         }
                     }
+                    else
+                    {
+                        <MudGrid Justify="Justify.Center">
+                            <MudButtonGroup>
+                                <MudButton StartIcon="@Icons.Material.Rounded.Add" Ripple="true">Add a quizz</MudButton>
+                                <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+                                    <MudMenuItem  OnClick="() => AddFirstQuizz()">Multiple choices question</MudMenuItem>
+                                    <MudMenuItem OnClick="() => SaveGame(1)">True or False</MudMenuItem>
+                                </MudMenu>
+                            </MudButtonGroup>
+                        </MudGrid>
+                    }
                     }
                 </MudStack>
             </MudPaper>
@@ -241,7 +253,7 @@
                 <MudItem Class="d-flex justify-start flex-grow-1 gap-4">
                     <MudText Class="d-inline-flex pa-4">Title:@InputGame.Title </MudText>
                     <MudText Class="d-inline-flex justify-end pa-4">
-                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@InputGame.TotalDuration.Minutes
+                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@InputGame.TotalDuration
                     </MudText>
                 </MudItem>
                 <MudItem Class="d-flex justify-end flex-grow-1 gap-4">
@@ -278,7 +290,9 @@
             </MudGrid>
             @if (form2Validate)
             {
-                <MudGrid Justify="Justify.Center">
+                @if (InputGame.multipleQuestions.Any())
+                {
+                    <MudGrid Justify="Justify.Center">
                     <MudItem>
                         <MudButton ButtonType="ButtonType.Button"
                                    EndIcon="@Icons.Material.Filled.Add"
@@ -288,8 +302,6 @@
                         </MudButton>
                     </MudItem>
                 </MudGrid>
-                @if (InputGame.multipleQuestions.Any())
-                {
                     <MudGrid>
                         <MudItem>
                             <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">

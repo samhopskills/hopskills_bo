@@ -43,23 +43,10 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         private string base64data = "";
         protected override async Task OnInitializedAsync()
         {
-            addQuestionForms =
-            [
-                new() {
-                    Id = 0,
-                    questionFormInput = new CreateMultipleQuestionsViewModel
-                {
-                    PossibleAnswers =
-                [
-                    new CreateAnswerViewModel { Id = 1,
-                        Label = "Answer 1",
-                        Answer = string.Empty,
-                    IsCorrect = false, Order = 0}
-                ],ImageFiles = [],
-                AudioFiles = []
-                }}];
+            addQuestionForms = [];
             serviceEndpoint = $"{backendUrl}/api/Game/AddGame";
             InputGame.Image = new CreateGameImageViewModel();
+            InputGame.TotalDuration = new TimeSpan(0, 0, 0);
             InputGameContext1 = new(InputGame);
             InputGameContext1.OnFieldChanged += InputGameContext1_OnFieldChanged;
             InputGame.multipleQuestions = [];
@@ -113,10 +100,10 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         protected async void CreateFormValid(CreateMultipleQuestionsViewModel validQuestionFom)
         {
             addQuestionForms.LastOrDefault().questionFormInput = validQuestionFom;
-            addQuestionForms.LastOrDefault().questionFormInput.Zone = _zones[0].Name;
-            InputGame.multipleQuestions.Add(addQuestionForms.LastOrDefault().questionFormInput);
-            InputGame.TotalXperience += addQuestionForms.LastOrDefault().questionFormInput.Xperience;
-            InputGame.TotalDuration.Add(TimeSpan.Parse(addQuestionForms.LastOrDefault().questionFormInput.Duration));
+            validQuestionFom.Zone = _zones[0].Name;
+            InputGame.multipleQuestions.Add(validQuestionFom);
+            InputGame.TotalXperience += validQuestionFom.Xperience;
+            InputGame.TotalDuration.Add(validQuestionFom.Duration.ToTimeSpan());
             addQuestionForms.LastOrDefault().IsValid = true;
             Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
             formQuestions = !formQuestions;
@@ -137,27 +124,71 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
                 if(addQuestionForms.LastOrDefault().IsValid)
                 {
                     addQuestionForms.LastOrDefault().Expanded = false;
-                    addQuestionForms.Add(new AddQuestionFormComponent()
+                    var questionFormInput = new CreateMultipleQuestionsViewModel
                     {
-                        Id = addQuestionForms.Count + 1,
-                        questionFormInput = new CreateMultipleQuestionsViewModel
-                        {
-                            Id = InputGame.multipleQuestions.Count + 1,
-                            PossibleAnswers =
+                        Id = InputGame.multipleQuestions.Count + 1,
+                        PossibleAnswers =
                             [
                                 new CreateAnswerViewModel { Id = 1,
-                                Label = "Answer 1",
+                                Label = $"Answer {InputGame.multipleQuestions.Count + 1}",
                                 Answer = string.Empty,
                                 IsCorrect = false, Order = 0}
                             ],
-                            ImageFiles = [],
-                            AudioFiles = []
-                        }
+                        ImageFiles = [],
+                        AudioFiles = []
+                    };
+                    addQuestionForms.Add(new AddQuestionFormComponent()
+                    {
+                        Id = addQuestionForms.Count + 1,
+                        questionFormInput = questionFormInput
                     });
+                    //InputGame.multipleQuestions.Add(questionFormInput);
+                    StateHasChanged();
                 }
                 else
                     Snackbar.Add("Please fill or delete the last quiz first", MudBlazor.Severity.Error);
             }
+        }
+
+        private void AddFirstQuizz()
+        {
+            var questionFormInput = new CreateMultipleQuestionsViewModel
+            {
+                Id = InputGame.multipleQuestions.Count + 1,
+                PossibleAnswers =
+                            [
+                                new CreateAnswerViewModel { Id = 1,
+                                Label = $"Answer {InputGame.multipleQuestions.Count + 1}",
+                                Answer = string.Empty,
+                                IsCorrect = false, Order = 0}
+                            ],
+                ImageFiles = [],
+                AudioFiles = []
+            };
+            addQuestionForms.Add(new AddQuestionFormComponent()
+            {
+                Id = 0,
+                questionFormInput = new CreateMultipleQuestionsViewModel
+                {
+                    Id = 0,
+                    PossibleAnswers =
+                    [
+                        new CreateAnswerViewModel { Id = 1,
+                                Label = "Answer 1",
+                                Answer = string.Empty,
+                                IsCorrect = false, Order = 0}
+                    ],
+                    ImageFiles = [],
+                    AudioFiles = []
+                }
+            });
+            //InputGame.multipleQuestions.Add(questionFormInput);
+            StateHasChanged();
+        }
+
+        private void AddTrueOrFalse()
+        {
+
         }
 
         private void OnValidSubmit(EditContext context)

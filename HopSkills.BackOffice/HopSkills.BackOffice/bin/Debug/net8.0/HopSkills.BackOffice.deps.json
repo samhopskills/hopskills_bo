@@ -88,6 +88,17 @@
           }
         }
       },
+      "Blazor.Bootstrap/3.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "8.0.8"
+        },
+        "runtime": {
+          "lib/net8.0/BlazorBootstrap.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
       "BlazorAuthorizeRoleView/1.0.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "8.0.8",
@@ -1448,6 +1459,7 @@
       },
       "HopSkills.BackOffice.Client/1.0.0": {
         "dependencies": {
+          "Blazor.Bootstrap": "3.0.0",
           "BlazorAuthorizeRoleView": "1.0.1",
           "FluentValidation": "11.9.2",
           "HopSkills.BO.Plugins.InMemory": "1.0.0",
@@ -1518,6 +1530,13 @@
       "sha512": "sha512-KKBFnc4WZ6m9HgsKgwfO1cIxd154b8cAnP3uWhuelvFkzxqBXQQgIsHF0n3DYBG2AoTJCZDXwJpKuVC7CsKJWg==",
       "path": "azure.storage.common/12.20.1",
       "hashPath": "azure.storage.common.12.20.1.nupkg.sha512"
+    },
+    "Blazor.Bootstrap/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZfVF0D+Ey33QKcyyZNHgK2WrHYnyqJMBPuBOKPqEO9Io4n24YPDi0RVzcrnTOe1B3YdBAisCofOqlF8Gleky8g==",
+      "path": "blazor.bootstrap/3.0.0",
+      "hashPath": "blazor.bootstrap.3.0.0.nupkg.sha512"
     },
     "BlazorAuthorizeRoleView/1.0.1": {
       "type": "package",

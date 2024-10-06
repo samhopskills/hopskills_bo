@@ -764,3 +764,4 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\obj
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\obj\Debug\net8.0\HopSkills.BackOffice.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\obj\Debug\net8.0\HopSkills.BackOffice.genruntimeconfig.cache
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\obj\Debug\net8.0\ref\HopSkills.BackOffice.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\BlazorBootstrap.dll

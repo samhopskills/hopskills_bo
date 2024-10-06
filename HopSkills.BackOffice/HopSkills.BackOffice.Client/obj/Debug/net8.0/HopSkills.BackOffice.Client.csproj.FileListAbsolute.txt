@@ -4434,3 +4434,8 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\refint\HopSkills.BackOffice.Client.dll
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\HopSkills.BackOffice.Client.pdb
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\ref\HopSkills.BackOffice.Client.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorBootstrap.wasm
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\wwwroot\_framework\BlazorBootstrap.wasm.gz
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\BlazorBootstrap.dll
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\webcil\BlazorBootstrap.wasm
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\4y2367zl3s.gz
