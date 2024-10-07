@@ -8,5 +8,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public List<CreateAnswerViewModel> PossibleAnswers { get; set; }
         public string Zone { get; set; }
         public int Id { get; set; }
+        public bool Expanded { get; set; }
+        public bool IsValid { get; set; }
     }
 }

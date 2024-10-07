@@ -221,11 +221,11 @@
                             Back
                         </MudButton>
                     </div>
-                         @if (addQuestionForms is not null && addQuestionForms.Any())
+                    @if (InputGame.multipleQuestions is not null && InputGame.multipleQuestions.Any())
                     {
-                        foreach (var form in addQuestionForms)
+                        foreach (var multiQ in InputGame.multipleQuestions)
                         {
-                            <AddQuestionFormComponent questionFormInput="form.questionFormInput"
+                            <AddQuestionFormComponent questionFormInput="multiQ"
                                                       OnValidEvent="CreateFormValid"
                                                       OnCancelEvent="CreateFormCanceled">
                             </AddQuestionFormComponent>
@@ -237,8 +237,8 @@
                             <MudButtonGroup>
                                 <MudButton StartIcon="@Icons.Material.Rounded.Add" Ripple="true">Add a quizz</MudButton>
                                 <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
-                                    <MudMenuItem  OnClick="() => AddFirstQuizz()">Multiple choices question</MudMenuItem>
-                                    <MudMenuItem OnClick="() => SaveGame(1)">True or False</MudMenuItem>
+                                    <MudMenuItem OnClick="() => AddQuizz()">Multiple choices question</MudMenuItem>
+                                    <MudMenuItem OnClick="() => AddQuizz()">True or False</MudMenuItem>
                                 </MudMenu>
                             </MudButtonGroup>
                         </MudGrid>

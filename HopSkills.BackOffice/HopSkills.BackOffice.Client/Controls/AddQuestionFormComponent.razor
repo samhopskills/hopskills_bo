@@ -4,13 +4,13 @@
 
 <br />
 <br />
-@* <MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
-    @(_expanded ? "Collapse" : $"Expand {questionFormInput.Question}")
+<MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
+    @(questionFormInput.Expanded ? "Collapse" : $"Expand {questionFormInput.Question}")
 </MudButton>
-<MudDivider /> *@
+<MudDivider />
 <MudGrid>
     <MudItem xs="12" sm="12" md="12">
-                    @* <MudCollapse Expanded="_expanded"> *@
+        <MudCollapse Expanded="@questionFormInput.Expanded">
         <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
                 <DataAnnotationsValidator/>
                 <MudCard>
@@ -181,7 +181,7 @@
                                       T="string" 
                                       Label="Explain the correct answer" 
                                       Required="true"
-                                      @bind-Value="questionFormInput.CorrectAnswerExplanation"
+                                      @bind-Value="@questionFormInput.CorrectAnswerExplanation"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.CorrectAnswerExplanation)"
                                       AutoGrow="true" Variant="Variant.Filled" />
@@ -201,7 +201,7 @@
                     </MudCardActions>
                 </MudCard>
                        </EditForm>
-                       @* </MudCollapse> *@
+                       </MudCollapse>
     </MudItem>
 </MudGrid>
 
@@ -224,40 +224,22 @@
     private bool formDisabled { get; set; }
     private List<string> base64Images = new();
     private List<string> base64Audios = new();
-    public bool Expanded { get; set; }
-    public bool IsValid { get; set; }
     public int Id { get; set; }
-    // [Required]
-    private int min { get; set; }
-    // [Required]
-    private int sec { get; set; }
+   
     private bool hasBeenValidated { get; set; }
     private async void Cancel()
     {
         await OnCancelEvent.InvokeAsync();
     }
 
-    bool _expanded = true;
 
     private void OnExpandCollapseClick()
     {
-        _expanded = !_expanded;
+        questionFormInput.Expanded = !questionFormInput.Expanded;
     }
 
     protected override async Task OnInitializedAsync()
     {
-        questionFormInput = new CreateMultipleQuestionsViewModel
-            {
-                PossibleAnswers = new List<CreateAnswerViewModel>
-                {
-                    new CreateAnswerViewModel { 
-                        Label = "Answer 1",
-                        Answer = string.Empty,
-                    IsCorrect = false}
-                },
-                ImageFiles = new List<string>(),
-                AudioFiles = new List<string>()
-            };
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
