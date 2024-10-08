@@ -22,7 +22,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string PriorGame { get; set; }
         public int NumberOfQuestion { get; set; }
         //[Required]
-        public TimeSpan TotalDuration { get; set; }
+        public TimeOnly TotalDuration { get; set; }
         public EditGameImageViewModel Image { get; set; }
         //[Required]
         public int TotalXperience { get; set; }

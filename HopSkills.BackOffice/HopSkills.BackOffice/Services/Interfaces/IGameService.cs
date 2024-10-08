@@ -1,4 +1,5 @@
-﻿using HopSkills.BackOffice.Client.ViewModels;
+﻿using Azure;
+using HopSkills.BackOffice.Client.ViewModels;
 using HopSkills.BackOffice.Model;
 
 namespace HopSkills.BackOffice.Services.Interfaces
@@ -13,5 +14,7 @@ namespace HopSkills.BackOffice.Services.Interfaces
         Task<IEnumerable<GameViewModel>> GetGamesByUser(string usermail);
         Task<bool> UpdateGameStatus(string id);
         Task<EditGameModel?> GetGameById(string id);
+        Task<Response<bool>> DeleteImageFromGame(string id);
+        Task<Response<bool>> UploadImageForGame(CreateGameImage Image, string Id);
     }
 }

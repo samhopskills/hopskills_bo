@@ -282,12 +282,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
             }
         }
 
-        private void Upload()
-        {
-            // Upload the files here
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-            Snackbar.Add("TODO: Upload your files!");
-        }
+        
 
         private void SetDragClass()
             => _dragClass = $"{DefaultDragClass} mud-border-primary";

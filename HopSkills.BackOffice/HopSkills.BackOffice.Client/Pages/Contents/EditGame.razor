@@ -15,17 +15,53 @@
 @inject NavigationManager Navigation
 
 
+<MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" TimelinePosition="TimelinePosition.Bottom">
+
+    @if (form1Validate)
+    {
+        <MudTimelineItem Color="Color.Info">
+            <ItemContent>
+                <MudText Color="Color.Info" Align="Align.Center">General Information</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        <MudTimelineItem>
+            <ItemContent>
+                <MudText Align="Align.Center">Content Creation</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+    }
+
+    @if (form2Validate)
+    {
+        <MudTimelineItem Color="Color.Success">
+            <ItemContent>
+                <MudText Color="Color.Success" Align="Align.Center">General Information</MudText>
+            </ItemContent>
+        </MudTimelineItem>
+        @if (InputGame.multipleQuestions.Any())
+        {
+            <MudTimelineItem Color="Color.Success">
+                <ItemContent>
+                    <MudText Color="Color.Success" Align="Align.Center">Content Creation</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        }
+        else
+        {
+            <MudTimelineItem Color="Color.Info">
+                <ItemContent>
+                    <MudText Color="Color.Info" Align="Align.Center">Content Creation</MudText>
+                </ItemContent>
+            </MudTimelineItem>
+        }
+    }
+</MudTimeline>
 <MudGrid Class="justify-center">
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
             <MudStack Style="width: 100%">
                 @if (form1Validate)
                 {
-                    <MudButton 
-                        OnClick="OnExpandCollapseClick">@(_expanded ? "Collapse" : "Expand")
-                    </MudButton>
-                    <MudDivider />
-                    <MudCollapse Expanded="_expanded">
                     <EditForm Model="@InputGame" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
                         <MudGrid>
@@ -68,7 +104,11 @@
                                             </MudFileUpload>
                                             @if (fileNameWrong)
                                             {
-                                                <MudAlert Severity="MudBlazor.Severity.Error">File Name contains special characters. Please Upload a file with no special characters and less than 255 characters.</MudAlert>
+                                                <MudAlert Severity="MudBlazor.Severity.Error">
+                                                    File Name contains special characters.
+                                                    Please Upload a file with no special
+                                                    characters and less than 255 characters.
+                                                </MudAlert>
                                             }
                                             <MudToolBar Gutters="@false"
                                                         Class="relative d-flex justify-end gap-4">
@@ -151,7 +191,6 @@
                                                 </MudSelect>
                                             </MudItem>
                                         </MudGrid>
-                                            <MudDivider />
                                         <MudGrid>
                                             <MudItem xs="12">
                                                 <MudTextField Required="true" For="@(() => InputGame.Description)"
@@ -170,31 +209,39 @@
                             </MudItem>
                         </MudGrid>
                     </EditForm>
-                    </MudCollapse>
                 }
-                @if (addQuestionForms is not null && addQuestionForms.Any())
+                @if (form2Validate)
                 {
-                    foreach(var form in addQuestionForms)
-                    {
-                        <MudButton 
-                        OnClick="OnExpandCollapseClick">@(_expanded ? "Collapse" : "Expand")
-                    </MudButton>
-                    <MudDivider />
-                    <MudCollapse Expanded="_expanded">
-                        <AddQuestionFormComponent questionFormInput="@_questionFormInput"
-                                                  OnValidEvent="CreateFormValid"
-                                                  OnCancelEvent="CreateFormCanceled">
-                        </AddQuestionFormComponent>
-                        </MudCollapse>
-                    }
-                    @* <div class="object-left">
+                    <div class="object-left">
                         <MudButton Size="Size.Medium" ButtonType="ButtonType.Button"
                                    OnClick="NavigateToPreviousGameForm"
                                    Color="Color.Error" StartIcon="@Icons.Material.Filled.NavigateBefore"
                                    Variant="Variant.Filled">
                             Back
                         </MudButton>
-                    </div> *@
+                    </div>
+                    @if (InputGame.multipleQuestions is not null && InputGame.multipleQuestions.Count() > 0)
+                    {
+                        foreach (var multiQ in InputGame.multipleQuestions)
+                        {
+                            <AddQuestionFormComponent questionFormInput="multiQ"
+                                                      OnValidEvent="CreateFormValid"
+                                                      OnCancelEvent="CreateFormCanceled">
+                            </AddQuestionFormComponent>
+                        }
+                    }
+                    else
+                    {
+                        <MudGrid Justify="Justify.Center">
+                            <MudButtonGroup>
+                                <MudButton StartIcon="@Icons.Material.Rounded.Add" Ripple="true">Add a quizz</MudButton>
+                                <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+                                    <MudMenuItem OnClick="() => AddQuizz()">Multiple choices question</MudMenuItem>
+                                    <MudMenuItem OnClick="() => AddQuizz()">True or False</MudMenuItem>
+                                </MudMenu>
+                            </MudButtonGroup>
+                        </MudGrid>
+                    }
                 }
             </MudStack>
         </MudPaper>
@@ -205,7 +252,7 @@
                 <MudItem Class="d-flex justify-start flex-grow-1 gap-4">
                     <MudText Class="d-inline-flex pa-4">Title:@InputGame.Title </MudText>
                     <MudText Class="d-inline-flex justify-end pa-4">
-                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@InputGame.TotalDuration.Minutes
+                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@InputGame.TotalDuration
                     </MudText>
                 </MudItem>
                 <MudItem Class="d-flex justify-end flex-grow-1 gap-4">
@@ -218,109 +265,59 @@
             <MudDivider DividerType="DividerType.FullWidth" />
             <MudGrid Style="object-position:bottom">
                 <MudItem xs="12" sm="12" md="12" xl="12">
-                    <MudPaper>
-                        <MudPaper Style="border-radius: 24px !important;">
-                            @foreach (var item in InputGame.multipleQuestions)
+                    <MudPaper Style="border-radius: 24px !important;">
+                        <MudExpansionPanels MultiExpansion="true">
+                            @if (InputGame.multipleQuestions is not null
+                            && InputGame.multipleQuestions.Count() > 0)
                             {
-                                <MudPaper Class="gap-x-10 d-flex pa-4 ">
-                                    <MudText Class="d-inline-flex pa-4">@item.Question</MudText>
-                                    <MudText Class="d-inline-flex pa-4">
-                                        <MudIcon Icon="@Icons.Material.Outlined.Star" />@item.Xperience
-                                    </MudText>
-                                    <MudText Class="d-inline-flex justify-end pa-4">
-                                        <MudIcon Icon="@Icons.Material.Outlined.Timer" />@item.Duration
-                                    </MudText>
-                                </MudPaper>
+                                @foreach (var item in InputGame.multipleQuestions)
+                                {
+                                    <MudExpansionPanel Text="@item.Question">
+                                        @if (item.PossibleAnswers is not null
+                                       && item.PossibleAnswers.Count != 0)
+                                        {
+                                            @foreach (var answ in item.PossibleAnswers)
+                                            {
+                                                <MudText>
+                                                    @answ.Answer
+                                                    <MudIcon Icon="@(answ.IsCorrect? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                                             Color="@(answ.IsCorrect? Color.Success : Color.Error)" />
+                                                </MudText>
+                                            }
+                                        }
+                                    </MudExpansionPanel>
+                                }
                             }
-                        </MudPaper>
-                        @if(InputGame.multipleQuestions is not null)
-                        {
-                            @if (InputGame.multipleQuestions.Any())
-                        {
-                            <MudGrid>
-                                <MudItem>
-                                    <MudPaper>
-                                        <MudButton Variant="Variant.Filled"
-                                                   Color="Color.Primary"
-                                                   DropShadow="false" OnClick="CreateGameAsDraft">Save As A Draft</MudButton>
-                                        <MudButton Variant="Variant.Filled"
-                                                   Color="Color.Primary"
-                                                   DropShadow="false" OnClick="CreateGameAndPublish">Save & Publish</MudButton>
-                                    </MudPaper>
-                                </MudItem>
-                            </MudGrid>
-                        }
-                        }
+                        </MudExpansionPanels>
                     </MudPaper>
-                    @* <MudDropContainer T="CreateMultipleQuestionsViewModel" App
-                    Items="@InputGame.multipleQuestions" @ref="_container"
-                    ItemsSelector="@((item, dropzone) => item.Zone == dropzone)"
-                    ItemDropped="ItemUpdated"
-                    Class="d-flex flex-wrap flex-grow-1">
-                    <ChildContent>
-                    <MudDropZone T="CreateMultipleQuestionsViewModel" AllowReorder="true"
-                    Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
-                    </ChildContent>
-                    <ItemRenderer>
-                    <MudListItem T="CreateMultipleQuestionsViewModel"
-                    Text="@($"{context.Question}")" />
-                    <div class="mud-elevation-25 pa-4 my-4">@context.Question</div>
-                    <MudExpansionPanels>
-                    <MudExpansionPanel Text="@context.Question"
-                    MaxHeight="150" Expanded="false">
-                    <TitleContent>
-                    <div class="d-flex">
-                    <MudIcon Icon="@Icons.Material.Filled.Info" class="mr-3"></MudIcon>
-                    <MudText><strong>@context.Question</strong></MudText>
-                    </div>
-                    </TitleContent>
-                    <ChildContent>
-                    <MudText Class="d-inline-flex justify-end pa-4">
-                    <MudIcon Icon="@Icons.Material.Outlined.Star" />
-                    @context.Xperience
-                    </MudText>
-                    <MudText Class="d-inline-flex justify-end pa-4">
-                    <MudIcon Icon="@Icons.Material.Outlined.Timer" />
-                    @context.Duration
-                    </MudText>
-                    </ChildContent>
-                    </MudExpansionPanel>
-                    <MudDivider />
-                    </MudExpansionPanels>
-                    </ItemRenderer>
-                    </MudDropContainer> *@
-                    @* <MudDropContainer T="DropZoneItem" Items="_items" ItemDropped="ItemUpdated"
-                    ItemsSelector="@((item, dropzone) => true)"
-                    Class="d-flex flex-wrap flex-grow-1">
-                    <ChildContent>
-                    <MudDropZone T="DropZoneItem"
-                    AllowReorder Class="6 rounded mud-background-gray px-4 py-1 ma-4" />
-                    </ChildContent>
-                    <ItemRenderer>
-                    <MudPaper Class=" gap-x-10 d-flex pa-4 ">
-                    <MudText Typo="Typo.h6">@context.Name</MudText>
-                    <MudDropZone T="DropZoneItem" Identifier="@context.Name" AllowReorder Class="rounded mud-background-gray px-4 py-1 ma-4" />
-                    </MudPaper>
-                    </ItemRenderer>
-                    </MudDropContainer> *@
                 </MudItem>
             </MudGrid>
-            <MudGrid Justify="Justify.Center">
+            @if (form2Validate)
+            {
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton ButtonType="ButtonType.Button"
+                                   EndIcon="@Icons.Material.Filled.Add"
+                                   Color="Color.Primary"
+                                   OnClick="AddQuizz">
+                            Add an new quizz
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            }
+            <MudGrid>
                 <MudItem>
-                    <MudButton ButtonType="ButtonType.Button"
-                               EndIcon="@Icons.Material.Filled.Add"
-                               Color="Color.Primary"
-                    OnClick="AddQuizz">
-                               Add an new quizz</MudButton>
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudButton>Save As</MudButton>
+                        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown" Style="align-self: auto;">
+                            <MudMenuItem OnClick="() => SaveGame(0)">Draft</MudMenuItem>
+                            <MudMenuItem OnClick="() => SaveGame(1)">And Publish</MudMenuItem>
+                        </MudMenu>
+                    </MudButtonGroup>
                 </MudItem>
             </MudGrid>
-            @* </MudPaper>
-            </MudItem>
-            </MudGrid>
-            </MudPaper> *@
         </MudPaper>
     </MudItem>
-    
 </MudGrid>
 
 
@@ -377,6 +374,8 @@
         InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
         if(InputGame != null)
         {
+            InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
+            base64data = "data:image/png;base64," + InputGame.Image.Content;
             serviceEndpoint = $"{backendUrl}/api/Game/EditGame";
             InputGameContext = new(InputGame);
             InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
@@ -461,17 +460,6 @@
         addQuestionForms.Add(new AddQuestionFormComponent());
     }
 
-    // protected async void CreateFormValid(CreateMultipleQuestionsViewModel validQuestionFom)
-    // {
-    //     _questionFormInput = validQuestionFom;
-    //     InputGame.multipleQuestions.Add(_questionFormInput);
-    //     InputGame.TotalXperience += _questionFormInput.Xperience;
-    //     InputGame.TotalDuration.Add(TimeSpan.Parse(_questionFormInput.Duration));
-    //     Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
-    //     formQuestions = !formQuestions;
-    //     form3Validate = !form3Validate;
-    //     StateHasChanged();
-    // }
 
     protected async void CreateFormValid()
     {
@@ -487,6 +475,13 @@
 
     private void OnValidSubmit(EditContext context)
     {
+        if (form1Validate)
+        {
+            form1Validate = false;
+            form2Validate = true;
+        }
+        else if (form2Validate)
+            form2Validate = false;
         StateHasChanged();
     }
 
@@ -524,30 +519,42 @@
         }
     }
 
-    private async void CreateGameAndPublish()
+    private async void SaveGame(int Id)
     {
-        InputGame.Status = "Published";
-        InputGame.Creator = authenticatedUser.Identity.Name; ;
-        var result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
-        Navigation.NavigateTo("/games");
-    }
-
-    private async void CreateGameAsDraft()
-    {
-        InputGame.Status = "Draft";
-        InputGame.Creator = authenticatedUser.Identity.Name;
-        var result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
-        Navigation.NavigateTo("/games");
+        if (InputGame.multipleQuestions is not null && InputGame.multipleQuestions.Count != 0)
+        {
+            if (InputGame.multipleQuestions.LastOrDefault().IsValid)
+            {
+                InputGame.Status = Id == 0 ? "Draft" : "Published";
+                InputGame.Creator = authenticatedUser.Identity.Name; ;
+                HttpResponseMessage result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
+                Navigation.NavigateTo("/games");
+            }
+            else
+                Snackbar.Add("Please fill or delete the last quiz first", MudBlazor.Severity.Error);
+        }
     }
 
     private async void LoadFiles(InputFileChangeEventArgs e)
     {
-        var format = "image/png";
-        var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
-        var buffer = new byte[resizeImage.Size];
-        await resizeImage.OpenReadStream().ReadAsync(buffer);
-        InputGame.Image.Title = resizeImage.Name;
-        InputGame.Image.Content = Convert.ToBase64String(buffer);
+        var regexItem = new Regex("^[a-zA-Z0-9_.-]*$");
+        InputGame.Image.Title = e.File.Name.ToString();
+        if (regexItem.IsMatch(e.File.Name.ToString()))
+        {
+            fileNameWrong = false;
+            var format = e.File.ContentType;
+            var resizeImage = await e.File.RequestImageFileAsync(format, 300, int.MaxValue);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            InputGame.Image.Content = Convert.ToBase64String(buffer);
+            base64data = "data:image/png;base64," + InputGame.Image.Content;
+            StateHasChanged();
+        }
+        else
+        {
+            fileNameWrong = true;
+            disabledNext1 = true;
+        }
     }
 
     private void Upload()

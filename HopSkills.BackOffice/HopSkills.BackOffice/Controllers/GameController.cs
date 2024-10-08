@@ -138,5 +138,19 @@ namespace HopSkills.BackOffice.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("DeleteImageFromGame/{id}")]
+        public async Task<IActionResult> DeleteImageFromGame(string id)
+        {
+            try
+            {
+                return Ok(await _gameService.DeleteImageFromGame(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

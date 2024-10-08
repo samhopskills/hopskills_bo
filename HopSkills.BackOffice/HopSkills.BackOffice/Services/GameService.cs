@@ -8,6 +8,8 @@ using HopSkills.BackOffice.Model;
 using HopSkills.BackOffice.Services.Interfaces;
 using HopSkills.BO.CoreBusiness;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 
@@ -402,6 +404,53 @@ namespace HopSkills.BackOffice.Services
             return false;
         }
 
-        
+        public async Task<Response<bool>> DeleteImageFromGame(string id)
+        {
+            try
+            {
+                BlobContainerClient _containerClient = _blobServiceClient
+                            .GetBlobContainerClient(ImageContainerName);
+                var blobClient = _containerClient.GetBlobClient($"{id}.png");
+                return await blobClient.DeleteIfExistsAsync(DeleteSnapshotsOption.IncludeSnapshots);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[ERROR] : {ex} {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<Response<bool>> UploadImageForGame(CreateGameImage Image, string Id)
+        {
+            try
+            {
+                BlobContainerClient _containerClient = _blobServiceClient
+                           .GetBlobContainerClient(ImageContainerName);
+                if(Image is not null)
+                {
+                    if (!string.IsNullOrEmpty(Image.Content))
+                    {
+                        var blobClient = _containerClient.GetBlobClient($"{Id}.png");
+                        BlobUploadOptions options = new()
+                        {
+                            Tags = new Dictionary<string, string>
+                                {
+                                    {"Title",  Image.Title},
+                                    {"Date",  DateTime.UtcNow.ToShortDateString()}
+                                }
+                        };
+                        var bytes = Convert.FromBase64String(Image.Content);
+                        await blobClient.UploadAsync(BinaryData.FromBytes(bytes), options);
+                        _logger.LogInformation("[Game Image added to container]");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"[ERROR] : {ex} {ex.Message}");
+            }
+            return null;
+        }
+
     }
 }
