@@ -4,6 +4,31 @@
     .mud-input-outlined-border {
         border-radius: 24px !important;
     }
+
+    .hopskills-purple {
+        background-color: #7E3FF2 !important;
+    }
+
+    .hopskills-purple-text {
+        color: #7E3FF2 !important;
+    }
+
+    .hopskills-sidebar {
+        width: 250px;
+        background-color: white;
+    }
+
+    .hopskills-main {
+        background-color: #F8F7FA;
+    }
+
+    .hopskills-card {
+        border-radius: 8px;
+    }
+
+    .hopskills-stat-card {
+        height: 100px;
+    }
 </style>
 <MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
@@ -19,16 +44,29 @@
                                <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
                 @* <MudText Typo="Typo.h5" Class="ml-3">HopSkills</MudText> *@
                 <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.Notifications"
+                               Color="Color.Dark" Edge="Edge.End" />
+                <MudIconButton Icon="@Icons.Material.Filled.AccountCircle"
+                               Color="Color.Dark" Edge="Edge.End" />
                 @* <MudSwitch @bind-Value="_isDarkMode" 
                 Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
             </MudAppBar>
+            @* <MudAppBar Elevation="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.Notifications" 
+                Color="Color.Inherit" Edge="Edge.End" />
+                <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" 
+                Color="Color.Inherit" Edge="Edge.End" />
+            </MudAppBar> *@
             <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
             </MudDrawer>
         </Authorized>
     </AuthorizeView>
     <MudMainContent>
-        <MudContainer  Style="min-height:100vh;
+        <MudContainer MaxWidth="MaxWidth.Large" Class="pa-0" Style="min-height:100vh;
 min-width:100vw; background-color: #F3FBFF; align-content:center;">
             @Body
             <MudScrollToTop>
