@@ -290,7 +290,7 @@
             var correctCount = questionFormInput.PossibleAnswers.Where(p => p.IsCorrect == true).Count();
             if (correctCount > 0)
             {
-                questionFormInput.Duration = new TimeOnly(00, questionFormInput.Min, questionFormInput.Sec);
+                // questionFormInput.Duration = new TimeOnly(00, questionFormInput.Min, questionFormInput.Sec);
                 hasBeenValidated = true;
                 questionFormInput.ImageFiles = base64Images;
                 questionFormInput.AudioFiles = base64Audios;

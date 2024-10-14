@@ -4208,7 +4208,6 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Cli
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.HopSkills.BackOffice.Client.props
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\scopedcss\bundle\HopSkills.BackOffice.Client.styles.css
-C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\34rdsqbsy5.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\gppmzkdzuf.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\i10ob1wwaq.gz
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\kyvej5r7mq.gz
@@ -4444,3 +4443,4 @@ C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffi
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\bin\Debug\net8.0\BlazorBootstrap.dll
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\webcil\BlazorBootstrap.wasm
 C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\dm3rn81yuu.gz
+C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice.Client\obj\Debug\net8.0\compressed\er1hflz77d.gz

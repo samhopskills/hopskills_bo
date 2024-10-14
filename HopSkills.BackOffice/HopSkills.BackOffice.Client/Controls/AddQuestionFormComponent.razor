@@ -1,185 +1,144 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Text.RegularExpressions
 @inject ISnackbar Snackbar
+<style>
+    .answer-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
 
-<br />
-<br />
-<MudButton FullWidth="true" OnClick="OnExpandCollapseClick">
-    @(questionFormInput.Expanded ? "Collapse" : $"Expand {questionFormInput.Question}")
-</MudButton>
-<MudDivider />
-<MudGrid>
-    <MudItem xs="12" sm="12" md="12">
-        <MudCollapse Expanded="@questionFormInput.Expanded">
-        <EditForm  Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
-                <DataAnnotationsValidator/>
-                <MudCard>
-                    <MudCardContent>
-                        <MudGrid>
-                            <MudIconButton OnClick="OnCancelSubmit" 
-                                Color="Color.Error" Icon="@Icons.Material.Filled.Delete" />
-                            <MudItem xs="12">
-                        <MudTextField T="string" Label="Question" 
-                            @bind-Value="@questionFormInput.Question"
-                            Required="true" Variant="Variant.Outlined"
+    .answer-text {
+        flex-grow: 1;
+        margin-right: 8px;
+    }
+
+    .answer-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .correct-answer {
+        border: 2px solid rgba(0,200,83,1);
+        border-radius: 24px;
+    }
+
+    .question-paper{
+        border-radius: 24px;
+    }
+    .question-paper.selected {
+        border: 3px solid #673AB7 !important;
+        border-radius: 24px;
+    }
+
+    .quiz-title {
+        font-weight: bold;
+        margin-right: auto;
+    }
+
+</style>
+
+<div class="d-flex justify-space-between align-center mb-2">
+    <MudText Typo="Typo.h6" Class="quiz-title">@QuizTitle</MudText>
+    <div class="d-flex justify-end align-center">
+        <MudTooltip Text="Quiz Duration">
+            <div class="d-flex align-center">
+                <MudNumericField @bind-Value="Minutes"
+                                 Label="Min"
+                                 Min="0"
+                                 Max="59"
+                                 Style="width: 60px; margin-right: 4px;"
+                                 Variant="Variant.Text"
+                                 Density="Density.Compact"
+                                 HideSpinButtons="true" />
+                <MudText Class="mx-1">:</MudText>
+                <MudNumericField @bind-Value="Seconds"
+                                 Label="Sec"
+                                 Min="0"
+                                 Max="59"
+                                 Style="width: 60px;"
+                                 Variant="Variant.Text"
+                                 Density="Density.Compact"
+                                 HideSpinButtons="true" />
+            </div>
+        </MudTooltip>
+        <MudTooltip Text="Experience Points" Class="ml-4">
+            <MudText Typo="Typo.body2" Inline="true" Class="ml-1">@questionFormInput.Xperience XP</MudText>
+        </MudTooltip>
+        <MudTooltip Text="Delete the page">
+            <MudIconButton Size="Size.Small" OnClick="OnCancelSubmit"
+                           Icon="@Icons.Material.Outlined.Delete" />
+        </MudTooltip>
+        <MudTooltip Text="Add a page">
+            <MudIconButton Size="Size.Small" OnClick="OnAddSubmit"
+                           Icon="@Icons.Material.Outlined.NoteAdd" />
+        </MudTooltip>
+    </div>
+</div>
+<MudPaper Elevation="3" ref="componentRef"
+          Class="@($"pa-4 question-paper {(IsSelected ? "selected" : "")}")" 
+    @onclick="OnSelectClicked">
+    <EditForm Model="@questionFormInput" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <MudCard>
+            <MudCardContent>
+                <MudGrid>
+                   
+                    <MudItem xs="12">
+                        <MudTextField @ref="firstInputRef" T="string" Label="Question"
+                                      @bind-Value="@questionFormInput.Question"
+                                      Required="true" Variant="Variant.Outlined"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.Question)"
-                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QuestionMark"
-                                          InputMode="InputMode.text" AutoGrow="true" Lines="5" />
+                                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QuestionMark"
+                                      InputMode="InputMode.text" AutoGrow="true" Lines="1" />
 
                     </MudItem>
-                        </MudGrid>
-                        <br/>
-                        <br/>
+                </MudGrid>
+                @if (questionFormInput.PossibleAnswers is not null && questionFormInput.PossibleAnswers.Count != 0)
+                {
+                    @foreach (var item in questionFormInput.PossibleAnswers)
+                    {
+                        <MudPaper Elevation="0" Class="answer-container pa-2">
+                            <div class="answer-text">
+                                <MudTextField InputMode="InputMode.text"
+                                              Required="true"
+                                              T="string"
+                                              Label="@(item.IsCorrect ? "Correct Answer" : item.Label)"
+                                              @bind-Value="@item.Answer"
+                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                              For="@(() => item.Label)"
+                                              Variant="Variant.Outlined"
+                                              Class="@(item.IsCorrect ? "correct-answer" : "")"
+                                              FullWidth="true" />
+                            </div>
+                            <div class="answer-actions">
+                                <MudSwitch @bind-Value="@item.IsCorrect"
+                                           Color="@(item.IsCorrect ? Color.Success : Color.Error)"
+                                           ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                           ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)"
+                                           Class="ma-0 pa-0" />
+                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Order))"
+                                               Icon="@Icons.Material.Rounded.Delete"
+                                               Size="Size.Small"
+                                               Class="ml-2" />
+                            </div>
+                        </MudPaper>
+                    }
+                }
                 <MudGrid>
-                    <MudItem xs="12" sm="6" md="4">
-                            <MudGrid Spacing="1" Justify="Justify.FlexStart">
-                            <MudItem>
-                                    <MudTextField Style="width:35px" T="int"
-                                          InputMode="InputMode.numeric" 
-                                          Placeholder="00"
-                                          Required="true"
-                                          @bind-Value="@questionFormInput.Min"
-                                          UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                                  For="@(() => questionFormInput.Min)" />
-                            </MudItem>
-                            <MudItem>
-                                    <MudText>:</MudText>
-                            </MudItem>
-                            <MudItem>
-                                    <MudTextField Style="width:35px" T="int"
-                                          InputMode="InputMode.numeric" Placeholder="00"
-                                          Required="true"
-                                                  @bind-Value="@questionFormInput.Sec"
-                                                  UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                                  For="@(() => questionFormInput.Sec)" />
-                                          </MudItem>
-                            </MudGrid>
-                        </MudItem>
-                            <MudItem xs="12" sm="6" md="4">
-                            </MudItem>
-                    <MudItem xs="12" sm="6" md="4">
-                            <MudTextField T="int" InputMode="InputMode.numeric" Label="Xp" Required="true"
-                            @bind-Value="@questionFormInput.Xperience"
-                                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Star"
-                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                      For="@(() => questionFormInput.Xperience)" />
+                    <MudItem xs="4" sm="4" md="4">
+                        <MudButton ButtonType="ButtonType.Button"
+                                   EndIcon="@Icons.Material.Filled.Add"
+                                   OnClick="AddAnswer">Add an answer</MudButton>
                     </MudItem>
                 </MudGrid>
                 <br />
-                    <MudGrid>
-                    <MudItem xs="4" sm="4" md="4">
-                        <MudFileUpload T="IBrowserFile" Accept=".png" FilesChanged="UploadFiles">
-                            <ActivatorContent>
-                                <MudFab Color="Color.Secondary"
-                                        StartIcon="@Icons.Material.Filled.Image"
-                                        Label="Load picture" />
-                            </ActivatorContent>
-                        </MudFileUpload>
-                        <MudItem>
-                                @if (base64Images.Any())
-                                {
-                                    @foreach (var file in base64Images)
-                                    {
-                                        <MudItem>
-                                            <MudIconButton OnClick="DeleteImg(file)"
-                                                           Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
-                                            <MudImage Src="@file"
-                                                      Style="height:100px;width:100px;" />
-                                        </MudItem>
-                                    }
-                                }
-                        </MudItem>
-                           
-                    </MudItem>
-                    <MudItem xs="4" sm="4" md="4"></MudItem>
-                    <MudItem xs="4" sm="4" md="4">
-                        <MudFileUpload T="IBrowserFile" 
-                            Accept=".mp3" FilesChanged="UploadFiles2" MaximumFileCount="100">
-                            <ActivatorContent>
-                                <MudButton Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           StartIcon="@Icons.Material.Filled.AudioFile">
-                                    Upload audio files (mp3)
-                                </MudButton>
-                                    @if (base64Audios.Any())
-                                    {
-                                        @foreach (var file in base64Audios)
-                                        {
-                                            @if (!string.IsNullOrEmpty(file))
-                                            {
-                                                <MudItem>
-                                                    <audio controls src="@file" />
-                                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" 
-                                                    aria-label="delete" />
-                                                </MudItem>
-                                            }
-                                        }
-                                    }
-                            </ActivatorContent>
-                        </MudFileUpload>
-                           
-                    </MudItem>
-                    </MudGrid>
-                    <br />
-                    <br />
-                        @if (questionFormInput.PossibleAnswers is not null && questionFormInput.PossibleAnswers.Count != 0)
-                    {
-                        @foreach (var item in questionFormInput.PossibleAnswers)
-                        {
-                            <MudGrid>
-                                <MudItem xs="9" sm="9" md="9">
-                                    @if(item.IsCorrect)
-                                    {
-                                        <MudTextField InputMode="InputMode.text"
-                                                      Required="true"
-                                                      T="string"
-                                                      @bind-Value="@item.Answer"
-                                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                                      For="@(() => item.Label)"
-                                                      Variant="Variant.Outlined"
-                                                      AutoGrow="true" Lines="3"
-                                                      Style="border-radius: 24px !important; border:solid; border-color: rgba(0,200,83,1)" />
-                                    }
-                                    else
-                                    {
-                                        <MudTextField InputMode="InputMode.text"
-                                                      Required="true"
-                                                      T="string" Label="@item.Label"
-                                                      @bind-Value="@item.Answer"
-                                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                                      For="@(() => item.Label)"
-                                                      Variant="Variant.Outlined"
-                                                      AutoGrow="true" Lines="3"/>
-                                    }
-                                    
-                                </MudItem>
-                                <MudItem>
-                                    <MudSwitch @bind-Value="@item.IsCorrect"
-                                               ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
-                                               ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)">
-                                    </MudSwitch>
-                                        <MudIconButton OnClick="@(e => DeleteAnswer(item.Order))"
-                                                       Icon="@Icons.Material.Rounded.Delete"></MudIconButton>
-                                </MudItem>
-
-                            </MudGrid>
-                            <br />
-                        }
-                    }
-                    <MudGrid>
-                    <MudItem xs="4" sm="4" md="4">
-                        <MudButton ButtonType="ButtonType.Button" 
-                        EndIcon="@Icons.Material.Filled.Add" 
-                        OnClick="AddAnswer">Add an answer</MudButton>
-                        </MudItem>
-                    </MudGrid>
-                <br />
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="12">
-                        <MudTextField  InputMode="InputMode.text"
-                                      T="string" 
-                                      Label="Explain the correct answer" 
+                        <MudTextField InputMode="InputMode.text"
+                                      T="string"
+                                      Label="Explain the correct answer"
                                       Required="true"
                                       @bind-Value="@questionFormInput.CorrectAnswerExplanation"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
@@ -187,23 +146,21 @@
                                       AutoGrow="true" Variant="Variant.Filled" />
                     </MudItem>
                 </MudGrid>
-                    </MudCardContent>
-                <br />
-                <MudCardActions>
-                    @if(!hasBeenValidated)
-                    {
-                        <MudButton ButtonType="ButtonType.Submit"
-                                   Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   DropShadow="false" Class="ml-auto">Validate</MudButton>
+            </MudCardContent>
+            <br />
+            @* <MudCardActions>
+                @if (!hasBeenValidated)
+                {
+                    <MudButton ButtonType="ButtonType.Submit"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               DropShadow="false" Class="ml-auto">Validate</MudButton>
 
-                    }
-                    </MudCardActions>
-                </MudCard>
-                       </EditForm>
-                       </MudCollapse>
-    </MudItem>
-</MudGrid>
+                }
+            </MudCardActions> *@
+        </MudCard>
+    </EditForm>
+    </MudPaper>
 
 @code {
     int spacing;
@@ -211,12 +168,33 @@
     IList<IBrowserFile> _audios = new List<IBrowserFile>();
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
-    [Parameter]
-    public EventCallback<int> OnCancelEvent { get; set; }
-    [Parameter]
-    public EventCallback<CreateMultipleQuestionsViewModel> OnValidEvent { get; set; }
-    [Parameter]
-    public CreateMultipleQuestionsViewModel questionFormInput { get; set; }
+    [Parameter] public CreateMultipleQuestionsViewModel questionFormInput { get; set; }
+    [Parameter] public EventCallback OnCancelEvent { get; set; }
+    [Parameter] public EventCallback OnAddEvent { get; set; }
+    [Parameter] public EventCallback<CreateMultipleQuestionsViewModel> OnValidEvent { get; set; }
+    [Parameter] public bool IsSelected { get; set; }
+    [Parameter] public EventCallback OnSelect { get; set; }
+    private MudTextField<string> firstInputRef;
+    private ElementReference componentRef;
+    [Parameter] public string QuizTitle { get; set; }
+    public async Task FocusFirstInput()
+    {
+        if (firstInputRef != null)
+        {
+            await firstInputRef.FocusAsync();
+        }
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine($"AddQuestionFormComponent: IsSelected = {IsSelected}");
+        base.OnParametersSet();
+    }
+
+    private async Task OnSelectClicked()
+    {
+        Console.WriteLine("OnSelectClicked called");
+        await OnSelect.InvokeAsync();
+    }
     private CustomerViewModel CompanySelected { get; set; }
     public bool Dense_CheckBox { get; set; }
     private bool fileNameWrong { get; set; }
@@ -225,7 +203,8 @@
     private List<string> base64Images = new();
     private List<string> base64Audios = new();
     public int Id { get; set; }
-   
+    private int Minutes { get; set; }
+    private int Seconds { get; set; }
     private bool hasBeenValidated { get; set; }
     private async void Cancel()
     {
@@ -240,6 +219,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Minutes = questionFormInput.Duration.Value.Minutes;
+        Seconds = questionFormInput.Duration.Value.Seconds;
+        
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
@@ -307,6 +289,11 @@
         await OnCancelEvent.InvokeAsync(Id);
     }
 
+    private async void OnAddSubmit()
+    {
+        await OnAddEvent.InvokeAsync(Id);
+    }
+
     private async void OnValidSubmit()
     {
         if (questionFormInput.PossibleAnswers is not null 
@@ -315,7 +302,7 @@
             var correctCount = questionFormInput.PossibleAnswers.Where(p => p.IsCorrect == true).Count();
             if(correctCount > 0)
             {
-                questionFormInput.Duration = new TimeOnly(00, questionFormInput.Min, questionFormInput.Sec);
+                questionFormInput.Duration = new TimeSpan(0, Minutes, Seconds);
                 hasBeenValidated = true;
                 questionFormInput.ImageFiles = base64Images;
                 questionFormInput.AudioFiles = base64Audios;

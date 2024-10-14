@@ -15,23 +15,24 @@
 
         <AuthorizeRoleView Roles="Admin">
             <Authorized>
-                <MudNavGroup Icon="@Icons.Material.Filled.Key" Title="Licences" Expanded="false">
-                    <MudNavLink Icon="@Icons.Material.Filled.Key" Href="users" Match="NavLinkMatch.Prefix">Gestion des licences</MudNavLink>
-                    <MudNavLink Icon="@Icons.Material.Filled.AttachMoney" Href="/security" Match="NavLinkMatch.Prefix">Gestion des abonnements</MudNavLink>
+                <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.Key" 
+                Title="Licences" Expanded="false">
+                <MudNavLink  Icon="@Icons.Material.Filled.Key" Href="users" Match="NavLinkMatch.Prefix">Gestion des licences</MudNavLink>
+                <MudNavLink  Icon="@Icons.Material.Filled.AttachMoney" Href="/security" Match="NavLinkMatch.Prefix">Gestion des abonnements</MudNavLink>
                 </MudNavGroup>
-                <MudNavLink Icon="@Icons.Material.Filled.SupervisedUserCircle" Href="/customers" Match="NavLinkMatch.Prefix">Clients</MudNavLink>
+            <MudNavLink IconColor="Color.Primary" Icon="@Icons.Material.Filled.SupervisedUserCircle" Href="/customers" Match="NavLinkMatch.Prefix">Clients</MudNavLink>
             </Authorized>
         </AuthorizeRoleView>
         <AuthorizeRoleView Roles="Admin, Manager">
             <Authorized>
-            <MudNavLink Icon="@Icons.Material.Filled.SpaceDashboard" Href="/" Match="NavLinkMatch.All">
+            <MudNavLink IconColor="Color.Primary" Icon="@Icons.Material.Filled.SpaceDashboard" Href="/" Match="NavLinkMatch.All">
                 Dashboards
             </MudNavLink>
-                <MudNavGroup Icon="@Icons.Material.Filled.Create" Title="Création de contenu" Expanded="false">
+            <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.Create" Title="Création de contenu" Expanded="false">
                 <MudNavLink Icon="@Icons.Material.Filled.Games" Href="/games" Match="NavLinkMatch.Prefix">Jeux</MudNavLink>
                 <MudNavLink Icon="@Icons.Material.Filled.ModelTraining" Href="/trainings" Match="NavLinkMatch.Prefix">Formation</MudNavLink>
                 </MudNavGroup>
-                <MudNavGroup Icon="@Icons.Material.Filled.Groups" Title="Utilisateurs" Expanded="false">
+            <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.Groups" Title="Utilisateurs" Expanded="false">
                     <MudNavLink Icon="@Icons.Material.Filled.Group" Href="users" Match="NavLinkMatch.Prefix">Utilisateurs</MudNavLink>
                     <MudNavLink Icon="@Icons.Material.Filled.GroupWork" Href="groups" Match="NavLinkMatch.Prefix">Groupes</MudNavLink>
                       <AuthorizeRoleView Roles="Admin">
@@ -40,12 +41,12 @@
                     </Authorized>
                     </AuthorizeRoleView>
                 </MudNavGroup>
-                <MudNavGroup Icon="@Icons.Material.Filled.ManageAccounts" Title="Mon compte" Expanded="false">
+                <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.ManageAccounts" Title="Mon compte" Expanded="false">
                     <MudNavLink Icon="@Icons.Material.Filled.CreditScore" Href="users" Match="NavLinkMatch.Prefix">Mes abonnements</MudNavLink>
                     <MudNavLink Icon="@Icons.Material.Filled.TextSnippet" Href="/security" Match="NavLinkMatch.Prefix">Mes factures</MudNavLink>
                     <MudNavLink Icon="@Icons.Material.Filled.ShortText" Href="/security" Match="NavLinkMatch.Prefix">Information de facturation</MudNavLink>
                 </MudNavGroup>
-                <MudNavGroup Icon="@Icons.Material.Filled.Settings" Title="Paramètre" Expanded="false">
+            <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.Settings" Title="Paramètre" Expanded="false">
                     <MudNavLink Icon="@Icons.Material.Filled.SettingsBrightness" Href="/users" Match="NavLinkMatch.Prefix">Thèmes</MudNavLink>
                     <MudNavLink Icon="@Icons.Material.Filled.DisplaySettings" Href="/security" Match="NavLinkMatch.Prefix">Difficulté</MudNavLink>
                     <MudNavLink Icon="@Icons.Material.Filled.Category" Href="/security" Match="NavLinkMatch.Prefix">Catégorie de tutoriel</MudNavLink>

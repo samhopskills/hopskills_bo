@@ -103,7 +103,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
             validQuestionFom.Zone = _zones[0].Name;
             validQuestionFom.IsValid = true;
             InputGame.TotalXperience += validQuestionFom.Xperience;
-            InputGame.TotalDuration = InputGame.TotalDuration.Add(validQuestionFom.Duration.ToTimeSpan());
+            InputGame.TotalDuration = InputGame.TotalDuration.Add(validQuestionFom.Duration.Value);
             Snackbar.Add("Question Form Has Been Added Successfully", MudBlazor.Severity.Success);
             formQuestions = !formQuestions;
             form3Validate = !form3Validate;

@@ -29,6 +29,10 @@
     .hopskills-stat-card {
         height: 100px;
     }
+
+    .mud-appbar {
+        z-index: 1400; /* Higher than the drawer's z-index */
+    }
 </style>
 <MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
@@ -60,7 +64,9 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" 
                 Color="Color.Inherit" Edge="Edge.End" />
             </MudAppBar> *@
-            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <MudDrawer @bind-Open="_drawerOpen" 
+            ClipMode="DrawerClipMode.Always" 
+            Variant="DrawerVariant.Mini" OpenMiniOnHover="true" Elevation="2">
                 <NavMenu />
             </MudDrawer>
         </Authorized>
@@ -69,7 +75,7 @@
         <MudContainer MaxWidth="MaxWidth.Large" Class="pa-0" Style="min-height:100vh;
 min-width:100vw; background-color: #F3FBFF; align-content:center;">
             @Body
-            <MudScrollToTop>
+            <MudScrollToTop Style="z-index:1500">
                 <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
             </MudScrollToTop>
         </MudContainer>
@@ -83,7 +89,7 @@ min-width:100vw; background-color: #F3FBFF; align-content:center;">
 </div>
 
 @code {
-    private bool _drawerOpen = true;
+    private bool _drawerOpen = false;
     private MudTheme _theme = new();
 
     private void DrawerToggle()

@@ -7,7 +7,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
 
         [Required]
         public string Question { get; set; }
-        public TimeOnly Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
         [Required]
         [Range(1, 10)]
         public int Min { get; set; }
