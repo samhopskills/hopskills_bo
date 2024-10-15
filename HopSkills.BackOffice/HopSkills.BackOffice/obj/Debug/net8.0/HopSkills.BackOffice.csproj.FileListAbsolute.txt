@@ -771,3 +771,8 @@ C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\samyd\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\s.dakhlaoui\source\hopskills_bo\HopSkills.BackOffice\HopSkills.BackOffice\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll

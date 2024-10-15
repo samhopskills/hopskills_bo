@@ -10,5 +10,6 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public int Id { get; set; }
         public bool Expanded { get; set; }
         public bool IsValid { get; set; }
+        public string UniqueId { get; set; }
     }
 }

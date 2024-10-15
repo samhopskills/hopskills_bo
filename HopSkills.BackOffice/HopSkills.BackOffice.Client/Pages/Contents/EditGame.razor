@@ -18,7 +18,6 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        background-color: #f8f9fa;
         padding: 20px;
         max-width: 1200px; /* Réduction de la largeur maximale */
         margin: 0 auto; /* Centrer le conteneur */
@@ -37,11 +36,14 @@
     }
 
     .quiz-form-container {
+        display: flex;
+        align-items: stretch;
+        margin-bottom: 20px;
         background-color: #ffffff;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /*box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         padding: 20px;
-        flex: 0 1 792px; /* Augmenté de 720px à 792px (10% de plus) */
+        flex: 0 1 792px; /* Augmenté de 720px à 792px (10% de plus) */ */
     }
 
    /*  .quiz-info-card {
@@ -73,6 +75,7 @@
         display: flex;
         align-items: stretch;
         margin-bottom: 20px;
+        width: 100%; /* Utilise toute la largeur disponible */
     }
 
     .question-form {
@@ -138,12 +141,7 @@
         overflow: hidden;
     }
 
-    .question-actions {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 4px;
-    }
+   
 
         .mud-expand-panel:last-child {
             margin-bottom: 0 !important; /* Suppression de la marge pour le dernier panneau */
@@ -167,21 +165,54 @@
         overflow: hidden;
     }
 
+    .quiz-info-card {
+        display: flex;
+        flex-direction: column;
+        gap: 16px; /* Espace entre les panneaux */
+        padding: 10px;
+        max-height: calc(50vh - 64px); /* Adjust based on your header height */
+        overflow-y: auto;
+    }
+
+
+    .uniform-panel {
+        height: 250px; /* Hauteur fixe pour tous les panneaux */
+        width: 100%; /* Utilise toute la largeur du conteneur parent */
+        overflow: hidden; /* Cache tout contenu dépassant */
+    }
+
+    .panel-content {
+        height: calc(100% - 48px); /* Hauteur totale moins la hauteur de l'en-tête */
+        overflow-y: auto; /* Défilement vertical si le contenu dépasse */
+        padding: 8px;
+    }
+
+    .panel-header {
+        height: 48px; /* Hauteur fixe pour l'en-tête */
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        overflow: hidden;
+    }
+
     .question-text {
-        flex: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 150px; /* Ajustez selon vos besoins */
+        flex-grow: 1;
     }
 
     .question-info {
         display: flex;
         align-items: center;
-        font-size: 0.8rem;
-        color: #757575;
         white-space: nowrap;
-        margin-right: 8px;
+        margin-left: 8px;
+    }
+
+    .question-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 8px;
     }
 
     .quiz-info-card-container {
@@ -259,7 +290,7 @@
             .quiz-form-container,
             .quiz-info-card {
                 width: 100%;
-                max-width: 720px; /* Ajusté pour correspondre à la nouvelle largeur du formulaire */
+                /* max-width: 720px; /* Ajusté pour correspondre à la nouvelle largeur du formulaire */ */
             }
 
             .quiz-info-card {
@@ -341,76 +372,103 @@
                 margin-right: 300px; /* Ajuster selon la largeur du menu */
             }
 
-    .quiz-info-card {
-        padding: 10px;
-        max-height: calc(50vh - 64px); /* Adjust based on your header height */
-        overflow-y: auto;
+    
+    
+
+    
+
+    .delete-image-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        padding: 4px;
+        transition: background-color 0.3s ease;
     }
+
+        .delete-image-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
 </style>
 
 <div class="page-content">
     <div class="main-content">
  @if (form1Validate)
  {
+            <style>
+                .image-container {
+                    position: relative;
+                    width: 100%;
+                    height: 200px; /* Correspond à la hauteur du MudPaper */
+                    overflow: hidden;
+                }
+
+                    .image-container img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+
+                .delete-button {
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    background-color: rgba(255, 255, 255, 0.7);
+                    border-radius: 50%;
+                }
+            </style>
          <div class="outer-container">           
 <div class="quiz-container">
     <div class="quiz-form-container">
-   
+   <MudPaper Elevation="3" Class="@($"pa-4 question-paper")">
     <EditForm Model="@InputGame" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
         <MudGrid>
 
             <MudItem xs="12">
-                @* <MudPaper Elevation="0" Class="add-image-container"> *@
-                    <MudFileUpload 
-                    T="IReadOnlyList<IBrowserFile>"
-                                   @ref="@_fileUpload"
-                                   @bind-Files="_model.Files"
-                                   For="@(() => _model.Files)"
-                                   AppendMultipleFiles="false"
-                                   Hidden="@false"
-                                   InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
-                                   InputStyle="opacity:0"
-                                   ErrorText="@string.Empty"
-                                   tabindex="-1"
-                                   Accept=".png, .jpg"
-                                   @ondrop="@ClearDragClass"
-                                   @ondragenter="@SetDragClass"
-                                   @ondragleave="@ClearDragClass"
-                                   @ondragend="@ClearDragClass"
-                                   OnFilesChanged="LoadFiles">
-                        <ActivatorContent>
-                            <MudPaper Height="200px" Outlined="true" Class="add-image-container"
-                                      >
-                                @* <div class="d-flex justify-center"> *@
-                                @if (string.IsNullOrEmpty(InputGame.Image?.Content))
-                                {
-                                    <div class="d-flex flex-column align-center justify-center">
-                                        <MudIcon Icon="@Icons.Material.Filled.AddPhotoAlternate" Class="add-image-icon mb-2" />
-                                        <MudText Align="Align.Center">Ajouter une image</MudText>
-                                    </div>
-                                }
-                                else
-                                {
-                                    @* <img src="@base64data" 
-                                        style="width: 100%; height: 100%; object-fit: cover;" alt="Quiz image" /> *@
-                                <MudImage Fluid="true"
-                                          ObjectFit="ObjectFit.Cover"
-                                          Src="@base64data" />
-                                }
-                            </MudPaper>
-                        </ActivatorContent>
-                    </MudFileUpload>
-                    @if (fileNameWrong)
-                    {
-                        <MudAlert Severity="MudBlazor.Severity.Error">
-                            File Name contains special characters.
-                            Please Upload a file with no special
-                            characters and less than 255 characters.
-                        </MudAlert>
-                    }
-                    
-                @* </MudPaper> *@
+                                        <MudPaper Height="200px" Width="100%" Outlined="true" Class="d-flex justify-center align-center">
+                                            @if (string.IsNullOrEmpty(InputGame.Image?.Content))
+        {
+                                                <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                                                               @ref="@_fileUpload"
+                                                               @bind-Files="_model.Files"
+                                                               For="@(() => _model.Files)"
+                                                               AppendMultipleFiles="false"
+                                                               Hidden="@false"
+                                                               InputClass="absolute mud-width-full mud-height-full overflow-hidden z-10"
+                                                               InputStyle="opacity:0"
+                                                               ErrorText="@string.Empty"
+                                                               tabindex="-1"
+                                                               Accept=".jpg,.jpeg,.png"
+                                                               @ondrop="@ClearDragClass"
+                                                               @ondragenter="@SetDragClass"
+                                                               @ondragleave="@ClearDragClass"
+                                                               @ondragend="@ClearDragClass"
+                                                               OnFilesChanged="LoadFiles">
+                                                    <ActivatorContent>
+                                                        <MudPaper Outlined="true">
+                                                            <div class="d-flex flex-column align-center justify-center h-100 w-100">
+                                                                <MudIcon Icon="@Icons.Material.Filled.AddPhotoAlternate" Class="add-image-icon mb-2" />
+                                                                <MudText Align="Align.Center">Ajouter une image</MudText>
+                                                            </div>
+                                                        </MudPaper>
+                                                    </ActivatorContent>
+                                                </MudFileUpload>
+                                            }
+        else
+        {
+                                                <div class="image-container">
+                                                    <img src="@base64data" alt="Image du jeu" />
+                                                    <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                                                   Color="Color.Error"
+                                                                   Size="Size.Small"
+                                                                   Class="delete-button"
+                                                                   OnClick="DeleteImage" />
+                                                </div>
+        }
+    </MudPaper>
+               
             </MudItem>
 
             <MudItem xs="12" sm="6">
@@ -471,8 +529,7 @@
                 </MudItem>
             </MudGrid>
             </EditForm>
-            
-            
+            </MudPaper>
         </div>
        @*  <div class="toggle-button-container">
             <MudIconButton Icon="@(_isInfoCardVisible ? Icons.Material.Filled.ChevronRight : Icons.Material.Filled.ChevronLeft)"
@@ -531,6 +588,7 @@
                                                               questionFormInput="InputGame.multipleQuestions[index]"
                                                               OnValidEvent="() => CreateFormValid(index)"
                                                               OnCancelEvent="() => CreateFormCanceled(index)"
+                                                              OnAddEvent="() => AddNewPage()"
                                                               IsSelected="selectedQuestionIndex == index"
                                                               OnSelect="() => SelectQuestion(index)"
                                                                       QuizTitle="@($"Quiz {index + 1}")" />
@@ -577,6 +635,78 @@
     </MudContainer>
 }
 </div>
+<style>
+            .draggable-item {
+                cursor: move;
+            }
+
+                .draggable-item.dragging {
+                    opacity: 0.5;
+                }
+
+            .drag-handle {
+                cursor: move;
+            }
+
+            .clickable-header {
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .clickable-header:hover {
+                    background-color: rgba(0, 0, 0, 0.04);
+                }
+
+            .quiz-info-card {
+                display: flex;
+                flex-direction: column;
+                gap: 16px; /* Espace entre les panneaux */
+            }
+
+            .question-container {
+                width: 100%; /* Utilise toute la largeur disponible */
+            }
+
+            .uniform-panel {
+                height: 250px; /* Hauteur fixe pour tous les panneaux */
+                width: 100%; /* Utilise toute la largeur du conteneur parent */
+                overflow: hidden; /* Cache tout contenu dépassant */
+            }
+
+            .panel-content {
+                height: calc(100% - 48px); /* Hauteur totale moins la hauteur de l'en-tête */
+                overflow-y: auto; /* Défilement vertical si le contenu dépasse */
+                padding: 8px;
+            }
+
+            .panel-header {
+                height: 48px; /* Hauteur fixe pour l'en-tête */
+                display: flex;
+                align-items: center;
+                padding: 0 16px;
+                overflow: hidden;
+            }
+
+            .question-text {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex-grow: 1;
+            }
+
+            .question-info {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                margin-left: 8px;
+            }
+
+            .question-actions {
+                display: flex;
+                justify-content: flex-end;
+                padding: 8px;
+            }
+</style>
         <MudDrawer @bind-Open="@isMenuOpen"
                    Anchor="Anchor.Right"
                    Elevation="1"
@@ -584,98 +714,111 @@
                    Variant="@DrawerVariant.Mini"
                    Width="400px"
                    Class="side-menu">
-                   <div class="side-menu-content">
-            <MudDrawerHeader>
-        <MudGrid>
-            <MudItem xs="12" Class="d-flex align-center">
-                <MudAvatar Style="margin-right: 16px; width: 60px; height: 60px; object-fit: cover;">
-                    @if (!string.IsNullOrEmpty(base64data) && base64data != "data:image/png;base64,")
-                    {
-                        <MudImage Src="@base64data" Alt="Quiz Image" Width="60" Height="60" ObjectFit="ObjectFit.Cover" />
-                    }
-                    else
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.Image" />
-                    }
-                </MudAvatar>
-                <div>
-                    <MudText Typo="Typo.h6">@InputGame.Title</MudText>
-                    <MudText Typo="Typo.body2">@InputGame.Theme</MudText>
-                </div>
-            </MudItem>
-            <MudItem xs="12" Class="d-flex justify-space-between mt-2">
-                <MudText Typo="Typo.body2">
-                    <MudIcon Icon="@Icons.Material.Filled.Timer" Size="Size.Small" Class="mr-1" />
-                    Duration:  min 00 s
-                </MudText>
-                <MudText Typo="Typo.body2">
-                    <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Small" Class="mr-1" />
-                    Points : @InputGame.TotalXperience Xp @InputGame.DifficultyLevel
-                </MudText>
-            </MudItem>
-        </MudGrid>
-    </MudDrawerHeader>
-   <MudDrawerContainer>
+            <div class="side-menu-content">
+                <MudTooltip Text="Return to Quiz Info" Placement="Placement.End">
+                    <MudDrawerHeader @onclick="GoBackToForm1" Class="clickable-header">
+                    <MudGrid>
+                        <MudItem xs="12" Class="d-flex align-center">
+                            <MudAvatar Style="margin-right: 16px; width: 60px; height: 60px; object-fit: cover;">
+                                @if (!string.IsNullOrEmpty(base64data) && base64data != "data:image/png;base64,")
+                                {
+                                    <MudImage Src="@base64data" Alt="Quiz Image" Width="60" Height="60" ObjectFit="ObjectFit.Cover" />
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.Image" />
+                                }
+                            </MudAvatar>
+                            <div>
+                                <MudText Typo="Typo.h6">@InputGame.Title</MudText>
+                                <MudText Typo="Typo.body2">@InputGame.Theme</MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="12" Class="d-flex justify-space-between mt-2">
+                            <MudText Typo="Typo.body2">
+                                <MudIcon Icon="@Icons.Material.Filled.Timer" Size="Size.Small" Class="mr-1" />
+                                Duration:  min 00 s
+                            </MudText>
+                            <MudText Typo="Typo.body2">
+                                <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Small" Class="mr-1" />
+                                Points : @InputGame.TotalXperience Xp @InputGame.DifficultyLevel
+                            </MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudDrawerHeader>
+                </MudTooltip>
+               <MudDrawerContainer>
             <div class="quiz-info-card">
                 @if (InputGame?.multipleQuestions != null)
                 {
-                @for (int i = 0; i < InputGame.multipleQuestions.Count; i++)
-                {
-                    var question = InputGame.multipleQuestions[i];
-                    var index = i;
-                                <div class="question-container">
-                                    <div class="expansion-panel-wrapper">
-                                         <MudPaper Elevation="2" Class="pa-2 ma-2" 
-                              Style="@(isDragging && draggedIndex == index ? "opacity: 0.5;" : "")"
-                              @ondragstart="@(() => HandleDragStart(index))"
-                              @ondragover="@(() => HandleDragOver(index))"
-                              @ondrop="@(() => HandleDrop(index))"
-                              Draggable="@isDragging">
-                                        <MudExpansionPanel @onclick="@(() => SelectQuestionFromSummary(index))">
-                                            <TitleContent>
-                                                    <div class="d-flex align-center">
-                                                        <MudIconButton Icon="@Icons.Material.Filled.DragIndicator"
-                                                                       Size="Size.Small"
-                                                                       Color="Color.Secondary"
-                                                                       Class="mr-2"
-                                                                       @onmousedown="@(() => StartDrag(index))"
-                                                                       @onmouseup="@StopDrag"
-                                                                       @onmouseleave="@StopDrag" />
-                                                        <div class="question-item flex-grow-1">
-                                                            <span class="question-text">@TruncateText(question.Question, 5)</span>
-                                                            <div class="question-info">
-                                                                <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Small" Class="mr-1" />
-                                                                <span class="mr-2">@question.Xperience Xp</span>
-                                                                <MudIcon Icon="@Icons.Material.Filled.Timer" Size="Size.Small" Class="mr-1" />
-                                                                <span>@question.Duration.Value.Minutes min</span>
-                                                            </div>
-                                                        </div>
+                    @for (int i = 0; i < InputGame.multipleQuestions.Count; i++)
+                    {
+                        var question = InputGame.multipleQuestions[i];
+                        var index = i;
+                            <div class="question-container">
+                        <div class="draggable-item" draggable="true" @key="question.UniqueId"
+                             @ondragstart="@(() => HandleDragStart(index))"
+                             @ondragover:preventDefault
+                             @ondragover="@(() => {})"
+                                         @onclick="@(() => SelectQuestionFromSummary(index))">
+                                            <MudExpansionPanel Elevation="2" Class="@(selectedQuestionIndex == index ? "selected-question" : "")" @ondrop="@(() => HandleDrop(index))">
+                                    <TitleContent>
+                                                <div class="panel-header">
+                                                    <MudIcon Icon="@Icons.Material.Filled.DragIndicator"
+                                                             Size="Size.Small"
+                                                             Color="Color.Dark"
+                                                             Class="mr-2 drag-handle" />
+                                                    <span class="question-text">@TruncateText(question.Question, 30)</span>
+                                                    <div class="question-info">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Star" Size="Size.Small" Class="mr-1" />
+                                                        <span class="mr-2">@question.Xperience Xp</span>
+                                                        <MudIcon Icon="@Icons.Material.Filled.Timer" Size="Size.Small" Class="mr-1" />
+                                                        <span>@question.Duration.Value.Minutes min</span>
                                                     </div>
-                                            </TitleContent>
-                                            <ChildContent>
-                                                @foreach (var answer in question.PossibleAnswers)
-                                                {
-                                                    <MudText>@answer.Answer</MudText>
-                                                }
-                                            </ChildContent>
-                                        </MudExpansionPanel>
-                                        </MudPaper>
+                                                </div>
+                                    </TitleContent>
+                                    <ChildContent>
+                                                  <div class="panel-content">
+                                         <MudList T="CreateAnswerViewModel" 
+                                             Dense="true" DisablePadding="true">
+                                                    @foreach (var answer in question.PossibleAnswers)
+                                                    {
+                                                        <MudListItem>
+                                                            <div class="d-flex align-center">
+                                                                <MudText Class="flex-grow-1">@answer.Answer</MudText>
+                                                                @if (answer.IsCorrect)
+                                                                {
+                                                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" Class="ml-2" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Small" Class="ml-2" />
+                                                                }
+                                                            </div>
+                                                        </MudListItem>
+                                                    }
+                                                </MudList>
+                                                </div>
+                                    </ChildContent>
+                                </MudExpansionPanel>
+
+
                                     </div>
-                                    <div class="question-actions">
-                                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" />
-                                        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" Color="Color.Primary" />
-                                    </div>
+                                <div class="question-actions">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Dark" />
+                                        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" Color="Color.Dark" />
                                 </div>
+                                </div>
+                    }
                 }
+                else
+                {
+                    <MudText>No questions available.</MudText>
                 }
-                        else
-                        {
-                            <MudText>No questions available.</MudText>
-                        }
             </div>
         </MudDrawerContainer>
-    </div>
-</MudDrawer>
+            </div>
+        </MudDrawer>
 </div>
 </div>
 @code {
@@ -700,13 +843,11 @@
     }
     private int currentQuestionIndex = 0;
 
-    private int selectedQuestionIndex = -1;
+    private int? selectedQuestionIndex;
 
-    private void SelectQuestion(int index)
+    private async Task SelectQuestion(int index)
     {
-        Console.WriteLine($"SelectQuestion called with index: {index}");
-        selectedQuestionIndex = index;
-        StateHasChanged();
+        await SelectAndFocusQuestion(index);
     }
 
     private void SetCurrentQuestion(int index)
@@ -736,47 +877,97 @@
         : "right: 4%; transform: translateX(0);";
 
     private int? draggedIndex;
-    private bool isDragging = false;
 
-    private void StartDrag(int index)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        isDragging = true;
-        draggedIndex = index;
-        StateHasChanged();
+        if (firstRender)
+        {
+            await InjectJavaScriptAsync();
+            await JSRuntime.InvokeVoidAsync("eval", @"
+                window.enableDragging = (element) => {
+                    if (element) {
+                        element.draggable = true;
+                    }
+                };
+
+                window.disableDragging = (element) => {
+                    if (element) {
+                        element.draggable = false;
+                    }
+                };
+
+                window.handleDragStart = (e) => {
+                    if (e && e.target) {
+                        e.dataTransfer.effectAllowed = 'move';
+                        let draggableItem = e.target.closest('.draggable-item');
+                        if (draggableItem) {
+                            draggableItem.classList.add('dragging');
+                        }
+                    }
+                };
+
+                window.handleDragOver = (e) => {
+                    if (e && e.preventDefault) {
+                        e.preventDefault();
+                    }
+                    if (e && e.dataTransfer) {
+                        e.dataTransfer.dropEffect = 'move';
+                    }
+                    return false;
+                };
+
+                window.handleDrop = (e) => {
+                    if (e && e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+                    let draggingElement = document.querySelector('.dragging');
+                    if (draggingElement) {
+                        draggingElement.classList.remove('dragging');
+                    }
+                    return false;
+                };
+            ");
+        }
     }
 
-    private void StopDrag()
-    {
-        isDragging = false;
-        draggedIndex = null;
-        StateHasChanged();
-    }
 
     private void HandleDragStart(int index)
     {
-        if (isDragging)
-        {
-            draggedIndex = index;
-        }
+        draggedIndex = index;
     }
 
-    private void HandleDragOver(int index)
+    private async Task HandleDrop(int index)
     {
-        if (isDragging && draggedIndex.HasValue && draggedIndex.Value != index)
-        {
-            StateHasChanged();
-        }
-    }
-
-    private void HandleDrop(int index)
-    {
-        if (isDragging && draggedIndex.HasValue)
+        if (draggedIndex.HasValue && draggedIndex.Value != index)
         {
             var item = InputGame.multipleQuestions[draggedIndex.Value];
             InputGame.multipleQuestions.RemoveAt(draggedIndex.Value);
             InputGame.multipleQuestions.Insert(index, item);
             UpdateQuestionOrder();
-            StopDrag();
+
+            // Mettre à jour l'index sélectionné si nécessaire
+            if (selectedQuestionIndex == draggedIndex)
+            {
+                selectedQuestionIndex = index;
+            }
+            else if (selectedQuestionIndex >= index && selectedQuestionIndex < draggedIndex)
+            {
+                selectedQuestionIndex++;
+            }
+            else if (selectedQuestionIndex <= index && selectedQuestionIndex > draggedIndex)
+            {
+                selectedQuestionIndex--;
+            }
+
+            draggedIndex = null;
+            StateHasChanged();
+
+            // Mettre à jour le focus après le réarrangement
+            await Task.Delay(50); // Petit délai pour assurer que le DOM est mis à jour
+            if (selectedQuestionIndex.HasValue)
+            {
+                await SelectAndFocusQuestion(selectedQuestionIndex.Value);
+            }
         }
     }
 
@@ -863,7 +1054,19 @@
         InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
         if(InputGame != null)
         {
-            InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
+            if (InputGame?.multipleQuestions != null)
+            {
+                InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
+                foreach (var question in InputGame.multipleQuestions)
+                {
+                    if (string.IsNullOrEmpty(question.UniqueId))
+                    {
+                        question.UniqueId = Guid.NewGuid().ToString();
+                    }
+                }
+                // InputGame.multipleQuestions.ForEach(m => m.UniqueId = Guid.NewGuid().ToString());
+            }
+
             base64data = !string.IsNullOrEmpty(InputGame.Image?.Content)
                         ? "data:image/png;base64," + InputGame.Image.Content
                         : "data:image/png;base64,";
@@ -897,13 +1100,42 @@
     }
 
     private bool _isJsInitialized = false;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task OnInputFileChanged(IBrowserFile file)
     {
-        if (firstRender)
+        await LoadFiles(file);
+    }
+
+    private async Task LoadFiles(IBrowserFile file)
+    {
+        var regexItem = new Regex("^[a-zA-Z0-9_.-]*$");
+        if (InputGame.Image == null)
+            InputGame.Image = new EditGameImageViewModel();
+
+        InputGame.Image.Title = file.Name;
+
+        if (regexItem.IsMatch(file.Name))
         {
-            await InjectJavaScriptAsync();
+            fileNameWrong = false;
+            var format = file.ContentType;
+            var resizeImage = await file.RequestImageFileAsync(format, 300, int.MaxValue);
+            var buffer = new byte[resizeImage.Size];
+            await resizeImage.OpenReadStream().ReadAsync(buffer);
+            InputGame.Image.Content = Convert.ToBase64String(buffer);
+            base64data = $"data:{format};base64,{InputGame.Image.Content}";
         }
+        else
+        {
+            fileNameWrong = true;
+            disabledNext1 = true;
+        }
+        StateHasChanged();
+    }
+    private async Task DeleteImage()
+    {
+        InputGame.Image.Content = string.Empty;
+        await ClearAsync();
+        base64data = "data:image/png;base64,";
+        StateHasChanged();
     }
 
     private async Task InjectJavaScriptAsync()
@@ -911,12 +1143,12 @@
         try
         {
             await JSRuntime.InvokeVoidAsync("eval", @"
-                window.scrollToElement = (elementId) => {
-                    const element = document.getElementById(elementId);
+                window.scrollToElement = function(elementId) {
+                    var element = document.getElementById(elementId);
                     if (element) {
-                        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
-                }
+                };
             ");
             _isJsInitialized = true;
         }
@@ -954,16 +1186,14 @@
     {
         selectedQuestionIndex = index;
         StateHasChanged();
-        await Task.Delay(50); // Petit délai pour assurer que le rendu est terminé
 
-        if (questionComponents[index] != null)
+        // Faire défiler jusqu'à la question sélectionnée dans le formulaire principal
+        await JSRuntime.InvokeVoidAsync("scrollToElement", $"question-{index}");
+
+        // Mettre le focus sur le premier champ de la question dans le formulaire principal
+        if (questionComponents != null && questionComponents.Length > index && questionComponents[index] != null)
         {
             await questionComponents[index].FocusFirstInput();
-        }
-
-        if (_isJsInitialized)
-        {
-            await JSRuntime.InvokeVoidAsync("scrollToElement", $"question-{index}");
         }
     }
 
@@ -1024,7 +1254,7 @@
         form3Validate = !form3Validate;
     }
 
-    private void AddNewPage()
+    private async void AddNewPage()
     {
         if (InputGame.multipleQuestions == null)
         {
@@ -1032,10 +1262,10 @@
         }
         if (InputGame.multipleQuestions.Count == 0 || InputGame.multipleQuestions.LastOrDefault().IsValid)
         {
-           
-                InputGame.multipleQuestions.LastOrDefault().Expanded = false;
-               
-                InputGame.multipleQuestions.Add(new CreateMultipleQuestionsViewModel
+
+            InputGame.multipleQuestions.LastOrDefault().Expanded = false;
+
+            InputGame.multipleQuestions.Add(new CreateMultipleQuestionsViewModel
                     {
                         Question = string.Empty,
                         Id = InputGame.multipleQuestions.Count + 1,
@@ -1055,12 +1285,13 @@
                         Min = 1,
                         Sec = 0
                     });
-                        currentQuestionIndex = InputGame.multipleQuestions.Count - 1;
+            currentQuestionIndex = InputGame.multipleQuestions.Count - 1;
             InitializeArrays();
             StateHasChanged();
         }
         else
             Snackbar.Add("Please fill or delete the last quiz first", MudBlazor.Severity.Error);
+        await SelectAndFocusQuestion(currentQuestionIndex);
     }
 
 
@@ -1108,18 +1339,11 @@
         }
     }
 
-    private void NavigateToPreviousGameForm()
+    private void GoBackToForm1()
     {
-        if (form2Validate)
-        {
-            form1Validate = true;
-            form2Validate = false;
-        }
-        else if (form3Validate)
-        {
-            form2Validate = true;
-            form3Validate = false;
-        }
+        form1Validate = true;
+        form2Validate = false;
+        StateHasChanged();
     }
 
     private async void SaveGame(int Id)
