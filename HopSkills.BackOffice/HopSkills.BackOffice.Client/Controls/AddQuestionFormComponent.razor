@@ -346,12 +346,15 @@
                 Snackbar.Add($"File {file.Name} is too large. Max size is 5 MB.", Severity.Error);
                 continue;
             }
-
+            if (questionFormInput.ImageFiles is null)
+                questionFormInput.ImageFiles = new List<string>();
             var format = "image/png";
             var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
+            questionFormInput.ImageFiles.Add(Convert.ToBase64String(buffer));
             base64Images.Add(Convert.ToBase64String(buffer));
+
         }
         StateHasChanged();
     }
@@ -365,11 +368,13 @@
                 Snackbar.Add($"File {file.Name} is too large. Max size is 10 MB.", Severity.Error);
                 continue;
             }
-
+            if (questionFormInput.AudioFiles is null)
+                questionFormInput.AudioFiles = new List<string>();
             using (var stream = file.OpenReadStream(MaxAudioSizeBytes))
             {
                 var buffer = new byte[file.Size];
                 await stream.ReadAsync(buffer);
+                questionFormInput.AudioFiles.Add(Convert.ToBase64String(buffer));
                 base64Audios.Add(Convert.ToBase64String(buffer));
             }
         }
@@ -385,7 +390,8 @@
     {
         Minutes = questionFormInput.Duration.Value.Minutes;
         Seconds = questionFormInput.Duration.Value.Seconds;
-        
+        base64Images = questionFormInput.ImageFiles;
+        base64Audios = questionFormInput.AudioFiles;
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
@@ -419,34 +425,34 @@
         return EventCallback.Empty;
     }
 
-    private async void UploadFiles(IBrowserFile file)
-    {
-        _files.Add(file);
-        var format = "image/png";
-        var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
-        var buffer = new byte[resizeImage.Size];
-        await resizeImage.OpenReadStream().ReadAsync(buffer);
-        base64Images.Add(Convert.ToBase64String(buffer));
-        // base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
-        StateHasChanged();
-    }
+    // private async void UploadFiles(IBrowserFile file)
+    // {
+    //     _files.Add(file);
+    //     var format = "image/png";
+    //     var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
+    //     var buffer = new byte[resizeImage.Size];
+    //     await resizeImage.OpenReadStream().ReadAsync(buffer);
+    //     base64Images.Add(Convert.ToBase64String(buffer));
+    //     // base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
+    //     StateHasChanged();
+    // }
 
-    private async void UploadFiles2(IBrowserFile file)
-    {
-        _audios.Add(file);
-        using (var stream = file.OpenReadStream())
-        {
-            var length = stream.Length;
-            if (length <= int.MaxValue)
-            {
-                var result = new byte[length];
-                await stream.ReadAsync(result);
-                base64Audios.Add(Convert.ToBase64String(result));
-                // base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
-                StateHasChanged();
-            }
-        }
-    }
+    // private async void UploadFiles2(IBrowserFile file)
+    // {
+    //     _audios.Add(file);
+    //     using (var stream = file.OpenReadStream())
+    //     {
+    //         var length = stream.Length;
+    //         if (length <= int.MaxValue)
+    //         {
+    //             var result = new byte[length];
+    //             await stream.ReadAsync(result);
+    //             base64Audios.Add(Convert.ToBase64String(result));
+    //             // base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
+    //             StateHasChanged();
+    //         }
+    //     }
+    // }
 
     private async void OnCancelSubmit()
     {

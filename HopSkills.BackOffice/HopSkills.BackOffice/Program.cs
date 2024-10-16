@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Serilog;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +41,6 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddLogging(logging => logging.AddSerilog(Log.Logger, true));
 
-
 builder.Services.AddIdentityCore<ApplicationUser>(options => {
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedAccount = false;
@@ -55,7 +55,10 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => {
     .AddDefaultTokenProviders();
 
 builder.Services.ConfigureOptions<ConfigureSecurityStampOptions>();
-builder.Services.AddControllers().AddNewtonsoftJson(); 
+builder.Services.AddControllers().AddNewtonsoftJson().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+}); ; 
 builder.Services.AddControllersWithViews();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();

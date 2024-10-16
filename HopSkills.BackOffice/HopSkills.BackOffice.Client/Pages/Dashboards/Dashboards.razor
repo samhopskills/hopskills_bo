@@ -1,5 +1,170 @@
-﻿<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4 d-flex justify-center align-center" Style="height: calc(100vh - 80px);">
-    <MudPaper Elevation="3" Class="pa-4" Style="width: 50%; height: 50%;">
-        <MudText Align="Align.Center" Class="d-flex justify-center align-center" Style="height: 100%;">Zone de travail pour votre design</MudText>
+﻿@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-16">
+    <MudPaper Elevation="3" Class="pa-6 mb-16">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-8">Bonjour Administrator Quizapp ravi de vous revoir</MudText>
+
+        <MudPaper Elevation="2" Class="pa-4 mb-8">
+            <MudGrid>
+                <MudItem xs="12" sm="3" Style="display: flex; align-items: center;">
+                    <MudImage Src="Images/placeholder1.jpg" Alt="Astuce du jour" Width="100" Height="100" ObjectFit="ObjectFit.Cover" Class="rounded-lg" />
+                </MudItem>
+                <MudItem xs="12" sm="8">
+                    <MudText Typo="Typo.h5">Salam</MudText>
+                    <MudText Typo="Typo.body1">Test</MudText>
+                    <MudText Typo="Typo.caption">Créé par Administrator Quizapp, Le</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="1" Style="display: flex; align-items: center; justify-content: flex-end;">
+                    <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" Color="Color.Default" />
+                    <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Color="Color.Default" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Créer et diffuser des notifications</MudButton>
     </MudPaper>
+    <MudGrid>
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudGrid>
+                    <MudItem xs="2">
+                        <MudIcon Icon="@Icons.Material.Filled.MenuBook" Color="Color.Primary" Size="Size.Large" />
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudText Typo="Typo.subtitle1">Nombre de formation fait dans le mois</MudText>
+                        <MudText Typo="Typo.h3" Class="mt-2">1</MudText>
+                        <MudChip T="string" Color="Color.Error" Size="Size.Small">-89%</MudChip>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudGrid>
+                    <MudItem xs="2">
+                        <MudIcon Icon="@Icons.Material.Filled.Quiz" Color="Color.Info" Size="Size.Large" />
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudText Typo="Typo.subtitle1">Nombre de quiz fait dans le mois</MudText>
+                        <MudText Typo="Typo.h3" Class="mt-2">1</MudText>
+                        <MudChip T="string" Color="Color.Error" Size="Size.Small">-86%</MudChip>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudGrid>
+                    <MudItem xs="2">
+                        <MudIcon Icon="@Icons.Material.Filled.Group" Color="Color.Success" Size="Size.Large" />
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudText Typo="Typo.subtitle1">Nombre de visite fait dans le mois</MudText>
+                        <MudText Typo="Typo.h3" Class="mt-2">0</MudText>
+                        <MudChip T="string" Color="Color.Success" Size="Size.Small">0%</MudChip>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid Class="mt-8">
+        <MudItem xs="12" sm="6">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Formations</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Voir toutes les formations</MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        @foreach (var formation in formations)
+                        {
+                            <MudItem xs="12" sm="4">
+                                <MudCard>
+                                    <MudCardMedia Image="@formation.Image" Height="100" />
+                                    <MudCardContent>
+                                        <MudText Typo="Typo.h6">@formation.Title</MudText>
+                                        <MudText Typo="Typo.body2">@formation.Description</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@formation.Date.ToShortDateString()</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Snackbar.Add("Créer une nouvelle formation"))">Créer une nouvelle formation</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Quiz</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Voir tous les quiz</MudButton>
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        @foreach (var quiz in quizzes)
+                        {
+                            <MudItem xs="12" sm="4">
+                                <MudCard>
+                                    <MudCardMedia Image="@quiz.Image" Height="100" />
+                                    <MudCardContent>
+                                        <MudText Typo="Typo.h6">@quiz.Title</MudText>
+                                        <MudText Typo="Typo.body2">@quiz.Description</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@quiz.Date.ToShortDateString()</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Snackbar.Add("Créer un nouveau quiz"))">Créer un nouveau quiz</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
 </MudContainer>
+
+@code {
+    private List<Formation> formations = new List<Formation>
+    {
+        new Formation { Title = "dsqsd", Description = "", Image = "Images/placeholder1.jpg", Date = new DateTime(2024, 6, 22) },
+        new Formation { Title = "Logo", Description = "logoooo", Image = "Images/placeholder2.jpg", Date = new DateTime(2023, 9, 19) },
+        new Formation { Title = "Santé sécu...", Description = "La santé et la sécuri", Image = "Images/placeholder3.jpg", Date = new DateTime(2023, 9, 1) },
+    };
+
+    private List<Quiz> quizzes = new List<Quiz>
+    {
+        new Quiz { Title = "zqdzqd", Description = "qzd", Image = "Images/placeholder4.jpg", Date = new DateTime(2024, 7, 6) },
+        new Quiz { Title = "Les animau...", Description = "Salam", Image = "Images/placeholder5.jpg", Date = new DateTime(2023, 9, 20) },
+        new Quiz { Title = "sdfghjkl", Description = "klk;jh,fdsq", Image = "Images/placeholder6.jpg", Date = new DateTime(2023, 9, 19) },
+    };
+
+    public class Formation
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public DateTime Date { get; set; }
+    }
+
+    public class Quiz
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public DateTime Date { get; set; }
+    }
+}

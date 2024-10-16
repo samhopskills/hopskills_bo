@@ -111,6 +111,26 @@ namespace HopSkills.BackOffice.Controllers
             return Ok();
         }
 
+        [HttpPost("UpdatePartial")]
+        public async Task<IActionResult> UpdatePartial([FromBody] GameChangesModel changes)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _gameService.UpdateGamePartial(changes);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in UpdatePartial");
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete([FromBody]List<GameViewModel> games)
         {
@@ -145,6 +165,20 @@ namespace HopSkills.BackOffice.Controllers
             try
             {
                 return Ok(await _gameService.DeleteImageFromGame(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("UploadImageForGame/{id}")]
+        public async Task<IActionResult> UploadImageForGame([FromBody] EditGameImage Image, string Id)
+        {
+            try
+            {
+                return Ok(await _gameService.UploadImageForGame(Image, Id));
             }
             catch (Exception ex)
             {

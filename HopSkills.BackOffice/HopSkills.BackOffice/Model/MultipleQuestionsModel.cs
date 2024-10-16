@@ -2,6 +2,7 @@
 {
     public class MultipleQuestionsModel
     {
+        public string UniqueId { get; set; }
         public string Question { get; set; }
         public TimeOnly Duration { get; set; }
         public int Xperience { get; set; }

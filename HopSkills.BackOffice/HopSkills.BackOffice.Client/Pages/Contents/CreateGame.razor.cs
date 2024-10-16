@@ -125,7 +125,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
                     InputGame.multipleQuestions.LastOrDefault().Expanded = false;
                     var questionFormInput = new CreateMultipleQuestionsViewModel
                     {
-                        Id = InputGame.multipleQuestions.Count + 1,
+                        CountId = InputGame.multipleQuestions.Count + 1,
                         PossibleAnswers =
                             [
                                 new CreateAnswerViewModel { Id = 1,
@@ -150,7 +150,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
             {
                 var questionFormInput = new CreateMultipleQuestionsViewModel
                 {
-                    Id = InputGame.multipleQuestions.Count + 1,
+                    CountId = InputGame.multipleQuestions.Count + 1,
                     PossibleAnswers =
                         [
                             new CreateAnswerViewModel { Id = 1,
@@ -174,7 +174,7 @@ namespace HopSkills.BackOffice.Client.Pages.Contents
         {
             var questionFormInput = new CreateMultipleQuestionsViewModel
             {
-                Id = InputGame.multipleQuestions.Count + 1,
+                CountId = InputGame.multipleQuestions.Count + 1,
                 PossibleAnswers =
                             [
                                 new CreateAnswerViewModel { Id = 1,

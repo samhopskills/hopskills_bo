@@ -15,6 +15,7 @@ namespace HopSkills.BackOffice.Services.Interfaces
         Task<bool> UpdateGameStatus(string id);
         Task<EditGameModel?> GetGameById(string id);
         Task<Response<bool>> DeleteImageFromGame(string id);
-        Task<Response<bool>> UploadImageForGame(CreateGameImage Image, string Id);
+        Task<Response<bool>> UploadImageForGame(EditGameImage Image, string Id);
+        Task UpdateGamePartial(GameChangesModel changes);
     }
 }

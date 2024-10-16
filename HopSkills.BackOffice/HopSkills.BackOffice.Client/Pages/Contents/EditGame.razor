@@ -981,7 +981,7 @@
     {
         for (int i = 0; i < InputGame.multipleQuestions.Count; i++)
         {
-            InputGame.multipleQuestions[i].Id = i + 1;
+            InputGame.multipleQuestions[i].CountId = i + 1;
         }
         StateHasChanged();
     }
@@ -997,7 +997,7 @@
     private bool formQuestions { get; set; }
     private bool form1IsValid  { get; set; }
     private bool fileNameWrong { get; set; }
-
+    private EditGameViewModel originalGame;
     private string getPriorGamesEndpoint { get; set; }
     private CreateMultipleQuestionsViewModel _questionFormInput { get; set; }
     EditContext InputGameContext;
@@ -1062,6 +1062,7 @@
         InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
         if(InputGame != null)
         {
+            originalGame = CloneGame(InputGame); // Assurez-vous d'implémenter une méthode Clone() appropriée
             if (InputGame?.multipleQuestions != null)
             {
                 InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
@@ -1107,6 +1108,56 @@
             Navigation.NavigateTo("/games");
     }
 
+    private EditGameViewModel CloneGame(EditGameViewModel game)
+    {
+        var clone = new EditGameViewModel
+            {
+                Id = game.Id,
+                Creator = game.Creator,
+                Title = game.Title,
+                Description = game.Description,
+                Theme = game.Theme,
+                ElligibleSub = game.ElligibleSub,
+                Status = game.Status,
+                DifficultyLevel = game.DifficultyLevel,
+                PriorGame = game.PriorGame,
+                NumberOfQuestion = game.NumberOfQuestion,
+                TotalDuration = game.TotalDuration,
+                TotalXperience = game.TotalXperience,
+                Image = game.Image != null ? new EditGameImageViewModel { Title = game.Image.Title, Content = game.Image.Content } : null,
+                multipleQuestions = game.multipleQuestions?.Select(q => CloneQuestion(q)).ToList()
+            };
+        return clone;
+    }
+
+    private CreateMultipleQuestionsViewModel CloneQuestion(CreateMultipleQuestionsViewModel question)
+    {
+        return new CreateMultipleQuestionsViewModel
+            {
+                CountId = question.CountId,
+                UniqueId = question.UniqueId,
+                Question = question.Question,
+                Duration = question.Duration,
+                Min = question.Min,
+                Sec = question.Sec,
+                Xperience = question.Xperience,
+                CorrectAnswerExplanation = question.CorrectAnswerExplanation,
+                ImageFiles = question.ImageFiles?.ToList(),
+                AudioFiles = question.AudioFiles?.ToList(),
+                PossibleAnswers = question.PossibleAnswers?.Select(a => new CreateAnswerViewModel
+                {
+                    Id = a.Id,
+                    Label = a.Label,
+                    Answer = a.Answer,
+                    IsCorrect = a.IsCorrect,
+                    Order = a.Order
+                }).ToList(),
+                Zone = question.Zone,
+                Expanded = question.Expanded,
+                IsValid = question.IsValid
+            };
+    }
+
     private bool _isJsInitialized = false;
     private async Task OnInputFileChanged(IBrowserFile file)
     {
@@ -1130,6 +1181,7 @@
             await resizeImage.OpenReadStream().ReadAsync(buffer);
             InputGame.Image.Content = Convert.ToBase64String(buffer);
             base64data = $"data:{format};base64,{InputGame.Image.Content}";
+            HttpResponseMessage result = await Http.PostAsJsonAsync($"/api/Game/EditGameImage/{InputGame.Id.ToString()}", InputGame.Image);
         }
         else
         {
@@ -1140,6 +1192,7 @@
     }
     private async Task DeleteImage()
     {
+        HttpResponseMessage result = await Http.GetAsync($"/api/Game/DeleteImageFromGame/{InputGame.Id.ToString()}");
         InputGame.Image.Content = string.Empty;
         await ClearAsync();
         base64data = "data:image/png;base64,";
@@ -1276,7 +1329,7 @@
             InputGame.multipleQuestions.Add(new CreateMultipleQuestionsViewModel
                     {
                         Question = string.Empty,
-                        Id = InputGame.multipleQuestions.Count + 1,
+                        CountId = InputGame.multipleQuestions.Count + 1,
                         PossibleAnswers =
                                 [
                                     new CreateAnswerViewModel { Id = 1,
@@ -1361,9 +1414,74 @@
             if (InputGame.multipleQuestions.LastOrDefault().IsValid)
             {
                 InputGame.Status = statusId == 0 ? "Draft" : "Published";
-                InputGame.Creator = authenticatedUser.Identity.Name; ;
-                HttpResponseMessage result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
-                Navigation.NavigateTo("/games");
+                InputGame.Creator = authenticatedUser.Identity.Name;
+
+                var changes = new GameChangesModel
+                    {
+                        Id = InputGame.Id
+                    };
+
+                // Vérifier les changements dans les propriétés principales
+                if (InputGame.Title != originalGame.Title) changes.Title = InputGame.Title;
+                if (InputGame.Description != originalGame.Description) changes.Description = InputGame.Description;
+                if (InputGame.Theme != originalGame.Theme) changes.Theme = InputGame.Theme;
+                if (InputGame.ElligibleSub != originalGame.ElligibleSub) changes.ElligibleSub = InputGame.ElligibleSub;
+                if (InputGame.Status != originalGame.Status) changes.Status = InputGame.Status;
+                if (InputGame.DifficultyLevel != originalGame.DifficultyLevel) changes.DifficultyLevel = InputGame.DifficultyLevel;
+                if (InputGame.PriorGame != originalGame.PriorGame) changes.PriorGame = InputGame.PriorGame;
+                if (InputGame.TotalDuration != originalGame.TotalDuration) changes.TotalDuration = InputGame.TotalDuration;
+                if (InputGame.TotalXperience != originalGame.TotalXperience) changes.TotalXperience = InputGame.TotalXperience;
+
+                // Vérifier les changements dans l'image
+                if (InputGame.Image != null && (originalGame.Image == null ||
+                    InputGame.Image.Title != originalGame.Image.Title ||
+                    InputGame.Image.Content != originalGame.Image.Content))
+                {
+                    changes.Image = InputGame.Image;
+                }
+                if (changes.Questions is null)
+                    changes.Questions = new List<QuestionChangeModel>();
+                // Déterminer les questions ajoutées, mises à jour ou supprimées
+                foreach (var question in InputGame.multipleQuestions)
+                {
+                    var originalQuestion = originalGame.multipleQuestions.FirstOrDefault(q => q.UniqueId == question.UniqueId);
+                    if (originalQuestion == null)
+                    {
+                        changes.Questions.Add(CreateQuestionChangeModel(question, "Added"));
+                    }
+                    else if (HasQuestionChanged(question, originalQuestion))
+                    {
+                        changes.Questions.Add(CreateQuestionChangeModel(question, "Updated"));
+                    }
+                }
+
+                // Identifier les questions supprimées
+                foreach (var originalQuestion in originalGame.multipleQuestions)
+                {
+                    if (!InputGame.multipleQuestions.Any(q => q.UniqueId == originalQuestion.UniqueId))
+                    {
+                        changes.Questions.Add(CreateQuestionChangeModel(originalQuestion, "Deleted"));
+                    }
+                }
+
+                if (HasChanges(changes))
+                {
+                    var jsonString = System.Text.Json.JsonSerializer.Serialize(changes);
+                    HttpResponseMessage result = await Http.PostAsJsonAsync("api/Game/UpdatePartial", changes);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        Snackbar.Add("Game updated successfully", MudBlazor.Severity.Success);
+                        Navigation.NavigateTo("/games");
+                    }
+                    else
+                    {
+                        Snackbar.Add("Failed to update game", MudBlazor.Severity.Error);
+                    }
+                }
+                else
+                {
+                    Snackbar.Add("No changes detected", MudBlazor.Severity.Info);
+                }
             }
         }
         else
@@ -1371,6 +1489,77 @@
             Snackbar.Add("Please fill all required fields correctly before saving.", MudBlazor.Severity.Warning);
         }
     }
+
+    private QuestionChangeModel CreateQuestionChangeModel(CreateMultipleQuestionsViewModel question, string changeType)
+    {
+        return new QuestionChangeModel
+            {
+                UniqueId = question.UniqueId,
+                Id = question.CountId,
+                Question = question.Question,
+                Duration = new TimeSpan(0, question.Duration.Value.Minutes, question.Duration.Value.Seconds),
+                Min = question.Min,
+                Sec = question.Sec,
+                Xperience = question.Xperience,
+                CorrectAnswerExplanation = question.CorrectAnswerExplanation,
+                ImageFiles = question.ImageFiles,
+                AudioFiles = question.AudioFiles,
+                Answers = question.PossibleAnswers.Select(a => new AnswerChangeModel
+                {
+                    Id = a.Id,
+                    Label = a.Label,
+                    Answer = a.Answer,
+                    IsCorrect = a.IsCorrect,
+                    Order = a.Order,
+                    ChangeType = changeType
+                }).ToList(),
+                ChangeType = changeType
+            };
+    }
+
+    private bool HasQuestionChanged(CreateMultipleQuestionsViewModel current, CreateMultipleQuestionsViewModel original)
+    {
+        if (current.Question != original.Question ||
+            current.Duration != original.Duration ||
+            current.Min != original.Min ||
+            current.Sec != original.Sec ||
+            current.Xperience != original.Xperience ||
+            current.CorrectAnswerExplanation != original.CorrectAnswerExplanation||
+            current.PossibleAnswers.Count != original.PossibleAnswers.Count)
+        {
+            return true;
+        }
+
+        for (int i = 0; i < current.PossibleAnswers.Count; i++)
+        {
+            var currentAnswer = current.PossibleAnswers[i];
+            var originalAnswer = original.PossibleAnswers[i];
+            if (currentAnswer.Answer != originalAnswer.Answer ||
+                currentAnswer.IsCorrect != originalAnswer.IsCorrect ||
+                currentAnswer.Order != originalAnswer.Order)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool HasChanges(GameChangesModel changes)
+    {
+        return changes.Title != null ||
+               changes.Description != null ||
+               changes.Theme != null ||
+               changes.ElligibleSub != null ||
+               changes.Status != null ||
+               changes.DifficultyLevel != null ||
+               changes.PriorGame != null ||
+               changes.TotalDuration != default ||
+               changes.TotalXperience != 0 ||
+               changes.Image != null ||
+               changes.Questions.Any();
+    }
+
     private bool ValidateAllForms()
     {
         if (string.IsNullOrWhiteSpace(InputGame.Title) ||
@@ -1394,7 +1583,7 @@
                 !question.PossibleAnswers.Any(a => a.IsCorrect) ||
                 question.Xperience <= 0 ||
                 question.Duration == null ||
-                question.Duration.Value.TotalSeconds <= 0)
+                question.Duration.Value.TotalSeconds < 0)
             {
                 return false;
             }
@@ -1418,6 +1607,7 @@
             await resizeImage.OpenReadStream().ReadAsync(buffer);
             InputGame.Image.Content = Convert.ToBase64String(buffer);
             base64data = "data:image/png;base64," + InputGame.Image.Content;
+            HttpResponseMessage result = await Http.PostAsJsonAsync($"/api/Game/UploadImageForGame/{InputGame.Id.ToString()}", InputGame.Image);
             StateHasChanged();
         }
         else

@@ -34,4 +34,46 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string Title { get; set; }
         public string Content { get; set; }
     }
+
+    public class GameChangesModel
+    {
+        public Guid Id { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? Theme { get; set; }
+        public string? ElligibleSub { get; set; }
+        public string? Status { get; set; }
+        public string? DifficultyLevel { get; set; }
+        public string? PriorGame { get; set; }
+        public TimeOnly TotalDuration { get; set; }
+        public EditGameImageViewModel? Image { get; set; }
+        public int? TotalXperience { get; set; }
+        public List<QuestionChangeModel>? Questions { get; set; }
+    }
+
+    public class QuestionChangeModel
+    {
+        public string? UniqueId { get; set; }
+        public int? Id { get; set; }
+        public string? Question { get; set; }
+        public TimeSpan? Duration { get; set; }
+        public int? Min { get; set; }
+        public int? Sec { get; set; }
+        public int? Xperience { get; set; }
+        public string? CorrectAnswerExplanation { get; set; }
+        public List<string?>? ImageFiles { get; set; }
+        public List<string?>? AudioFiles { get; set; }
+        public List<AnswerChangeModel?>? Answers { get; set; }
+        public string? ChangeType { get; set; }
+    }
+
+    public class AnswerChangeModel
+    {
+        public int? Id { get; set; }
+        public string? Label { get; set; }
+        public string? Answer { get; set; }
+        public bool? IsCorrect { get; set; }
+        public int? Order { get; set; }
+        public string? ChangeType { get; set; }
+    }
 }
