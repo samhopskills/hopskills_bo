@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HopSkills.BO.CoreBusiness")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73a2550bb06ddcad0d35aa8fe5ed7368312f1636")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a500706666590cf8af3bd4fd22f79777171ff5f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HopSkills.BO.CoreBusiness")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HopSkills.BO.CoreBusiness")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

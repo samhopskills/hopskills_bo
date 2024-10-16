@@ -170,8 +170,8 @@
         flex-direction: column;
         gap: 16px; /* Espace entre les panneaux */
         padding: 10px;
-        max-height: calc(50vh - 64px); /* Adjust based on your header height */
-        overflow-y: auto;
+        /* max-height: calc(50vh - 64px); /* Adjust based on your header height */ */
+        /* overflow-y: auto; */
     }
 
 
@@ -316,7 +316,7 @@
         position: fixed;
         top: 0;
         right: 0;
-        height: 50vh;
+        /* height: 50vh; */
         width: 400px;
         z-index: 1300;
         transition: transform 0.3s ease-in-out;
@@ -756,10 +756,12 @@
                         var question = InputGame.multipleQuestions[i];
                         var index = i;
                             <div class="question-container">
-                        <div class="draggable-item" draggable="true" @key="question.UniqueId"
+                        <div class="draggable-item" draggable="true" 
+                        @key="question.UniqueId"
                              @ondragstart="@(() => HandleDragStart(index))"
                              @ondragover:preventDefault
                              @ondragover="@(() => {})"
+                                         @ondragend="@HandleDragEnd" ondrop="@(() => HandleDrop(index))"
                                          @onclick="@(() => SelectQuestionFromSummary(index))">
                                             <MudExpansionPanel Elevation="2" Class="@(selectedQuestionIndex == index ? "selected-question" : "")" @ondrop="@(() => HandleDrop(index))">
                                     <TitleContent>
@@ -779,21 +781,16 @@
                                     </TitleContent>
                                     <ChildContent>
                                                   <div class="panel-content">
+                                                    <MudText Typo="Typo.body2">@question.CorrectAnswerExplanation</MudText>
                                          <MudList T="CreateAnswerViewModel" 
                                              Dense="true" DisablePadding="true">
                                                     @foreach (var answer in question.PossibleAnswers)
                                                     {
                                                         <MudListItem>
                                                             <div class="d-flex align-center">
-                                                                <MudText Class="flex-grow-1">@answer.Answer</MudText>
-                                                                @if (answer.IsCorrect)
-                                                                {
-                                                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" Class="ml-2" />
-                                                                }
-                                                                else
-                                                                {
-                                                                    <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Small" Class="ml-2" />
-                                                                }
+                                                                    <MudListItem IconColor="@(answer.IsCorrect ? Color.Success : Color.Error)" Icon="@(answer.IsCorrect ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)">
+                                                                            @answer.Answer
+                                                                        </MudListItem>
                                                             </div>
                                                         </MudListItem>
                                                     }
@@ -816,6 +813,10 @@
                     <MudText>No questions available.</MudText>
                 }
             </div>
+                    <MudPaper Class="d-flex justify-center pa-4" Elevation="0">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => ValidateAndSave(0))" Class="mr-2">Save as Draft</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => ValidateAndSave(1))">Publish</MudButton>
+                    </MudPaper>
         </MudDrawerContainer>
             </div>
         </MudDrawer>
@@ -936,6 +937,11 @@
         draggedIndex = index;
     }
 
+    private void HandleDragEnd()
+    {
+        draggedIndex = null;
+    }
+
     private async Task HandleDrop(int index)
     {
         if (draggedIndex.HasValue && draggedIndex.Value != index)
@@ -1011,6 +1017,8 @@
     private string base64data = "data:image/png;base64,";
     private ElementReference[] questionRefs;
     private AddQuestionFormComponent[] questionComponents;
+    [Parameter]
+    public EventCallback<EditGameViewModel> OnSaveGame { get; set; }
     public class Model
     {
         public IReadOnlyList<IBrowserFile>? Files { get; set; } = new List<IBrowserFile>();
@@ -1346,20 +1354,53 @@
         StateHasChanged();
     }
 
-    private async void SaveGame(int Id)
+    private async Task ValidateAndSave(int statusId)
     {
-        if (InputGame.multipleQuestions is not null && InputGame.multipleQuestions.Count != 0)
+        if (ValidateAllForms())
         {
             if (InputGame.multipleQuestions.LastOrDefault().IsValid)
             {
-                InputGame.Status = Id == 0 ? "Draft" : "Published";
+                InputGame.Status = statusId == 0 ? "Draft" : "Published";
                 InputGame.Creator = authenticatedUser.Identity.Name; ;
                 HttpResponseMessage result = await Http.PostAsJsonAsync(serviceEndpoint, InputGame);
                 Navigation.NavigateTo("/games");
             }
-            else
-                Snackbar.Add("Please fill or delete the last quiz first", MudBlazor.Severity.Error);
         }
+        else
+        {
+            Snackbar.Add("Please fill all required fields correctly before saving.", MudBlazor.Severity.Warning);
+        }
+    }
+    private bool ValidateAllForms()
+    {
+        if (string.IsNullOrWhiteSpace(InputGame.Title) ||
+            string.IsNullOrWhiteSpace(InputGame.Theme) ||
+            string.IsNullOrWhiteSpace(InputGame.ElligibleSub) ||
+            string.IsNullOrWhiteSpace(InputGame.DifficultyLevel))
+        {
+            return false;
+        }
+
+        if (InputGame.multipleQuestions == null || InputGame.multipleQuestions.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (var question in InputGame.multipleQuestions)
+        {
+            if (string.IsNullOrWhiteSpace(question.Question) ||
+                question.PossibleAnswers == null ||
+                question.PossibleAnswers.Count < 2 ||
+                !question.PossibleAnswers.Any(a => a.IsCorrect) ||
+                question.Xperience <= 0 ||
+                question.Duration == null ||
+                question.Duration.Value.TotalSeconds <= 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private async void LoadFiles(InputFileChangeEventArgs e)

@@ -99,7 +99,7 @@
         </div>
     </MudTooltip>
     <MudTooltip Text="Experience Points" Class="ml-4">
-        <MudText Typo="Typo.body2" Inline="true" Class="ml-1">@questionFormInput.Xperience XP</MudText>
+        <MudTextField AdornmentIcon="@Icons.Material.Outlined.Star" Adornment="Adornment.End" @bind-Value="@questionFormInput.Xperience" Style="width: 60px;" Class="mx-1" />
     </MudTooltip>
     <div class="d-flex justify-end align-center">
         <MudTooltip Text="Upload Image">
