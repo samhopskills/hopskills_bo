@@ -108,7 +108,7 @@ namespace HopSkills.BackOffice.Services
                                         var audioFiles = creaMutliQ.FirstOrDefault(q => q.Question == multi.Question).AudioFiles;
                                         if (imagesFiles.Count != 0)
                                         {
-                                            var bytes = imagesFiles.Select(Convert.FromBase64String);
+                                            var bytes = imagesFiles.Select(i => Convert.FromBase64String(i.Content));
                                             int count = 0;
                                             foreach (var b in bytes)
                                             {
@@ -120,7 +120,7 @@ namespace HopSkills.BackOffice.Services
                                         if(audioFiles.Count > 0)
                                         {
                                             _containerClient = _blobServiceClient.GetBlobContainerClient(AudioContainerName);
-                                            var bytes = audioFiles.Select(Convert.FromBase64String);
+                                            var bytes = audioFiles.Select(i => Convert.FromBase64String(i.Content));
                                             int count = 0;
                                             foreach (var b in bytes)
                                             {
@@ -141,94 +141,6 @@ namespace HopSkills.BackOffice.Services
             catch (Exception ex)
             {
                 _logger.LogError($"[ERROR] : {ex} {ex.Message}");
-            }
-        }
-
-        public async Task EditGame(EditGameModel editGameModel)
-        {
-            try
-            {
-                var creator = await _hopSkillsDb.Users.SingleAsync(u => u.Email == editGameModel.Creator);
-                if (creator != null) {
-                    var gameToEdit = await _hopSkillsDb.Games.SingleAsync(g => g.Id == editGameModel.Id);
-                    if (gameToEdit != null)
-                    {
-                        if (creator != null)
-                        {
-                            gameToEdit.TotalDuration = editGameModel.TotalDuration;
-                            gameToEdit.Status = editGameModel.Status.ToString();
-                            gameToEdit.Theme = editGameModel.Theme.ToString();
-                            gameToEdit.TotalXp = editGameModel.TotalXperience;
-                            gameToEdit.Title = editGameModel.Title;
-                            gameToEdit.UserId = new Guid(creator.Id);
-                            gameToEdit.Description = editGameModel.Description;
-                            gameToEdit.DifficultyLevel = editGameModel.DifficultyLevel;
-                            gameToEdit.ElligibleSub = editGameModel.ElligibleSub;
-                            gameToEdit.PriorGame = editGameModel.PriorGame;
-
-                            BlobContainerClient _containerClient = _blobServiceClient.GetBlobContainerClient(ImageContainerName);
-                            var editMutliQ = editGameModel.multipleQuestions;
-                            if (editMutliQ.Count != 0)
-                            {
-                                var multiQ = editMutliQ.Select(
-                                e => new ApplicationMultiQuestion
-                                {
-                                    CorrectAnswerExplanation = e.CorrectAnswerExplanation,
-                                    Duration = e.Duration,
-                                    PossibleAnswers = e.PossibleAnswers.Select(e => new ApplicationAnswer
-                                    {
-                                        Answer = e.Answer,
-                                        IsCorrect = e.IsCorrect
-                                    }).ToList(),
-                                    Question = e.Question,
-                                    Xperience = e.Xperience,
-                                    GameId = editGameModel.Id
-                                }).ToList();
-                                foreach (var multi in multiQ)
-                                {
-                                    var result = await _hopSkillsDb.MultiQuestions.AddAsync(multi);
-                                    if (result != null)
-                                    {
-                                        Guid? mutlId = result.Entity.Id;
-                                        if (mutlId.HasValue)
-                                        {
-                                            multi.PossibleAnswers.ForEach(e => e.MultiQuestionId = mutlId.Value);
-                                            await _hopSkillsDb.Answers.AddRangeAsync(multi.PossibleAnswers);
-                                            var imagesFiles = editMutliQ.FirstOrDefault(q => q.Question == multi.Question).ImageFiles;
-                                            var audioFiles = editMutliQ.FirstOrDefault(q => q.Question == multi.Question).AudioFiles;
-                                            if (imagesFiles.Count != 0)
-                                            {
-                                                var bytes = imagesFiles.Select(Convert.FromBase64String);
-                                                int count = 0;
-                                                foreach (var b in bytes)
-                                                {
-                                                    var blobClient = _containerClient.GetBlobClient($"{editGameModel.Id}/{mutlId.Value}_{count++}.png");
-                                                    await blobClient.UploadAsync(BinaryData.FromBytes(b));
-                                                }
-                                            }
-                                            if (audioFiles.Count > 0)
-                                            {
-                                                _containerClient = _blobServiceClient.GetBlobContainerClient(AudioContainerName);
-                                                var bytes = audioFiles.Select(Convert.FromBase64String);
-                                                int count = 0;
-                                                foreach (var b in bytes)
-                                                {
-                                                    var blobClient = _containerClient.GetBlobClient($"{editGameModel.Id}/{mutlId.Value}_{count++}.mp3");
-                                                    await blobClient.UploadAsync(BinaryData.FromBytes(b));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            await _hopSkillsDb.SaveChangesAsync();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"[ERROR] : {ex.Message}");
             }
         }
 
@@ -271,7 +183,7 @@ namespace HopSkills.BackOffice.Services
                             await UpdateExistingQuestion(gameToUpdate.Id, questionChange);
                             break;
                         case "Deleted":
-                            await DeleteQuestion(gameToUpdate.Id, questionChange.Question);
+                            await DeleteQuestion(gameToUpdate.Id, questionChange);
                             break;
                     }
                 }
@@ -308,7 +220,7 @@ namespace HopSkills.BackOffice.Services
                     await UpdateExistingQuestion(gameId, questionChange);
                     break;
                 case "Deleted":
-                    await DeleteQuestion(gameId, questionChange.Question); // Assuming Question field is used as a unique identifier
+                    await DeleteQuestion(gameId, questionChange); // Assuming Question field is used as a unique identifier
                     break;
             }
         }
@@ -336,16 +248,20 @@ namespace HopSkills.BackOffice.Services
         private async Task UpdateExistingQuestion(Guid gameId, QuestionChangeModel questionChange)
         {
             var existingQuestion = await _hopSkillsDb.MultiQuestions
-                .FirstOrDefaultAsync(q => q.GameId == gameId && q.Question == questionChange.Question);
+                .FirstOrDefaultAsync(q => q.GameId == gameId && q.Id.ToString() == questionChange.UniqueId.ToLower());
 
             if (existingQuestion != null)
             {
-                existingQuestion.CorrectAnswerExplanation = questionChange.CorrectAnswerExplanation;
-                existingQuestion.Duration = new TimeOnly(0, questionChange.Duration.Value.Minutes, questionChange.Duration.Value.Seconds);
-                existingQuestion.Xperience = questionChange.Xperience.Value;
+                if(!string.IsNullOrEmpty(questionChange.Question)
+                    && questionChange.Question != existingQuestion.Question) existingQuestion.Question = questionChange.Question;
+                if (!string.IsNullOrEmpty(questionChange.CorrectAnswerExplanation)
+                   && questionChange.CorrectAnswerExplanation != existingQuestion.CorrectAnswerExplanation) existingQuestion.CorrectAnswerExplanation = questionChange.CorrectAnswerExplanation;
+                if (questionChange.Duration is not null) existingQuestion.Duration = new TimeOnly(0, questionChange.Duration.Value.Minutes, questionChange.Duration.Value.Seconds);
+                if (questionChange.Xperience.HasValue 
+                    && questionChange.Xperience.Value != existingQuestion.Xperience) existingQuestion.Xperience = questionChange.Xperience.Value;
 
                 // Update answers
-                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId == existingQuestion.Id).ToListAsync();
+                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId.ToString() == existingQuestion.Id.ToString().ToLower()).ToListAsync();
                 foreach (var answerChange in questionChange.Answers)
                 {
                     var existingAnswer = existingAnswers.FirstOrDefault(a => a.Answer == answerChange.Answer);
@@ -368,9 +284,10 @@ namespace HopSkills.BackOffice.Services
             }
         }
 
-        private async Task DeleteQuestion(Guid gameId, string questionText)
+        private async Task DeleteQuestion(Guid gameId, QuestionChangeModel questionChange)
         {
-            var questionToDelete = await _hopSkillsDb.MultiQuestions.FirstOrDefaultAsync(q => q.GameId == gameId && q.Question == questionText);
+            var questionToDelete = await _hopSkillsDb.MultiQuestions.FirstOrDefaultAsync(q => q.GameId == gameId 
+            && q.Id.ToString() == questionChange.UniqueId.ToLower());
             if (questionToDelete != null)
             {
                 _hopSkillsDb.MultiQuestions.Remove(questionToDelete);
@@ -388,9 +305,17 @@ namespace HopSkills.BackOffice.Services
                     {
                         for (int i = 0; i < questionChange.ImageFiles.Count; i++)
                         {
-                            var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.png");
-                            var bytes = Convert.FromBase64String(questionChange.ImageFiles[i]);
-                            await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                            if(!questionChange.ImageFiles[i].Delete)
+                            {
+                                var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.png");
+                                if (!await blobClient.ExistsAsync())
+                                {
+                                    var bytes = Convert.FromBase64String(questionChange.ImageFiles[i].Content);
+                                    await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                                }
+                            }
+                            else
+                                await containerClient.DeleteBlobIfExistsAsync($"{gameId}/{questionId}_{i}.png");
                         }
                     }
                     else
@@ -403,7 +328,6 @@ namespace HopSkills.BackOffice.Services
                             i++;
                         } while (blobExist);
                     }
-                    
                 }
 
                 if (questionChange.AudioFiles != null)
@@ -413,9 +337,17 @@ namespace HopSkills.BackOffice.Services
                     {
                         for (int i = 0; i < questionChange.AudioFiles.Count; i++)
                         {
-                            var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.mp3");
-                            var bytes = Convert.FromBase64String(questionChange.AudioFiles[i]);
-                            await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                            if(!questionChange.AudioFiles[i].Delete)
+                            {
+                                var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.mp3");
+                                if (!await blobClient.ExistsAsync())
+                                {
+                                    var bytes = Convert.FromBase64String(questionChange.AudioFiles[i].Content);
+                                    await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                                }
+                            }
+                            else
+                                await containerClient.DeleteBlobIfExistsAsync($"{gameId}/{questionId}_{i}.mp3");
                         }
                     }
                     else
@@ -436,10 +368,10 @@ namespace HopSkills.BackOffice.Services
             }
         }
 
-        private async Task<(List<string> ImageFiles, List<string> AudioFiles)> GetQuestionFiles(string gameId, string questionId)
+        private async Task<(List<GameFileModel> ImageFiles, List<GameFileModel> AudioFiles)> GetQuestionFiles(string gameId, string questionId)
         {
-            List<string> imageFiles = [];
-            List<string> audioFiles = [];
+            List<GameFileModel> imageFiles = [];
+            List<GameFileModel> audioFiles = [];
 
             // Récupérer les images
             var imageContainerClient = _blobServiceClient.GetBlobContainerClient(ImageContainerName);
@@ -452,7 +384,10 @@ namespace HopSkills.BackOffice.Services
                 }
                 var blobDownloadInfo = await blobClient.DownloadContentAsync();
                 var content = Convert.ToBase64String(blobDownloadInfo.Value.Content);
-                imageFiles.Add(content);
+                imageFiles.Add(new GameFileModel
+                {
+                    Content = content
+                });
             }
 
             // Récupérer les fichiers audio
@@ -466,7 +401,10 @@ namespace HopSkills.BackOffice.Services
                 }
                 var blobDownloadInfo = await blobClient.DownloadContentAsync();
                 var content = Convert.ToBase64String(blobDownloadInfo.Value.Content);
-                audioFiles.Add(content);
+                audioFiles.Add(new GameFileModel
+                {
+                    Content = content
+                });
             }
 
             return (imageFiles, audioFiles);
