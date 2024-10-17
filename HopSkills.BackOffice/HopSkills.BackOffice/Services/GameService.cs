@@ -381,31 +381,57 @@ namespace HopSkills.BackOffice.Services
         {
             try
             {
-                if (questionChange.ImageFiles != null && questionChange.ImageFiles.Any())
+                if (questionChange.ImageFiles != null)
                 {
                     var containerClient = _blobServiceClient.GetBlobContainerClient(ImageContainerName);
-                    for (int i = 0; i < questionChange.ImageFiles.Count; i++)
+                    if (questionChange.ImageFiles.Count != 0)
                     {
-                        var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.png");
-                        var bytes = Convert.FromBase64String(questionChange.ImageFiles[i]);
-                        await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                        for (int i = 0; i < questionChange.ImageFiles.Count; i++)
+                        {
+                            var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.png");
+                            var bytes = Convert.FromBase64String(questionChange.ImageFiles[i]);
+                            await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                        }
                     }
+                    else
+                    {
+                        var blobExist = true;
+                        var i = 0;
+                        do
+                        {
+                            blobExist = await containerClient.DeleteBlobIfExistsAsync($"{gameId}/{questionId}_{i}.png");
+                            i++;
+                        } while (blobExist);
+                    }
+                    
                 }
 
-                if (questionChange.AudioFiles != null && questionChange.AudioFiles.Any())
+                if (questionChange.AudioFiles != null)
                 {
                     var containerClient = _blobServiceClient.GetBlobContainerClient(AudioContainerName);
-                    for (int i = 0; i < questionChange.AudioFiles.Count; i++)
+                    if (questionChange.AudioFiles.Count != 0)
                     {
-                        var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.mp3");
-                        var bytes = Convert.FromBase64String(questionChange.AudioFiles[i]);
-                        await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                        for (int i = 0; i < questionChange.AudioFiles.Count; i++)
+                        {
+                            var blobClient = containerClient.GetBlobClient($"{gameId}/{questionId}_{i}.mp3");
+                            var bytes = Convert.FromBase64String(questionChange.AudioFiles[i]);
+                            await blobClient.UploadAsync(BinaryData.FromBytes(bytes));
+                        }
+                    }
+                    else
+                    {
+                        var blobExist = true;
+                        var i = 0;
+                        do
+                        {
+                            blobExist = await containerClient.DeleteBlobIfExistsAsync($"{gameId}/{questionId}_{i}.mp3");
+                            i++;
+                        } while (blobExist);
                     }
                 }
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex.Message);
             }
         }

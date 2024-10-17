@@ -4,3 +4,8 @@
 
 /.vs/HopSkills/FileContentIndex
 /.vs/HopSkills/v17
+*.suo
+*.user
+bin
+obj
+packages
