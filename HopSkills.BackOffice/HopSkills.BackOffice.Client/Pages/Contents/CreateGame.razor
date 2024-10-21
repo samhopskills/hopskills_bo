@@ -372,7 +372,11 @@
         }
 
 
-
+    .quiz-title {
+        font-weight: bold;
+        margin-right: auto;
+        margin-left: 7%;
+    }
 
     .delete-image-button {
         position: absolute;
@@ -430,16 +434,18 @@
             @if (form1Validate)
             {
                 <div class="d-flex justify-space-between align-center mb-2">
+                    <MudText Typo="Typo.h6" Class="quiz-title">
                     <MudTextField @bind-Value="InputGame.Title"
-                                  Label="Title"
+                                  Label="Add a title"
                                   Required="true"
                                   Variant="Variant.Text"
-                                  Class="quiz-title"
-                                  Style="font-weight: bold; font-size: 1.25rem;" />
+                                  Style="font-size: 1.25rem; font-weight: 500;" />
+                                  </MudText>
                 </div>
                 <div class="outer-container">
                     <div class="quiz-container">
                         <div class="quiz-form-container">
+                           
                             <MudPaper Elevation="3" Class="@($"pa-4 question-paper")">
                                 <EditForm Model="@InputGame" OnValidSubmit="OnValidSubmit">
                                     <DataAnnotationsValidator />
@@ -582,7 +588,7 @@
                                      Variant="Variant.Outlined"
                                      StartIcon="@Icons.Material.Filled.Add"
                                      Color="Color.Dark">
-                                Add a quizz
+                                Add a new form
                             </MudButton>
                         </MudItem>
                     </MudGrid>
