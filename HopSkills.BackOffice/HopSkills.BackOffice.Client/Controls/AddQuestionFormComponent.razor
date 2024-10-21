@@ -2,6 +2,7 @@
 @using System.Text.RegularExpressions
 @inject ISnackbar Snackbar
 @inject IJSRuntime JSRuntime
+@inject HttpClient Http
 
 <style>
     .answer-container {
@@ -130,21 +131,23 @@
         <MudCard>
             <MudCardContent>
                 <MudGrid>
-                   
                     <MudItem xs="12">
                         <MudTextField @ref="firstInputRef" T="string" Label="Question"
                                       @bind-Value="@questionFormInput.Question"
                                       Required="true" Variant="Variant.Outlined"
                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.Question)"
-                                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.QuestionMark"
+                                      Adornment="Adornment.End" 
+                                      AdornmentIcon="@Icons.Material.Filled.QuestionMark"
                                       InputMode="InputMode.text" AutoGrow="true" Lines="1" />
 
                     </MudItem>
                 </MudGrid>
-                @if (questionFormInput.PossibleAnswers is not null && questionFormInput.PossibleAnswers.Count != 0)
+                @if (questionFormInput.PossibleAnswers is not null 
+                && questionFormInput.PossibleAnswers.Count != 0)
                 {
-                    @foreach (var item in questionFormInput.PossibleAnswers)
+                    @foreach (var item in 
+                    questionFormInput.PossibleAnswers.Where(a => a.ChangeType != "Deleted"))
                     {
                         <MudPaper Elevation="0" Class="answer-container pa-2">
                             <div class="answer-text">
@@ -153,11 +156,12 @@
                                               T="string"
                                               Label="@(item.IsCorrect ? "Correct Answer" : item.Label)"
                                               @bind-Value="@item.Answer"
-                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
                                               For="@(() => item.Label)"
                                               Variant="Variant.Outlined"
                                               Class="@(item.IsCorrect ? "correct-answer" : "")"
-                                              FullWidth="true" />
+                                              FullWidth="true"
+                                              @onclick:stopPropagation
+                                              @onfocus="@(() => PreventDefaultFocus())" />
                             </div>
                             <div class="answer-actions">
                                 <MudSwitch @bind-Value="@item.IsCorrect"
@@ -165,7 +169,7 @@
                                            ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
                                            ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)"
                                            Class="ma-0 pa-0" />
-                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Order))"
+                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Id))"
                                                Icon="@Icons.Material.Rounded.Delete"
                                                Size="Size.Small"
                                                Class="ml-2" />
@@ -188,63 +192,60 @@
                                       Label="Explain the correct answer"
                                       Required="true"
                                       @bind-Value="@questionFormInput.CorrectAnswerExplanation"
-                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
                                       For="@(() => questionFormInput.CorrectAnswerExplanation)"
-                                      AutoGrow="true" Variant="Variant.Filled" />
+                                      AutoGrow="true" Variant="Variant.Filled"
+                                      @onclick:stopPropagation
+                                      @onfocus="@(() => PreventDefaultFocus())" />
                     </MudItem>
                 </MudGrid>
-                @if (base64Images.Any())
+                @if (questionFormInput.ImageFiles != null 
+                && questionFormInput.ImageFiles.Count() != 0)
                 {
                     <MudText Typo="Typo.subtitle1" Class="mt-2">Images:</MudText>
                     <div class="preview-container">
-                        @for (int i = 0; i < base64Images.Count; i++)
+                        @for (int i = 0; i < questionFormInput.ImageFiles.Count; i++)
                         {
                             var index = i;
-                            <div class="file-preview-container">
-                                <img src="data:image/png;base64,@base64Images[index]" alt="Preview" class="image-preview" />
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
-                                               Size="Size.Small"
-                                               Class="delete-button"
-                                               OnClick="@(() => DeleteImage(index))" />
-                            </div>
-                        }
-                    </div>
-                }
-
-                @if (base64Audios.Any())
-                {
-                    <MudText Typo="Typo.subtitle1" Class="mt-2">Audio Files:</MudText>
-                    <div class="preview-container">
-                        @for (int i = 0; i < base64Audios.Count; i++)
-                        {
-                            var index = i;
-                            <div class="file-preview-container">
-                                <div class="audio-preview">
-                                    <audio controls>
-                                        <source src="data:audio/mpeg;base64,@base64Audios[index]" type="audio/mpeg">
-                                        Your browser does not support the audio element.
-                                    </audio>
+                            @if (!questionFormInput.ImageFiles[index].Delete)
+                            {
+                                <div class="file-preview-container">
+                                    <img src="data:image/png;base64,@questionFormInput.ImageFiles[index].Content" alt="Preview" class="image-preview" />
                                     <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                                    Size="Size.Small"
                                                    Class="delete-button"
-                                                   OnClick="@(() => DeleteAudio(index))" />
+                                                   OnClick="@(() => DeleteImage(index))" />
                                 </div>
-                            </div>
+                            }
+                        }
+                    </div>
+                }
+                @if (questionFormInput.AudioFiles != null 
+                && questionFormInput.AudioFiles.Count() != 0)
+                {
+                    <MudText Typo="Typo.subtitle1" Class="mt-2">Audio Files:</MudText>
+                    <div class="preview-container">
+                        @for (int i = 0; i < questionFormInput.AudioFiles.Count; i++)
+                        {
+                            var index = i;
+                            @if (!questionFormInput.AudioFiles[index].Delete)
+                            {
+                                <div class="file-preview-container">
+                                    <div class="audio-preview">
+                                        <audio controls>
+                                            <source src="data:audio/mpeg;base64,@questionFormInput.AudioFiles[index].Content" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                                       Size="Size.Small"
+                                                       Class="delete-button"
+                                                       OnClick="@(() => DeleteAudio(index))" />
+                                    </div>
+                                </div>
+                            }
                         }
                     </div>
                 }
             </MudCardContent>
-            <br />
-            @* <MudCardActions>
-                @if (!hasBeenValidated)
-                {
-                    <MudButton ButtonType="ButtonType.Submit"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               DropShadow="false" Class="ml-auto">Validate</MudButton>
-
-                }
-            </MudCardActions> *@
         </MudCard>
     </EditForm>
     </MudPaper>
@@ -287,6 +288,11 @@
         Console.WriteLine("OnSelectClicked called");
         await OnSelect.InvokeAsync();
     }
+
+    private void PreventDefaultFocus()
+    {
+        // Cette méthode est vide, mais elle empêche la propagation de l'événement focus
+    }
     private CustomerViewModel CompanySelected { get; set; }
     public bool Dense_CheckBox { get; set; }
     private bool fileNameWrong { get; set; }
@@ -315,22 +321,20 @@
         }
     }
 
-    private void DeleteImage(int index)
+    private async void DeleteImage(int index)
     {
-        if (index >= 0 && index < base64Images.Count)
-        {
-            base64Images.RemoveAt(index);
-            StateHasChanged();
-        }
+        if (questionFormInput.ImageFiles != null
+            && questionFormInput.ImageFiles.Count() != 0)
+            questionFormInput.ImageFiles[index].Delete = true;
+        StateHasChanged();
     }
 
     private void DeleteAudio(int index)
     {
-        if (index >= 0 && index < base64Audios.Count)
-        {
-            base64Audios.RemoveAt(index);
-            StateHasChanged();
-        }
+        if (questionFormInput.AudioFiles != null
+                && questionFormInput.AudioFiles.Count() != 0)
+            questionFormInput.AudioFiles[index].Delete = true;
+        StateHasChanged();
     }
 
     private async Task OpenFileInput(string inputId)
@@ -347,12 +351,15 @@
                 continue;
             }
             if (questionFormInput.ImageFiles is null)
-                questionFormInput.ImageFiles = new List<string>();
+                questionFormInput.ImageFiles = new List<GameFileModel>();
             var format = "image/png";
             var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
             var buffer = new byte[resizeImage.Size];
             await resizeImage.OpenReadStream().ReadAsync(buffer);
-            questionFormInput.ImageFiles.Add(Convert.ToBase64String(buffer));
+            questionFormInput.ImageFiles.Add(new GameFileModel{
+                Content = Convert.ToBase64String(buffer),
+                Delete = false
+            });
             base64Images.Add(Convert.ToBase64String(buffer));
 
         }
@@ -369,12 +376,16 @@
                 continue;
             }
             if (questionFormInput.AudioFiles is null)
-                questionFormInput.AudioFiles = new List<string>();
+                questionFormInput.AudioFiles = new List<GameFileModel>();
             using (var stream = file.OpenReadStream(MaxAudioSizeBytes))
             {
                 var buffer = new byte[file.Size];
                 await stream.ReadAsync(buffer);
-                questionFormInput.AudioFiles.Add(Convert.ToBase64String(buffer));
+                questionFormInput.AudioFiles.Add(new GameFileModel
+                    {
+                        Content = Convert.ToBase64String(buffer),
+                        Delete = false
+                    });
                 base64Audios.Add(Convert.ToBase64String(buffer));
             }
         }
@@ -390,8 +401,8 @@
     {
         Minutes = questionFormInput.Duration.Value.Minutes;
         Seconds = questionFormInput.Duration.Value.Seconds;
-        base64Images = questionFormInput.ImageFiles;
-        base64Audios = questionFormInput.AudioFiles;
+        base64Images = questionFormInput.ImageFiles.Select(i => i.Content).ToList();
+        base64Audios = questionFormInput.AudioFiles.Select(i => i.Content).ToList();
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
@@ -408,7 +419,8 @@
         {
                 Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
             Answer = string.Empty,
-            IsCorrect = false
+            IsCorrect = false,
+            ChangeType = "Added"
         });
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
@@ -421,38 +433,9 @@
 
     private EventCallback DeleteAnswer(int Id)
     {
-        questionFormInput.PossibleAnswers.RemoveAt(Id);
+        questionFormInput.PossibleAnswers[Id].ChangeType = "Deleted";
         return EventCallback.Empty;
     }
-
-    // private async void UploadFiles(IBrowserFile file)
-    // {
-    //     _files.Add(file);
-    //     var format = "image/png";
-    //     var resizeImage = await file.RequestImageFileAsync(format, 640, 480);
-    //     var buffer = new byte[resizeImage.Size];
-    //     await resizeImage.OpenReadStream().ReadAsync(buffer);
-    //     base64Images.Add(Convert.ToBase64String(buffer));
-    //     // base64Images.Add("data:image/png;base64," + Convert.ToBase64String(buffer));
-    //     StateHasChanged();
-    // }
-
-    // private async void UploadFiles2(IBrowserFile file)
-    // {
-    //     _audios.Add(file);
-    //     using (var stream = file.OpenReadStream())
-    //     {
-    //         var length = stream.Length;
-    //         if (length <= int.MaxValue)
-    //         {
-    //             var result = new byte[length];
-    //             await stream.ReadAsync(result);
-    //             base64Audios.Add(Convert.ToBase64String(result));
-    //             // base64Audios.Add("data:audio/mp3;base64," + Convert.ToBase64String(result));
-    //             StateHasChanged();
-    //         }
-    //     }
-    // }
 
     private async void OnCancelSubmit()
     {
@@ -474,8 +457,6 @@
             {
                 questionFormInput.Duration = new TimeSpan(0, Minutes, Seconds);
                 hasBeenValidated = true;
-                questionFormInput.ImageFiles = base64Images;
-                questionFormInput.AudioFiles = base64Audios;
                 await OnValidEvent.InvokeAsync(questionFormInput);
             }
            else

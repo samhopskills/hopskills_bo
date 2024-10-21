@@ -26,9 +26,14 @@ namespace HopSkills.BackOffice.Client.ViewModels
         [Required]
         public string CorrectAnswerExplanation { get; set; }
         [MaxLength(255)]
-        public List<string> ImageFiles { get; set; }
+        public List<GameFileModel> ImageFiles { get; set; }
         [MaxLength(255)]
-        public List<string> AudioFiles { get; set; }
+        public List<GameFileModel> AudioFiles { get; set; }
     }
 
+    public class GameFileModel
+    {
+        public string Content { get; set; }
+        public bool Delete { get; set; }
+    }
 }

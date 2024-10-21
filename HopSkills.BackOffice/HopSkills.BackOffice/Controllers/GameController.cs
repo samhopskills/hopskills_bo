@@ -96,21 +96,6 @@ namespace HopSkills.BackOffice.Controllers
             return Ok();
         }
 
-        [HttpPost("EditGame")]
-        public async Task<IActionResult> EditGame([FromBody] EditGameModel editGameModel)
-        {
-            try
-            {
-                await _gameService.EditGame(editGameModel);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                return BadRequest(ex.Message);
-            }
-            return Ok();
-        }
-
         [HttpPost("UpdatePartial")]
         public async Task<IActionResult> UpdatePartial([FromBody] GameChangesModel changes)
         {

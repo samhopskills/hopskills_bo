@@ -33,6 +33,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
     {
         public string Title { get; set; }
         public string Content { get; set; }
+        public bool ToDelete { get; set; }
     }
 
     public class GameChangesModel
@@ -61,15 +62,15 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public int? Sec { get; set; }
         public int? Xperience { get; set; }
         public string? CorrectAnswerExplanation { get; set; }
-        public List<string?>? ImageFiles { get; set; }
-        public List<string?>? AudioFiles { get; set; }
+        public List<GameFileModel?>? ImageFiles { get; set; }
+        public List<GameFileModel?>? AudioFiles { get; set; }
         public List<AnswerChangeModel?>? Answers { get; set; }
         public string? ChangeType { get; set; }
     }
 
     public class AnswerChangeModel
     {
-        public int? Id { get; set; }
+        public string? UniqueId { get; set; }
         public string? Label { get; set; }
         public string? Answer { get; set; }
         public bool? IsCorrect { get; set; }

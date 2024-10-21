@@ -212,8 +212,8 @@
                         Answer = string.Empty,
                     IsCorrect = false}
                 },
-                ImageFiles = new List<string>(),
-                AudioFiles = new List<string>()
+                ImageFiles = new List<GameFileModel>(),
+                AudioFiles = new List<GameFileModel>()
             };
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
@@ -292,8 +292,6 @@
             {
                 // questionFormInput.Duration = new TimeOnly(00, questionFormInput.Min, questionFormInput.Sec);
                 hasBeenValidated = true;
-                questionFormInput.ImageFiles = base64Images;
-                questionFormInput.AudioFiles = base64Audios;
                 await OnValidEvent.InvokeAsync(questionFormInput);
             }
             else

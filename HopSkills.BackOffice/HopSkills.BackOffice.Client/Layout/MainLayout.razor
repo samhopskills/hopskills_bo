@@ -34,33 +34,20 @@
         z-index: 1400; /* Higher than the drawer's z-index */
     }
 </style>
-<MudThemeProvider Theme="_theme" />
+<MudThemeProvider Theme="customTheme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-<MudLayout >
+<MudLayout>
     <AuthorizeView>
         <Authorized>
             <MudAppBar Elevation="1" Style="background-color:white">
                                <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
-                @* <MudText Typo="Typo.h5" Class="ml-3">HopSkills</MudText> *@
-                <MudSpacer />
                 <MudIconButton Icon="@Icons.Material.Filled.Notifications"
                                Color="Color.Dark" Edge="Edge.End" />
                 <MudIconButton Icon="@Icons.Material.Filled.AccountCircle"
                                Color="Color.Dark" Edge="Edge.End" />
-                @* <MudSwitch @bind-Value="_isDarkMode" 
-                Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" /> *@
             </MudAppBar>
-            @* <MudAppBar Elevation="1">
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
-                <MudSpacer />
-                <MudIconButton Icon="@Icons.Material.Filled.Notifications" 
-                Color="Color.Inherit" Edge="Edge.End" />
-                <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" 
-                Color="Color.Inherit" Edge="Edge.End" />
-            </MudAppBar> *@
             <MudDrawer @bind-Open="_drawerOpen" 
             ClipMode="DrawerClipMode.Always" 
             Variant="DrawerVariant.Mini" OpenMiniOnHover="true" Elevation="2">
@@ -69,8 +56,8 @@
         </Authorized>
     </AuthorizeView>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="pa-0" Style="min-height:100vh;
-min-width:100vw; background-color: #F3FBFF; align-content:center;">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="h-screen w-screen" Style="height:100vh;
+width:100vw;  align-content:center;">
             @Body
             <MudScrollToTop Style="z-index:1500">
                 <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
@@ -88,7 +75,20 @@ min-width:100vw; background-color: #F3FBFF; align-content:center;">
 @code {
     private bool _drawerOpen = false;
     private MudTheme _theme = new();
+    private MudTheme customTheme = new MudTheme()
+        {
 
+            PaletteLight = new PaletteLight()
+            {
+                Primary = "#8a6eae",
+                Secondary = "#6e567c",
+                AppbarBackground = "#8a6eae",
+                Background = "#ffffff",
+                DrawerBackground = "#ffffff",
+                DrawerText = "rgba(0,0,0, 0.7)",
+                Success = "#06d79c"
+            }
+        };
     private void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;

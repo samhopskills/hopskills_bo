@@ -6,57 +6,75 @@
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
-
-<MudGrid>
-    <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
-    <MudItem class="w-100 d-flex justify-content-center">
-        <MudImage Width="700" Src="Images/boy-with-rocket-light.png" />
+<MudGrid Class="h-screen">
+    <MudItem xs="12" sm="5" md="4" Class="bg-[#8a6eae] bg-opacity-5 d-flex align-center justify-center">
+        <div Class="pa-8 text-center text-sm-left">
+            <MudText Typo="Typo.h2" Style="color: #8a6eae" Class="font-weight-bold mb-4">Hopskills</MudText>
+            <MudText Typo="Typo.h5" Class="mb-4">Administration Panel</MudText>
+            <MudText Class="hidden sm-flex text-gray-600">
+                Gérez vos équipes et suivez leur progression
+            </MudText>
+        </div>
     </MudItem>
-    </div>
-    <div style="background-color:white" 
-    class="d-flex col-12 col-lg-5 col-xl-4 align-items-center p-sm-12 p-6">
-        <MudItem class="w-px-400 mx-auto mt-12 pt-5">
-            <MudText Typo="Typo.h4" GutterBottom="true">Welcome to HopSkills! 👋</MudText>
-        <StatusMessage Message="@errorMessage" />
-        <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
-            <DataAnnotationsValidator />
-            <MudText GutterBottom="true" Typo="Typo.body1">Please sign-in to your account and start the adventure</MudText>
-            <MudGrid>
-                <MudItem md="6">
-                        <MudStaticTextField Variant="Variant.Outlined"  For="@(() => Input.Email)" @bind-Value="Input.Email"
-                                            Label="Email" Placeholder="name@example.com" 
-                        UserAttributes="@(new() { { "autocomplete", "true" }, { "aria-required", "true" } } )" />
-                </MudItem>
-                <MudItem md="6">
-                        <MudStaticTextField Variant="Variant.Outlined" For="@(() => Input.Password)" @bind-Value="Input.Password"
-                                            Label="Password" InputType="InputType.Password" Placeholder="password" 
-                        UserAttributes="@(new() { { "autocomplete", "current-password" }, { "aria-required", "true" } } )" />
-                </MudItem>
-                <MudItem md="6">
-                    <MudStaticCheckBox For="@(() => Input.RememberMe)" @bind-Value="Input.RememberMe">Remember me</MudStaticCheckBox>
-                </MudItem>
-                <MudItem md="6">
-                    <MudStaticButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" FormAction="FormAction.Submit">Log in</MudStaticButton>
-                </MudItem>
-            </MudGrid>
-        </EditForm>
 
-        <MudGrid Class="mt-4">
-            <MudItem md="6">
-                    <MudLink Href="Account/ForgotPassword">Forgot your password?</MudLink><br />
-                    <p class="text-center">
-                        <span>New on our platform?</span>
-                <MudLink Href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", 
-                new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">
-                    <span>Create a new account</span>
-                </MudLink><br />
-                    </p>
-                <MudLink Href="Account/ResendEmailConfirmation">Resend email confirmation</MudLink>
-            </MudItem>
-        </MudGrid>
+    <MudItem xs="12" sm="7" md="8" Class="d-flex align-center justify-center bg-white">
+        <div Class="pa-8 width-100" Style="max-width: 450px;">
+            <MudText Typo="Typo.h4" Class="mb-4">Administration</MudText>
+            <MudText Color="Color.Secondary" Class="mb-8">Connectez-vous à votre espace administrateur</MudText>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="mb-4">@errorMessage</MudAlert>
+            }
+
+            <EditForm Model="loginModel" FormName="loginForm" OnValidSubmit="HandleLogin">
+                <DataAnnotationsValidator />
+                
+                <MudStaticTextField @bind-Value="loginModel.Email"
+                    Label="Email administrateur"
+                    Variant="Variant.Outlined"
+                    Class="mb-4 bg-white"
+                    Placeholder="admin@hopskills.com"
+                    Required="true"
+                    RequiredError="Email est requis"/>
+
+                <MudStaticTextField 
+                    @bind-Value="loginModel.Password"
+                    Label="Mot de passe"
+                    Variant="Variant.Outlined"
+                    InputType="InputType.Password"
+                    Class="mb-4 bg-white"
+                    Required="true"
+                    RequiredError="Mot de passe est requis"/>
+
+                <div class="d-flex flex-column flex-sm-row justify-space-between align-center gap-4 mb-4">
+                    <MudStaticCheckBox @bind-Checked="loginModel.RememberMe" 
+                               Label="Se souvenir de moi" 
+                               Color="Color.Primary"/>
+                    <MudLink Href="/admin/forgot-password" 
+                            Style="color: #8a6eae"
+                            Underline="Underline.Hover">
+                        Mot de passe oublié?
+                    </MudLink>
+                </div>
+
+                <MudButton Variant="Variant.Filled" 
+                          Style="background-color: #8a6eae"
+                          FullWidth="true"
+                          ButtonType="ButtonType.Submit"
+                          Class="mb-4 py-3 text-white hover:opacity-90">
+                    Connexion administrateur
+                </MudButton>
+
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-6">
+                    Cet espace est réservé aux administrateurs. Si vous êtes un utilisateur, 
+                    <MudLink Href="/login" Style="color: #8a6eae">cliquez ici</MudLink>.
+                </MudAlert>
+            </EditForm>
+        </div>
     </MudItem>
-    </div>
 </MudGrid>
+
 
 @code {
     private string? errorMessage;
@@ -65,11 +83,12 @@
     private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel loginModel { get; set; } = new();
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
+    
     protected override async Task OnInitializedAsync()
     {
         if (HttpMethods.IsGet(HttpContext.Request.Method))
@@ -79,11 +98,11 @@
         }
     }
 
-    public async Task LoginUser()
+    public async Task HandleLogin()
     {
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, loginModel.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
         {
             Logger.LogInformation("User logged in.");
@@ -93,7 +112,7 @@
         {
             RedirectManager.RedirectTo(
                 "Account/LoginWith2fa",
-                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
+                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = loginModel.RememberMe });
         }
         else if (result.IsLockedOut)
         {

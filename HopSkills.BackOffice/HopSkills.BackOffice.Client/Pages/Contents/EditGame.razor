@@ -392,7 +392,36 @@
         }
 </style>
 
+
+
 <div class="page-content">
+    @if (isLoading)
+    {
+        <MudPaper Class="pa-4">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudSkeleton Height="200px" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSkeleton Height="40px" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSkeleton Height="40px" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSkeleton Height="40px" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudSkeleton Height="40px" />
+                </MudItem>
+                <MudItem xs="12" Class="d-flex justify-end">
+                    <MudSkeleton Width="100px" Height="40px" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
+    else
+    {
     <div class="main-content">
  @if (form1Validate)
  {
@@ -714,6 +743,40 @@
                    Variant="@DrawerVariant.Mini"
                    Width="400px"
                    Class="side-menu">
+                @if (isLoading)
+                {
+                    <div class="side-menu-content">
+                        <MudDrawerHeader>
+                            <MudGrid>
+                                <MudItem xs="12" Class="d-flex align-center">
+                                    <MudSkeleton Width="60px" Height="60px" Class="mud-skeleton-circle mr-4" />
+                                    <div>
+                                        <MudSkeleton Width="200px" Height="24px" />
+                                        <MudSkeleton Width="150px" Height="20px" />
+                                    </div>
+                                </MudItem>
+                                <MudItem xs="12" Class="d-flex justify-space-between mt-2">
+                                    <MudSkeleton Width="100px" Height="20px" />
+                                    <MudSkeleton Width="100px" Height="20px" />
+                                </MudItem>
+                            </MudGrid>
+                        </MudDrawerHeader>
+                        <MudDrawerContainer>
+                            <div class="quiz-info-card">
+                                @for (var i = 0; i < 3; i++)
+                                {
+                                    <MudSkeleton Height="250px" Class="mb-4" />
+                                }
+                            </div>
+                            <MudPaper Class="d-flex justify-center pa-4" Elevation="0">
+                                <MudSkeleton Width="120px" Height="40px" Class="mr-2" />
+                                <MudSkeleton Width="120px" Height="40px" />
+                            </MudPaper>
+                        </MudDrawerContainer>
+                    </div>
+                }
+                else
+                {
             <div class="side-menu-content">
                 <MudTooltip Text="Return to Quiz Info" Placement="Placement.End">
                     <MudDrawerHeader @onclick="GoBackToForm1" Class="clickable-header">
@@ -798,8 +861,6 @@
                                                 </div>
                                     </ChildContent>
                                 </MudExpansionPanel>
-
-
                                     </div>
                                 <div class="question-actions">
                                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Dark" />
@@ -819,11 +880,14 @@
                     </MudPaper>
         </MudDrawerContainer>
             </div>
+            }
         </MudDrawer>
 </div>
+}
 </div>
-@code {
 
+@code {
+    private bool isLoading = true;
     private async Task SelectQuestionFromSummary(int index)
     {
         if (form1Validate)
@@ -1057,55 +1121,64 @@
 
     protected override async Task OnInitializedAsync()
     {
+        isLoading = true;
         fileNameWrong = false;
-        InputGameContext = new(InputGame);
-        InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
-        if(InputGame != null)
+        try
         {
-            originalGame = CloneGame(InputGame); // Assurez-vous d'implémenter une méthode Clone() appropriée
-            if (InputGame?.multipleQuestions != null)
-            {
-                InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
-                foreach (var question in InputGame.multipleQuestions)
-                {
-                    if (string.IsNullOrEmpty(question.UniqueId))
-                    {
-                        question.UniqueId = Guid.NewGuid().ToString();
-                    }
-                }
-                // InputGame.multipleQuestions.ForEach(m => m.UniqueId = Guid.NewGuid().ToString());
-            }
-
-            base64data = !string.IsNullOrEmpty(InputGame.Image?.Content)
-                        ? "data:image/png;base64," + InputGame.Image.Content
-                        : "data:image/png;base64,";
-            serviceEndpoint = $"{backendUrl}/api/Game/EditGame";
             InputGameContext = new(InputGame);
-            InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
-            InitializeArrays();
-            // InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
-            form1Validate = true;
-            disabledNext1 = false;
-            disabledNext2 = false;
-            if (authenticationStateTask is not null)
+            InputGame = await Http.GetFromJsonAsync<EditGameViewModel>($"{backendUrl}/api/Game/Get/{selectedId}");
+            if (InputGame != null)
             {
-                authenticationState = await authenticationStateTask;
-                if (authenticatedUser is null)
-                    authenticatedUser = authenticationState?.User;
+                originalGame = CloneGame(InputGame); // Assurez-vous d'implémenter une méthode Clone() appropriée
+                if (InputGame?.multipleQuestions != null)
+                {
+                    InputGame.multipleQuestions.ForEach(m => m.IsValid = true);
+                    foreach (var question in InputGame.multipleQuestions)
+                    {
+                        if (string.IsNullOrEmpty(question.UniqueId))
+                        {
+                            question.UniqueId = Guid.NewGuid().ToString();
+                        }
+                    }
+                    // InputGame.multipleQuestions.ForEach(m => m.UniqueId = Guid.NewGuid().ToString());
+                }
+
+                base64data = !string.IsNullOrEmpty(InputGame.Image?.Content)
+                            ? "data:image/png;base64," + InputGame.Image.Content
+                            : "data:image/png;base64,";
+                serviceEndpoint = $"{backendUrl}/api/Game/EditGame";
+                InputGameContext = new(InputGame);
+                InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
+                InitializeArrays();
+                // InputGame.multipleQuestions = new List<CreateMultipleQuestionsViewModel>();
+                form1Validate = true;
+                disabledNext1 = false;
+                disabledNext2 = false;
+                if (authenticationStateTask is not null)
+                {
+                    authenticationState = await authenticationStateTask;
+                    if (authenticatedUser is null)
+                        authenticatedUser = authenticationState?.User;
+                }
+                Games = new List<GameViewModel>();
+                if (authenticatedUser.IsInRole("Admin"))
+                    getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
+                else
+                {
+                    var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+                    getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
+                }
+                if (!string.IsNullOrEmpty(serviceEndpoint))
+                    Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
             }
-            Games = new List<GameViewModel>();
-            if (authenticatedUser.IsInRole("Admin"))
-                getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
             else
-            {
-                var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
-                getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
-            }
-            if (!string.IsNullOrEmpty(serviceEndpoint))
-                Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
+                Navigation.NavigateTo("/games");
         }
-        else
-            Navigation.NavigateTo("/games");
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
     private EditGameViewModel CloneGame(EditGameViewModel game)
@@ -1323,9 +1396,6 @@
         }
         if (InputGame.multipleQuestions.Count == 0 || InputGame.multipleQuestions.LastOrDefault().IsValid)
         {
-
-            InputGame.multipleQuestions.LastOrDefault().Expanded = false;
-
             InputGame.multipleQuestions.Add(new CreateMultipleQuestionsViewModel
                     {
                         Question = string.Empty,
@@ -1411,8 +1481,6 @@
     {
         if (ValidateAllForms())
         {
-            if (InputGame.multipleQuestions.LastOrDefault().IsValid)
-            {
                 InputGame.Status = statusId == 0 ? "Draft" : "Published";
                 InputGame.Creator = authenticatedUser.Identity.Name;
 
@@ -1464,6 +1532,7 @@
                     }
                 }
 
+
                 if (HasChanges(changes))
                 {
                     var jsonString = System.Text.Json.JsonSerializer.Serialize(changes);
@@ -1482,7 +1551,6 @@
                 {
                     Snackbar.Add("No changes detected", MudBlazor.Severity.Info);
                 }
-            }
         }
         else
         {
@@ -1506,12 +1574,12 @@
                 AudioFiles = question.AudioFiles,
                 Answers = question.PossibleAnswers.Select(a => new AnswerChangeModel
                 {
-                    Id = a.Id,
+                    UniqueId = a.UniqueId,
                     Label = a.Label,
                     Answer = a.Answer,
                     IsCorrect = a.IsCorrect,
                     Order = a.Order,
-                    ChangeType = changeType
+                    ChangeType = a.ChangeType
                 }).ToList(),
                 ChangeType = changeType
             };
