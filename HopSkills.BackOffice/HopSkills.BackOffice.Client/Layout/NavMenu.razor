@@ -6,13 +6,64 @@
 @attribute [Authorize]
 
 <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
-    @* <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
-    <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
-    <MudNavLink Href="auth" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Lock">Auth Required</MudNavLink> *@
-    @* <MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix"
-                Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink> *@
+    @if (isLoading)
+    {
+        <MudSkeleton Class="mb-4" Height="48px" />
 
+        <!-- Admin Section Skeleton -->
+        <div class="mb-4">
+            <MudSkeleton Height="48px" />
+            <div style="margin-left: 24px">
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+            </div>
+        </div>
+
+        <!-- Dashboard & Content Section Skeleton -->
+        <MudSkeleton Height="48px" Class="mb-2" />
+        <div class="mb-4">
+            <MudSkeleton Height="48px" />
+            <div style="margin-left: 24px">
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+            </div>
+        </div>
+
+        <!-- Users Section Skeleton -->
+        <div class="mb-4">
+            <MudSkeleton Height="48px" />
+            <div style="margin-left: 24px">
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+            </div>
+        </div>
+
+        <!-- Account Section Skeleton -->
+        <div class="mb-4">
+            <MudSkeleton Height="48px" />
+            <div style="margin-left: 24px">
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+            </div>
+        </div>
+
+        <!-- Settings Section Skeleton -->
+        <div class="mb-4">
+            <MudSkeleton Height="48px" />
+            <div style="margin-left: 24px">
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+                <MudSkeleton Height="40px" Class="my-1" />
+            </div>
+        </div>
+
+        <!-- Logout Skeleton -->
+        <MudSkeleton Height="48px" />
+    }
+    else
+    {
         <AuthorizeRoleView Roles="Admin">
             <Authorized>
                 <MudNavGroup IconColor="Color.Primary" Icon="@Icons.Material.Filled.Key" 
@@ -60,6 +111,7 @@
                 </form>
             </Authorized>
             </AuthorizeRoleView>
+    }
 </MudNavMenu>
 
 
@@ -69,17 +121,26 @@
     private string? currentUrl;
     private AuthenticationState authenticationState { get; set; }
     private ClaimsPrincipal user { get; set; }
-
+    private bool isLoading = true;
     protected override async Task OnInitializedAsync()
     {
-        if (authenticationStateTask is not null)
+        isLoading = true;
+        try
         {
-            authenticationState = await authenticationStateTask;
-            if(user is null)
-                user = authenticationState?.User;
+            if (authenticationStateTask is not null)
+            {
+                authenticationState = await authenticationStateTask;
+                if (user is null)
+                    user = authenticationState?.User;
+            }
+            currentUrl = navigationManager.ToBaseRelativePath(navigationManager.Uri);
+            navigationManager.LocationChanged += OnLocationChanged;
         }
-        currentUrl = navigationManager.ToBaseRelativePath(navigationManager.Uri);
-        navigationManager.LocationChanged += OnLocationChanged;
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

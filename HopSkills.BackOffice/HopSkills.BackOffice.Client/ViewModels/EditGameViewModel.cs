@@ -70,7 +70,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
 
     public class AnswerChangeModel
     {
-        public int? Id { get; set; }
+        public string? UniqueId { get; set; }
         public string? Label { get; set; }
         public string? Answer { get; set; }
         public bool? IsCorrect { get; set; }

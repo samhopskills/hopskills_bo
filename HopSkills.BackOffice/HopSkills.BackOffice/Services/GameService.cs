@@ -261,18 +261,25 @@ namespace HopSkills.BackOffice.Services
                     && questionChange.Xperience.Value != existingQuestion.Xperience) existingQuestion.Xperience = questionChange.Xperience.Value;
 
                 // Update answers
-                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId.ToString() == existingQuestion.Id.ToString().ToLower()).ToListAsync();
+                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId.ToString() == existingQuestion.Id.ToString()).ToListAsync();
                 foreach (var answerChange in questionChange.Answers)
                 {
-                    var existingAnswer = existingAnswers.FirstOrDefault(a => a.Answer == answerChange.Answer);
+                    var existingAnswer = existingAnswers.FirstOrDefault(a => a.Id.ToString() == answerChange.UniqueId);
                     if (existingAnswer != null)
                     {
-                        existingAnswer.IsCorrect = answerChange.IsCorrect.Value;
-                        existingAnswer.Answer = answerChange.Answer;
+                        if(answerChange.ChangeType == "Deleted")
+                        {
+                            _hopSkillsDb.Answers.Remove(existingAnswer);
+                        }
+                        else
+                        {
+                            existingAnswer.IsCorrect = answerChange.IsCorrect.Value;
+                            existingAnswer.Answer = answerChange.Answer;
+                        }
                     }
                     else
                     {
-                        existingQuestion.PossibleAnswers.Add(new ApplicationAnswer
+                        existingAnswers.Add(new ApplicationAnswer
                         {
                             Answer = answerChange.Answer,
                             IsCorrect = answerChange.IsCorrect.Value
@@ -472,6 +479,7 @@ namespace HopSkills.BackOffice.Services
                             PossibleAnswers = m.PossibleAnswers.Select(
                                 p => new AnswerModel
                                 {
+                                    UniqueId = p.Id.ToString(),
                                     Answer = p.Answer,
                                     IsCorrect = p.IsCorrect
                                 }

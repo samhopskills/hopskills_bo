@@ -76,7 +76,53 @@
 
 </style>
 
-
+<div class="d-flex justify-space-between align-center mb-2">
+    <MudText Typo="Typo.h6" Class="quiz-title">@QuizTitle</MudText>
+    <MudTooltip Text="Quiz Duration">
+        <div class="d-flex align-center">
+            <MudNumericField @bind-Value="Minutes"
+                             Label="Min"
+                             Min="0"
+                             Max="59"
+                             Style="width: 60px; margin-right: 4px;"
+                             Variant="Variant.Text"
+                             Density="Density.Compact"
+                             HideSpinButtons="true" />
+            <MudText Class="mx-1">:</MudText>
+            <MudNumericField @bind-Value="Seconds"
+                             Label="Sec"
+                             Min="0"
+                             Max="59"
+                             Style="width: 60px;"
+                             Variant="Variant.Text"
+                             Density="Density.Compact"
+                             HideSpinButtons="true" />
+        </div>
+    </MudTooltip>
+    <MudTooltip Text="Experience Points" Class="ml-4">
+        <MudTextField AdornmentIcon="@Icons.Material.Outlined.Star" Adornment="Adornment.End" @bind-Value="@questionFormInput.Xperience" Style="width: 60px;" Class="mx-1" />
+    </MudTooltip>
+    <div class="d-flex justify-end align-center">
+        <MudTooltip Text="Upload Image">
+            <MudIconButton Size="Size.Medium" OnClick="@(() => OpenFileInput("fileInput"))"
+                           Icon="@Icons.Material.Outlined.Image" />
+        </MudTooltip>
+        <MudTooltip Text="Upload Audio">
+            <MudIconButton Size="Size.Medium" OnClick="@(() => OpenFileInput("audioInput"))"
+                           Icon="@Icons.Material.Outlined.AudioFile" />
+        </MudTooltip>
+        <InputFile id="fileInput" OnChange="@UploadFiles" hidden accept=".png,.jpg,.jpeg" />
+        <InputFile id="audioInput" OnChange="@UploadFiles2" hidden accept=".mp3,.wav" />
+        <MudTooltip Text="Delete the page">
+            <MudIconButton Size="Size.Medium" OnClick="OnCancelSubmit"
+                           Icon="@Icons.Material.Outlined.Delete" />
+        </MudTooltip>
+        <MudTooltip Text="Add a page">
+            <MudIconButton Size="Size.Medium" OnClick="OnAddSubmit"
+                           Icon="@Icons.Material.Outlined.NoteAdd" />
+        </MudTooltip>
+    </div>
+</div>
 <MudPaper Elevation="3" ref="componentRef"
           Class="@($"pa-4 question-paper {(IsSelected ? "selected" : "")}")" 
     @onclick="OnSelectClicked">
@@ -100,38 +146,8 @@
                 @if (questionFormInput.PossibleAnswers is not null 
                 && questionFormInput.PossibleAnswers.Count != 0)
                 {
-                   @*  @foreach (var item in questionFormInput.PossibleAnswers)
-                    {
-                        <MudPaper Elevation="0" Class="answer-container pa-2">
-                            <div class="answer-text">
-                                <MudTextField InputMode="InputMode.text"
-                                              Required="true"
-                                              T="string"
-                                              Label="@(item.IsCorrect ? "Correct Answer" : item.Label)"
-                                              @bind-Value="@item.Answer"
-                                              UserAttributes="@(new() { { "aria-required", "true" } } )"
-                                              For="@(() => item.Label)"
-                                              Variant="Variant.Outlined"
-                                              Class="@(item.IsCorrect ? "correct-answer" : "")"
-                                              FullWidth="true"
-                                              @onclick:stopPropagation
-                                              @onfocus="@(() => PreventDefaultFocus())" />
-                            </div>
-                            <div class="answer-actions">
-                                <MudSwitch @bind-Value="@item.IsCorrect"
-                                           Color="@(item.IsCorrect ? Color.Success : Color.Error)"
-                                           ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
-                                           ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)"
-                                           Class="ma-0 pa-0" />
-                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Order))"
-                                               Icon="@Icons.Material.Rounded.Delete"
-                                               Size="Size.Small"
-                                               Class="ml-2" />
-                            </div>
-                        </MudPaper>
-                    } *@
-
-                    @foreach (var item in questionFormInput.PossibleAnswers)
+                    @foreach (var item in 
+                    questionFormInput.PossibleAnswers.Where(a => a.ChangeType != "Deleted"))
                     {
                         <MudPaper Elevation="0" Class="answer-container pa-2">
                             <div class="answer-text">
@@ -153,7 +169,7 @@
                                            ThumbIcon="@(item.IsCorrect ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
                                            ThumbIconColor="@(item.IsCorrect ? Color.Success : Color.Error)"
                                            Class="ma-0 pa-0" />
-                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Order))"
+                                <MudIconButton OnClick="@(() => DeleteAnswer(item.Id))"
                                                Icon="@Icons.Material.Rounded.Delete"
                                                Size="Size.Small"
                                                Class="ml-2" />
@@ -403,7 +419,8 @@
         {
                 Label = $"Answer {questionFormInput.PossibleAnswers.Count + 1}",
             Answer = string.Empty,
-            IsCorrect = false
+            IsCorrect = false,
+            ChangeType = "Added"
         });
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
@@ -416,7 +433,7 @@
 
     private EventCallback DeleteAnswer(int Id)
     {
-        questionFormInput.PossibleAnswers.RemoveAt(Id);
+        questionFormInput.PossibleAnswers[Id].ChangeType = "Deleted";
         return EventCallback.Empty;
     }
 
