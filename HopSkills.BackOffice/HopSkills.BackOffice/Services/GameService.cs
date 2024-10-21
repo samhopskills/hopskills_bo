@@ -261,7 +261,7 @@ namespace HopSkills.BackOffice.Services
                     && questionChange.Xperience.Value != existingQuestion.Xperience) existingQuestion.Xperience = questionChange.Xperience.Value;
 
                 // Update answers
-                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId.ToString() == existingQuestion.Id.ToString()).ToListAsync();
+                var existingAnswers = await _hopSkillsDb.Answers.Where(a => a.MultiQuestionId == existingQuestion.Id).ToListAsync();
                 foreach (var answerChange in questionChange.Answers)
                 {
                     var existingAnswer = existingAnswers.FirstOrDefault(a => a.Id.ToString() == answerChange.UniqueId);
@@ -282,7 +282,8 @@ namespace HopSkills.BackOffice.Services
                         existingAnswers.Add(new ApplicationAnswer
                         {
                             Answer = answerChange.Answer,
-                            IsCorrect = answerChange.IsCorrect.Value
+                            IsCorrect = answerChange.IsCorrect.Value,
+                            MultiQuestionId = existingQuestion.Id
                         });
                     }
                 }

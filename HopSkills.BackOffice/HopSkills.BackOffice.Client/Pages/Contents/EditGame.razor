@@ -1647,7 +1647,7 @@
         {
             if (string.IsNullOrWhiteSpace(question.Question) ||
                 question.PossibleAnswers == null ||
-                question.PossibleAnswers.Count < 2 ||
+                question.PossibleAnswers.Where(p => p.ChangeType != "Deleted").ToList().Count < 2 ||
                 !question.PossibleAnswers.Any(a => a.IsCorrect) ||
                 question.Xperience <= 0 ||
                 question.Duration == null ||

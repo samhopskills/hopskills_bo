@@ -401,8 +401,8 @@
     {
         Minutes = questionFormInput.Duration.Value.Minutes;
         Seconds = questionFormInput.Duration.Value.Seconds;
-        base64Images = questionFormInput.ImageFiles.Select(i => i.Content).ToList();
-        base64Audios = questionFormInput.AudioFiles.Select(i => i.Content).ToList();
+        base64Images = questionFormInput.ImageFiles?.Select(i => i.Content).ToList();
+        base64Audios = questionFormInput.AudioFiles?.Select(i => i.Content).ToList();
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
