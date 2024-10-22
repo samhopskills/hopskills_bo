@@ -40,7 +40,7 @@ namespace HopSkills.BackOffice.Services
                 {
                     var newAppGame = new ApplicationGame
                     {
-                        TotalDuration = createGameModel.TotalDuration,
+                        TotalDuration = TimeOnly.FromTimeSpan(createGameModel.TotalDuration),
                         Status = createGameModel.Status.ToString(),
                         Theme = createGameModel.Theme.ToString(),
                         TotalXp = createGameModel.TotalXperience,
@@ -84,7 +84,7 @@ namespace HopSkills.BackOffice.Services
                             e => new ApplicationMultiQuestion
                             {
                                 CorrectAnswerExplanation = e.CorrectAnswerExplanation,
-                                Duration = e.Duration,
+                                Duration = TimeOnly.FromTimeSpan(e.Duration),
                                 PossibleAnswers = e.PossibleAnswers.Select(e => new ApplicationAnswer
                                 {
                                     Answer = e.Answer,
@@ -106,7 +106,7 @@ namespace HopSkills.BackOffice.Services
                                         await _hopSkillsDb.Answers.AddRangeAsync(multi.PossibleAnswers);
                                         var imagesFiles = creaMutliQ.FirstOrDefault(q => q.Question == multi.Question).ImageFiles;
                                         var audioFiles = creaMutliQ.FirstOrDefault(q => q.Question == multi.Question).AudioFiles;
-                                        if (imagesFiles.Count != 0)
+                                        if (imagesFiles is not null && imagesFiles.Count != 0)
                                         {
                                             var bytes = imagesFiles.Select(i => Convert.FromBase64String(i.Content));
                                             int count = 0;
@@ -117,7 +117,7 @@ namespace HopSkills.BackOffice.Services
                                             }
                                             _logger.LogInformation("[Multi Form Images Added to Container]");
                                         }
-                                        if(audioFiles.Count > 0)
+                                        if(audioFiles is not null && audioFiles.Count > 0)
                                         {
                                             _containerClient = _blobServiceClient.GetBlobContainerClient(AudioContainerName);
                                             var bytes = audioFiles.Select(i => Convert.FromBase64String(i.Content));
@@ -474,7 +474,7 @@ namespace HopSkills.BackOffice.Services
                             
                             UniqueId = m.Id.ToString(),
                             CorrectAnswerExplanation = m.CorrectAnswerExplanation,
-                            Duration = m.Duration,
+                            Duration = m.Duration.ToTimeSpan(),
                             Question = m.Question,
                             Xperience = m.Xperience,
                             PossibleAnswers = m.PossibleAnswers.Select(

@@ -5,43 +5,92 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration config;
 @inject NavigationManager Navigation
 
-    <MudDataGrid Loading="@isLoading" LoadingProgressColor="Color.Primary" T="GameViewModel" Items="@Games"
-                 MultiSelection="true"
-                 Virtualize="true"
-                 SortMode="SortMode.Multiple"
-                 Filterable="true" ReadOnly="false"
-                 StartedEditingItem="@StartedEditingItem"
-                 CommittedItemChanges="@CommittedItemChanges"
-                 EditMode="@(DataGridEditMode.Form)"
-                 CanceledEditingItem="@CanceledEditingItem"
-                 QuickFilter="@_quickFilter"
-                 RowClick="@RowClicked"
-                 RowContextMenuClick="RowRightClicked"
-                 SelectedItemsChanged="@SelectedItemsChanged">
+@if (isLoading)
+{
+    <MudPaper Class="pa-4">
+        <MudGrid>
+            <MudItem xs="12" Class="d-flex align-center justify-space-between mb-4">
+                <div class="d-flex gap-2">
+                    <MudSkeleton Width="80px" Height="36px" />
+                    <MudSkeleton Width="80px" Height="36px" />
+                </div>
+                <MudSkeleton Width="200px" Height="40px" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudStack>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <MudPaper Elevation="0" Class="pa-4">
+                            <MudGrid>
+                                <MudItem xs="1">
+                                    <MudSkeleton Width="20px" Height="20px" />
+                                </MudItem>
+                                <MudItem xs="3">
+                                    <MudSkeleton Width="150px" Height="20px" />
+                                </MudItem>
+                                <MudItem xs="2">
+                                    <MudSkeleton Width="100px" Height="20px" />
+                                </MudItem>
+                                <MudItem xs="2">
+                                    <MudSkeleton Width="80px" Height="20px" />
+                                </MudItem>
+                                <MudItem xs="2">
+                                    <MudSkeleton Width="60px" Height="20px" />
+                                </MudItem>
+                                <MudItem xs="2" Class="d-flex justify-end">
+                                    <div class="d-flex gap-2">
+                                        <MudSkeleton Width="30px" Height="30px" Class="rounded-lg" />
+                                        <MudSkeleton Width="30px" Height="30px" Class="rounded-lg" />
+                                    </div>
+                                </MudItem>
+                            </MudGrid>
+                        </MudPaper>
+                    }
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+else
+{
+    <MudDataGrid T="GameViewModel" Items="@Games"
+    MultiSelection="true"
+    Virtualize="true"
+    SortMode="SortMode.Multiple"
+    Filterable="true" ReadOnly="false"
+    StartedEditingItem="@StartedEditingItem"
+    CommittedItemChanges="@CommittedItemChanges"
+    EditMode="@(DataGridEditMode.Form)"
+    CanceledEditingItem="@CanceledEditingItem"
+    QuickFilter="@_quickFilter"
+    RowClick="@RowClicked"
+    RowContextMenuClick="RowRightClicked"
+    SelectedItemsChanged="@SelectedItemsChanged">
         <ToolBarContent>
             <MudGrid Spacing="10">
                 <MudItem>
-                    
-                        <MudButton Size="@Size.Small"
-                               Href="creategame"
-                                   Variant="@Variant.Filled"
-                                   EndIcon="@Icons.Material.Filled.Add"
-                                   Color="@Color.Primary">Add</MudButton>
-                   
+
+                    <MudButton Size="@Size.Small"
+                    Href="creategame"
+                    Variant="@Variant.Filled"
+                    EndIcon="@Icons.Material.Filled.Add"
+                    Color="@Color.Primary">Add</MudButton>
+
                 </MudItem>
                 <MudItem>
                     <MudButton Size="@Size.Small"
-                               Variant="@Variant.Filled"
-                               EndIcon="@Icons.Material.Filled.Remove"
-                               Color="@Color.Error" Disabled="@disabledDelete"
-                               OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
+                    Variant="@Variant.Filled"
+                    EndIcon="@Icons.Material.Filled.Remove"
+                    Color="@Color.Error" Disabled="@disabledDelete"
+                    OnClick="@((e) => DeleteServerAsync())">Delete</MudButton>
                 </MudItem>
                 <MudSpacer />
                 <MudTextField @bind-Value="_searchString" Placeholder="Search"
-                              Adornment="Adornment.Start" Immediate="true"
-                              AdornmentIcon="@Icons.Material.Filled.Search"
-                              Variant="Variant.Outlined"
-                              IconSize="Size.Medium" Class="mt-10"></MudTextField>
+                Adornment="Adornment.Start" Immediate="true"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                Variant="Variant.Outlined"
+                IconSize="Size.Medium" Class="mt-10"></MudTextField>
             </MudGrid>
 
         </ToolBarContent>
@@ -61,19 +110,19 @@
                 <CellTemplate>
                     <MudStack Row>
                         <MudTooltip Text="Edit">
-                        <MudIconButton Size="@Size.Small"
-                                       Color="@Color.Primary"
-                                       OnClick="@context.Actions.StartEditingItemAsync"
-                                       Icon="@Icons.Material.Outlined.Edit"
-                                       Variant="@Variant.Text"></MudIconButton>
+                            <MudIconButton Size="@Size.Small"
+                            Color="@Color.Primary"
+                            OnClick="@context.Actions.StartEditingItemAsync"
+                            Icon="@Icons.Material.Outlined.Edit"
+                            Variant="@Variant.Text"></MudIconButton>
                         </MudTooltip>
                         @if (context.Item.Status.Equals("Published"))
                         {
                             <MudTooltip Text="Draft"><MudIconButton Size="@Size.Small"
-                            Color="@Color.Primary"
-                            Icon="@Icons.Material.Outlined.Archive"
-                            OnClick="@(() => UpdateStatusAsync(context.Item))"
-                                               Variant="@Variant.Text"></MudIconButton>
+                                Color="@Color.Primary"
+                                Icon="@Icons.Material.Outlined.Archive"
+                                OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                Variant="@Variant.Text"></MudIconButton>
                             </MudTooltip>
 
                         }
@@ -81,10 +130,10 @@
                         {
                             <MudTooltip Text="Publish">
                                 <MudIconButton Size="@Size.Small"
-                                               Color="@Color.Primary"
-                                               Icon="@Icons.Material.Outlined.Publish"
-                                               OnClick="@(() => UpdateStatusAsync(context.Item))"
-                                               Variant="@Variant.Text"></MudIconButton>
+                                Color="@Color.Primary"
+                                Icon="@Icons.Material.Outlined.Publish"
+                                OnClick="@(() => UpdateStatusAsync(context.Item))"
+                                Variant="@Variant.Text"></MudIconButton>
                             </MudTooltip>
 
                         }
@@ -96,7 +145,7 @@
             <MudDataGridPager T="GameViewModel" />
         </PagerContent>
     </MudDataGrid>
-
+    }
 
 
 <style>

@@ -1,6 +1,7 @@
 ﻿using HopSkills.BO.CoreBusiness;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HopSkills.BackOffice.Data
 {
@@ -17,7 +18,8 @@ namespace HopSkills.BackOffice.Data
         public int NumberOfQuestion { get; set; }
         public int Duration { get; set; }
         public TimeOnly TotalDuration { get; set; }
-        public string ImageUri { get; set; }
+        [AllowNull]
+        public string? ImageUri { get; set; }
         public int TotalXp { get; set; }
         [ForeignKey("UserId")]
         public Guid UserId { get; set; }

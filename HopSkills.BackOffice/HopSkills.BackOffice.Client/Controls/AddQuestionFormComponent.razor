@@ -392,11 +392,6 @@
         StateHasChanged();
     }
 
-    private void OnExpandCollapseClick()
-    {
-        questionFormInput.Expanded = !questionFormInput.Expanded;
-    }
-
     protected override async Task OnInitializedAsync()
     {
         Minutes = questionFormInput.Duration.Value.Minutes;

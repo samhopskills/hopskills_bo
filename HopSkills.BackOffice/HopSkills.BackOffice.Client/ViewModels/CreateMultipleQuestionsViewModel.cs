@@ -6,9 +6,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
     {
         [Required]
         public List<CreateAnswerViewModel> PossibleAnswers { get; set; }
-        public string Zone { get; set; }
         public int CountId { get; set; }
-        public bool Expanded { get; set; }
         public bool IsValid { get; set; }
         public string UniqueId { get; set; }
         [Required]

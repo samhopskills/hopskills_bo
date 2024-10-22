@@ -9,7 +9,8 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager Navigation
 @inject IConfiguration config
-
+@inject IJSRuntime JSRuntime
+@implements IDisposable
 <style>
     .outer-container {
         display: flex;
@@ -22,6 +23,37 @@
         max-height: 800px; /* Ajout d'une hauteur maximale */
         overflow-y: auto; /* Ajout d'un défilement vertical si nécessaire */
     }
+
+    .quill-editor-container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #toolbar {
+        border-bottom: 1px solid #ccc;
+        padding: 8px;
+    }
+
+    #quillEditor {
+        min-height: 200px;
+        background-color: white;
+    }
+
+    .ql-toolbar.ql-snow {
+        border: none !important;
+    }
+
+    .ql-container.ql-snow {
+        background-color: white;
+    }
+
+    .ql-toolbar.ql-snow + .ql-container.ql-snow {
+        height: calc(200px - 42px); /* 42px est la hauteur approximative de la barre d'outils */
+        overflow-y: auto;
+    }
+
 
     .quiz-container {
         display: flex;
@@ -375,7 +407,7 @@
     .quiz-title {
         font-weight: bold;
         margin-right: auto;
-        margin-left: 7%;
+        margin-left: 3%;
     }
 
     .delete-image-button {
@@ -433,24 +465,50 @@
         <div class="@($"main-content {(isMenuOpen ? "menu-open" : "")}")">
             @if (form1Validate)
             {
+                <style>
+                    .image-container {
+                        position: relative;
+                        width: 100%;
+                        height: 200px; /* Correspond à la hauteur du MudPaper */
+                        overflow: hidden;
+                    }
+
+                        .image-container img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+
+                    .delete-button {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        background-color: rgba(255, 255, 255, 0.7);
+                        border-radius: 50%;
+                    }
+
+                    .quiz-title {
+                        font-weight: bold;
+                        margin-right: auto;
+                        margin-left: 3%;
+                    }
+                </style>
                 <div class="d-flex justify-space-between align-center mb-2">
                     <MudText Typo="Typo.h6" Class="quiz-title">
-                    <MudTextField @bind-Value="InputGame.Title"
-                                  Label="Add a title"
-                                  Required="true"
-                                  Variant="Variant.Text"
-                                  Style="font-size: 1.25rem; font-weight: 500;" />
-                                  </MudText>
+                        <MudTextField T="string" Required="true" @bind-Value="@InputGame.Title"
+                                      Style="font-size: 1.25rem; font-weight: 500;" Placeholder="Add a title to the game"
+                                      UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                      For="@(() => InputGame.Title)" Variant="Variant.Text" />
+                    </MudText>
                 </div>
-                <div class="outer-container">
+                <div class="content-wrapper">
+                    <div class="outer-container">
                     <div class="quiz-container">
                         <div class="quiz-form-container">
-                           
                             <MudPaper Elevation="3" Class="@($"pa-4 question-paper")">
                                 <EditForm Model="@InputGame" OnValidSubmit="OnValidSubmit">
                                     <DataAnnotationsValidator />
                                     <MudGrid>
-
                                         <MudItem xs="12">
                                             <MudPaper Height="200px" Width="100%" Outlined="true" Class="d-flex justify-center align-center">
                                                 @if (string.IsNullOrEmpty(InputGame.Image?.Content))
@@ -495,48 +553,60 @@
                                             </MudPaper>
 
                                         </MudItem>
-
-                                        @* <MudItem xs="12" sm="6">
-                                            <MudTextField T="string" Required="true" 
-                                                         @bind-Value="@InputGame.Title"
-                                                         Label="Title" Variant="Variant.Outlined" />
-                                        </MudItem> *@
-
                                         <MudItem xs="12" sm="6">
-                                            <MudSelect T="string" Required="true"
-                                                       @bind-Value="@InputGame.Theme"
-                                                       Label="Theme" Variant="Variant.Outlined">
-                                                <MudSelectItem T="string" Value="@("Theme A")">Theme A</MudSelectItem>
-                                                <MudSelectItem T="string" Value="@("Theme B")">Theme B</MudSelectItem>
+                                            <MudSelect T="string" Required="true" For="@(() => InputGame.Theme)"
+                                                       @bind-Value="@InputGame.Theme" Placeholder="Select a Theme"
+                                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                       Label="Theme related to" Variant="Variant.Outlined"
+                                                       AnchorOrigin="Origin.BottomCenter">
+                                                <MudSelectItem T="string" Value="@("Theme A")" />
+                                                <MudSelectItem T="string" Value="@("Theme B")" />
+                                                <MudSelectItem T="string" Value="@("Theme C")" />
                                             </MudSelect>
                                         </MudItem>
-
                                         <MudItem xs="12" sm="6">
-                                            <MudSelect T="string" Required="true"
-                                                       @bind-Value="@InputGame.ElligibleSub"
-                                                       Label="Eligible subscription" Variant="Variant.Outlined">
-                                                <MudSelectItem T="string" Value="@("Sub A")">Sub A</MudSelectItem>
-                                                <MudSelectItem T="string" Value="@("Sub B")">Sub B</MudSelectItem>
+                                            <MudSelect T="string" Required="true" For="@(() => InputGame.DifficultyLevel)"
+                                                       @bind-Value="@InputGame.DifficultyLevel" Placeholder="Select a difficulty level"
+                                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                       Label="Difficulty level" Variant="Variant.Outlined"
+                                                       AnchorOrigin="Origin.BottomCenter">
+                                                <MudSelectItem T="string" Value="@("Easy")" />
+                                                <MudSelectItem T="string" Value="@("Medium")" />
+                                                <MudSelectItem T="string" Value="@("Hard")" />
                                             </MudSelect>
                                         </MudItem>
-
                                         <MudItem xs="12" sm="6">
-                                            <MudSelect T="string" Required="true"
-                                                       @bind-Value="@InputGame.DifficultyLevel"
-                                                       Label="Difficulty Level" Variant="Variant.Outlined">
-                                                <MudSelectItem T="string" Value="@("Easy")">Easy</MudSelectItem>
-                                                <MudSelectItem T="string" Value="@("Medium")">Medium</MudSelectItem>
-                                                <MudSelectItem T="string" Value="@("Hard")">Hard</MudSelectItem>
+                                            <MudSelect T="string" Required="true" For="@(() => InputGame.ElligibleSub)"
+                                                       @bind-Value="@InputGame.ElligibleSub" Placeholder="Select a Subscription"
+                                                       UserAttributes="@(new() { { "aria-required", "true" } } )"
+                                                       Label="Eligible subscription" Variant="Variant.Outlined"
+                                                       AnchorOrigin="Origin.BottomCenter">
+                                                <MudSelectItem T="string" Value="@("Sub A")" />
+                                                <MudSelectItem T="string" Value="@("Sub B")" />
+                                                <MudSelectItem T="string" Value="@("Sub C")" />
                                             </MudSelect>
                                         </MudItem>
-
+                                        <MudItem xs="12" sm="6">
+                                            <MudSelect @bind-Value="Subscription" 
+                                            Label="Abonnement" Variant="Variant.Outlined">
+                                                <MudSelectItem Value="@("Quel abonnement y aura accès ?")">Quel abonnement y aura accès ?</MudSelectItem>
+                                            </MudSelect>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="6">
+                                            <MudSelect T="string" Required="false"
+                                                       @bind-Value="@InputGame.PriorGame" Placeholder="Select a game"
+                                                       Label="Game to complete before" Variant="Variant.Outlined"
+                                                       AnchorOrigin="Origin.BottomCenter">
+                                                @foreach (var item in Games)
+                                                {
+                                                    <MudSelectItem T="string" Value="@(item.Title)" />
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
                                         <MudItem xs="12" Class="d-flex justify-end">
                                             <MudButton ButtonType="ButtonType.Submit"
-                                                      Variant="Variant.Filled"
-                                                      Color="Color.Primary"
-                                                      EndIcon="@Icons.Material.Filled.NavigateNext">
-                                                Next
-                                            </MudButton>
+                                                       Variant="Variant.Filled" Color="Color.Primary"
+                                                       EndIcon="@Icons.Material.Filled.NavigateNext">Next</MudButton>
                                         </MudItem>
                                     </MudGrid>
                                 </EditForm>
@@ -544,8 +614,51 @@
                         </div>
                     </div>
                 </div>
-            }
+                    <div class="description-container">
+                        @if (isLoading)
+                        {
+                            <MudPaper Elevation="3" Class="pa-4">
+                                <MudSkeleton Animation="Animation.Wave" Height="24px" Width="120px" Class="mb-2" />
+                                <MudSkeleton Animation="Animation.Wave" Height="200px" Class="mb-2" />
+                                <MudSkeleton Animation="Animation.Wave" Height="16px" Width="250px" />
+                            </MudPaper>
+                        }
+                        else
+                        {
+                            <MudPaper Elevation="3" Class="pa-4">
+                                <MudText Typo="Typo.subtitle1" Class="mb-2">Description</MudText>
+                                <div class="quill-editor-wrapper">
+                                    <div id="quillEditor" style="min-height: 200px;"></div>
+                                </div>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary" Class="mt-1">
+                                    Describe the content and objectives of your game
+                                </MudText>
+                            </MudPaper>
+                        }
+                    </div>
+                    <style>
+                        .content-wrapper {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 8px; /* Réduit l'espace entre les éléments */
+                            width: 100%;
+                            max-width: 1200px;
+                            margin: 0 auto;
+                        }
 
+                        .description-container {
+                            width: 100%;
+                            padding: 0 20px;
+                            margin-top: -120px; /* Ajoute une marge négative pour rapprocher davantage */
+                        }
+
+                        .quill-editor-wrapper {
+                            border: 1px solid rgba(0,0,0,0.12);
+                            border-radius: 4px;
+                        }
+                    </style>
+                </div>
+            }
             @if (form2Validate)
             {
                 <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-column">
@@ -699,10 +812,27 @@
     }
 </div>
 
+
+
 @code {
     private bool isLoading = false;
     private bool isMenuOpen = false;
-    private bool form1Validate = true;
+    private bool _form1Validate = true;
+    public bool form1Validate
+    {
+        get => _form1Validate;
+        set
+        {
+            if (_form1Validate != value)
+            {
+                _form1Validate = value;
+                if (_form1Validate)
+                {
+                    InvokeAsync(InitializeQuill);
+                }
+            }
+        }
+    }
     private bool form2Validate = false;
     private CreateGameViewModel InputGame = new();
     private Model _model = new();
@@ -717,6 +847,15 @@
     private string _dragClass = DefaultDragClass;
     private int? draggedIndex;
     private string? backendUrl;
+    private string Subscription { get; set; } = "Quel abonnement y aura accès ?";
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private AuthenticationState authenticationState { get; set; }
+    private ClaimsPrincipal authenticatedUser { get; set; }
+    private List<GameViewModel> Games { get; set; } = new List<GameViewModel>();
+    private string getPriorGamesEndpoint { get; set; }
+    private string? serviceEndpoint;
+    EditContext InputGameContext;
 
     private void HandleDragStart(int index)
     {
@@ -786,6 +925,13 @@
         _fileUpload?.ClearAsync();
     }
 
+    private async Task InitializeQuill()
+    {
+        // Attendre que le DOM soit mis à jour
+        await Task.Delay(100);
+        await JSRuntime.InvokeVoidAsync("initQuill", objRef);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
@@ -795,6 +941,24 @@
             {
                 multipleQuestions = new List<CreateMultipleQuestionsViewModel>()
             };
+            InputGameContext = new(InputGame);
+            InputGameContext.OnFieldChanged += InputGameContext_OnFieldChanged;
+            Games = new List<GameViewModel>();
+            if (authenticationStateTask is not null)
+            {
+                authenticationState = await authenticationStateTask;
+                if (authenticatedUser is null)
+                    authenticatedUser = authenticationState?.User;
+                InputGame.Creator = authenticatedUser.Identity.Name;
+            }
+            if (authenticatedUser.IsInRole("Admin"))
+                getPriorGamesEndpoint = $"{backendUrl}/api/Game/GetAll";
+            else
+            {
+                var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+                getPriorGamesEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
+            }
+            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(getPriorGamesEndpoint);
             InitializeArrays();
         }
         finally
@@ -804,11 +968,65 @@
         }
     }
 
+    private void InputGameContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+    private DotNetObjectReference<CreateGame>? objRef;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+                    objRef = DotNetObjectReference.Create(this);
             await JSRuntime.InvokeVoidAsync("eval", @"
+
+            window.initQuill = function(dotnetHelper) {
+                // Nettoyage de l'ancienne instance si elle existe
+                var existingEditor = document.querySelector('#quillEditor');
+                if (existingEditor) {
+                    existingEditor.innerHTML = window.quillContent || '';
+                }
+
+                var options = {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['blockquote', 'code-block'],
+                            [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'script': 'sub'}, { 'script': 'super' }],
+                            [{ 'indent': '-1'}, { 'indent': '+1' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            ['clean']
+                        ]
+                    }
+                };
+
+                // Vérifier si un éditeur Quill existe déjà
+                var existingQuill = Quill.find(document.querySelector('#quillEditor'));
+                if (existingQuill) {
+                    existingQuill.off('text-change');
+                }
+
+                // Créer une nouvelle instance
+                window.quill = new Quill('#quillEditor', options);
+
+                // Restaurer le contenu précédent s'il existe
+                if (window.quillContent) {
+                    window.quill.root.innerHTML = window.quillContent;
+                }
+
+                window.quill.on('text-change', function() {
+                    window.quillContent = window.quill.root.innerHTML;
+                    dotnetHelper.invokeMethodAsync('UpdateDescription', window.quillContent);
+                });
+
+                window.getQuillContent = function() {
+                    return window.quill ? window.quill.root.innerHTML : '';
+                };
+            }
+
             window.scrollToElement = function(elementId) {
                 var element = document.getElementById(elementId);
                 if (element) {
@@ -859,8 +1077,26 @@
                 return false;
             };
         ");
+            await InitializeQuill();
             _isJsInitialized = true;
         }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void Dispose()
+    {
+        objRef?.Dispose();
+    }
+
+    [JSInvokable]
+    public Task UpdateDescription(string content)
+    {
+        if (InputGame != null)
+        {
+            InputGame.Description = content;
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
     }
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
@@ -890,12 +1126,17 @@
         questionComponents = new AddQuestionFormComponent[count];
     }
 
-    private void OnValidSubmit()
+    private void OnValidSubmit(EditContext context)
     {
         if (form1Validate)
         {
             form1Validate = false;
             form2Validate = true;
+        }
+        else if (form2Validate)
+        {
+            form2Validate = false;
+            form1Validate = true;
         }
         StateHasChanged();
     }
@@ -983,10 +1224,12 @@
     {
         if (ValidateGame())
         {
+            var content = await JSRuntime.InvokeAsync<string>("getQuillContent");
+            InputGame.Description = content;
             InputGame.Status = status == 0 ? "Draft" : "Published";
             try
             {
-                var response = await Http.PostAsJsonAsync("api/Game/Create", InputGame);
+                var response = await Http.PostAsJsonAsync("api/Game/AddGame", InputGame);
                 if (response.IsSuccessStatusCode)
                 {
                     Snackbar.Add("Game created successfully", MudBlazor.Severity.Success);
@@ -1008,7 +1251,6 @@
     {
         if (string.IsNullOrWhiteSpace(InputGame.Title) ||
             string.IsNullOrWhiteSpace(InputGame.Theme) ||
-            string.IsNullOrWhiteSpace(InputGame.ElligibleSub) ||
             string.IsNullOrWhiteSpace(InputGame.DifficultyLevel) ||
             string.IsNullOrWhiteSpace(InputGame.Description))
             return false;
