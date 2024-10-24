@@ -102,7 +102,7 @@ else
             <PropertyColumn Property="x => x.Theme" Title="Theme" />
             <PropertyColumn Property="x => x.Status" Title="Status" />
             <PropertyColumn Property="x => x.NumberOfQuestion" Title="Question(s)" />
-            <PropertyColumn Property="x => x.Duration" Title="Duration" />
+            @* <PropertyColumn Property="x => TimeSpan.FromSeconds(x.Duration).Minutes" Title="Duration" /> *@
             @*  <PropertyColumn Editable="false" Property="x => x.companyId" Title="Company" />
             <PropertyColumn Property="x => x.role.Name" Title="Role" />
             <PropertyColumn Property="x => x.CreationDate" Title="Creation Date"/> *@
@@ -189,26 +189,33 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        backendUrl = config.GetValue<string>("BackendUrl");
-        if (authenticationStateTask is not null)
+        try
         {
-            authenticationState = await authenticationStateTask;
-            if (authenticatedUser is null)
-                authenticatedUser = authenticationState?.User;
-        }
-        disabledDelete = true;
-        Games = new List<GameViewModel>();
+            backendUrl = config.GetValue<string>("BackendUrl");
+            if (authenticationStateTask is not null)
+            {
+                authenticationState = await authenticationStateTask;
+                if (authenticatedUser is null)
+                    authenticatedUser = authenticationState?.User;
+            }
+            disabledDelete = true;
+            Games = new List<GameViewModel>();
 
-        if (authenticatedUser.IsInRole("Admin"))
-            serviceEndpoint = $"{backendUrl}/api/Game/GetAll";
-        else
-        {
-            var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
-            serviceEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
+            if (authenticatedUser.IsInRole("Admin"))
+                serviceEndpoint = $"{backendUrl}/api/Game/GetAll";
+            else
+            {
+                var user = await Http.GetFromJsonAsync<UserViewModel>($"{backendUrl}/api/User/userdetails/{authenticatedUser.Identity.Name}");
+                serviceEndpoint = $"{backendUrl}/api/Game/getgamesbycustomer/{user.Company}";
+            }
+            if (!string.IsNullOrEmpty(serviceEndpoint))
+                Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
+            isLoading = false;
         }
-        if (!string.IsNullOrEmpty(serviceEndpoint))
-            Games = await Http.GetFromJsonAsync<List<GameViewModel>>(serviceEndpoint);
-        isLoading = false;
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private List<string> _events = new();

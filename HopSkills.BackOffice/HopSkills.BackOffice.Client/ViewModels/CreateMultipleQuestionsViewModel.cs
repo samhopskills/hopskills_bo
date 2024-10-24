@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace HopSkills.BackOffice.Client.ViewModels
 {
@@ -11,11 +12,10 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string UniqueId { get; set; }
         [Required]
         public string Question { get; set; }
-        public TimeSpan? Duration { get; set; }
         [Required]
+        public TimeSpan? Duration { get; set; }
         [Range(1, 10)]
         public int Min { get; set; }
-        [Required]
         [Range(0, 59)]
         public int Sec { get; set; }
         [Required]

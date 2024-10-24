@@ -10,7 +10,7 @@
         public string DifficultyLevel { get; set; }
         public string ElligibleSub { get; set; }
         public string? PriorGame { get; set; }
-        public TimeSpan TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
         public CreateGameImage? Image { get; set; }
         public int TotalXperience { get; set; }
         public List<MultipleQuestionsModel>? multipleQuestions { get; set; }

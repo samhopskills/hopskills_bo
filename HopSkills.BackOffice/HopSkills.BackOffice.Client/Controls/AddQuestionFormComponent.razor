@@ -76,53 +76,6 @@
 
 </style>
 
-<div class="d-flex justify-space-between align-center mb-2">
-    <MudText Typo="Typo.h6" Class="quiz-title">@QuizTitle</MudText>
-    <MudTooltip Text="Quiz Duration">
-        <div class="d-flex align-center">
-            <MudNumericField @bind-Value="Minutes"
-                             Label="Min"
-                             Min="0"
-                             Max="59"
-                             Style="width: 60px; margin-right: 4px;"
-                             Variant="Variant.Text"
-                             Density="Density.Compact"
-                             HideSpinButtons="true" />
-            <MudText Class="mx-1">:</MudText>
-            <MudNumericField @bind-Value="Seconds"
-                             Label="Sec"
-                             Min="0"
-                             Max="59"
-                             Style="width: 60px;"
-                             Variant="Variant.Text"
-                             Density="Density.Compact"
-                             HideSpinButtons="true" />
-        </div>
-    </MudTooltip>
-    <MudTooltip Text="Experience Points" Class="ml-4">
-        <MudTextField AdornmentIcon="@Icons.Material.Outlined.Star" Adornment="Adornment.End" @bind-Value="@questionFormInput.Xperience" Style="width: 60px;" Class="mx-1" />
-    </MudTooltip>
-    <div class="d-flex justify-end align-center">
-        <MudTooltip Text="Upload Image">
-            <MudIconButton Size="Size.Medium" OnClick="@(() => OpenFileInput("fileInput"))"
-                           Icon="@Icons.Material.Outlined.Image" />
-        </MudTooltip>
-        <MudTooltip Text="Upload Audio">
-            <MudIconButton Size="Size.Medium" OnClick="@(() => OpenFileInput("audioInput"))"
-                           Icon="@Icons.Material.Outlined.AudioFile" />
-        </MudTooltip>
-        <InputFile id="fileInput" OnChange="@UploadFiles" hidden accept=".png,.jpg,.jpeg" />
-        <InputFile id="audioInput" OnChange="@UploadFiles2" hidden accept=".mp3,.wav" />
-        <MudTooltip Text="Delete the page">
-            <MudIconButton Size="Size.Medium" OnClick="OnCancelSubmit"
-                           Icon="@Icons.Material.Outlined.Delete" />
-        </MudTooltip>
-        <MudTooltip Text="Add a page">
-            <MudIconButton Size="Size.Medium" OnClick="OnAddSubmit"
-                           Icon="@Icons.Material.Outlined.NoteAdd" />
-        </MudTooltip>
-    </div>
-</div>
 <MudPaper Elevation="3" ref="componentRef"
           Class="@($"pa-4 question-paper {(IsSelected ? "selected" : "")}")" 
     @onclick="OnSelectClicked">
@@ -201,7 +154,6 @@
                 @if (questionFormInput.ImageFiles != null 
                 && questionFormInput.ImageFiles.Count() != 0)
                 {
-                    <MudText Typo="Typo.subtitle1" Class="mt-2">Images:</MudText>
                     <div class="preview-container">
                         @for (int i = 0; i < questionFormInput.ImageFiles.Count; i++)
                         {
@@ -222,7 +174,6 @@
                 @if (questionFormInput.AudioFiles != null 
                 && questionFormInput.AudioFiles.Count() != 0)
                 {
-                    <MudText Typo="Typo.subtitle1" Class="mt-2">Audio Files:</MudText>
                     <div class="preview-container">
                         @for (int i = 0; i < questionFormInput.AudioFiles.Count; i++)
                         {
@@ -257,8 +208,6 @@
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
     [Parameter] public CreateMultipleQuestionsViewModel questionFormInput { get; set; }
-    [Parameter] public EventCallback OnCancelEvent { get; set; }
-    [Parameter] public EventCallback OnAddEvent { get; set; }
     [Parameter] public EventCallback<CreateMultipleQuestionsViewModel> OnValidEvent { get; set; }
     [Parameter] public bool IsSelected { get; set; }
     [Parameter] public EventCallback OnSelect { get; set; }
@@ -298,16 +247,11 @@
     private bool fileNameWrong { get; set; }
     private bool audioFileNameWrong { get; set; }
     private bool formDisabled { get; set; }
-    private List<string> base64Images = new();
-    private List<string> base64Audios = new();
+    private List<string> base64Images;
+    private List<string> base64Audios;
     public int Id { get; set; }
-    private int Minutes { get; set; }
-    private int Seconds { get; set; }
     private bool hasBeenValidated { get; set; }
-    private async void Cancel()
-    {
-        await OnCancelEvent.InvokeAsync();
-    }
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -318,6 +262,7 @@
                     document.getElementById(inputId).click();
                 }
             ");
+            
         }
     }
 
@@ -347,7 +292,7 @@
         {
             if (file.Size > MaxImageSizeBytes)
             {
-                Snackbar.Add($"File {file.Name} is too large. Max size is 5 MB.", Severity.Error);
+                Snackbar.Add($"File {file.Name} is too large. Max size is 5 MB.", MudBlazor.Severity.Error);
                 continue;
             }
             if (questionFormInput.ImageFiles is null)
@@ -360,8 +305,6 @@
                 Content = Convert.ToBase64String(buffer),
                 Delete = false
             });
-            base64Images.Add(Convert.ToBase64String(buffer));
-
         }
         StateHasChanged();
     }
@@ -372,7 +315,7 @@
         {
             if (file.Size > MaxAudioSizeBytes)
             {
-                Snackbar.Add($"File {file.Name} is too large. Max size is 10 MB.", Severity.Error);
+                Snackbar.Add($"File {file.Name} is too large. Max size is 10 MB.", MudBlazor.Severity.Error);
                 continue;
             }
             if (questionFormInput.AudioFiles is null)
@@ -386,7 +329,6 @@
                         Content = Convert.ToBase64String(buffer),
                         Delete = false
                     });
-                base64Audios.Add(Convert.ToBase64String(buffer));
             }
         }
         StateHasChanged();
@@ -394,10 +336,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Minutes = questionFormInput.Duration.Value.Minutes;
-        Seconds = questionFormInput.Duration.Value.Seconds;
-        base64Images = questionFormInput.ImageFiles?.Select(i => i.Content).ToList();
-        base64Audios = questionFormInput.AudioFiles?.Select(i => i.Content).ToList();
+        base64Images = new();
+        base64Audios = new();
         questionFormInput.PossibleAnswers.LastOrDefault().Id = questionFormInput.PossibleAnswers.LastOrDefault().Order = questionFormInput.PossibleAnswers.Count() - 1;
     }
 
@@ -432,33 +372,9 @@
         return EventCallback.Empty;
     }
 
-    private async void OnCancelSubmit()
-    {
-        await OnCancelEvent.InvokeAsync(Id);
-    }
-
-    private async void OnAddSubmit()
-    {
-        await OnAddEvent.InvokeAsync(Id);
-    }
-
     private async void OnValidSubmit()
     {
-        if (questionFormInput.PossibleAnswers is not null 
-            && questionFormInput.PossibleAnswers.Count() != 0)
-        {
-            var correctCount = questionFormInput.PossibleAnswers.Where(p => p.IsCorrect == true).Count();
-            if(correctCount > 0)
-            {
-                questionFormInput.Duration = new TimeSpan(0, Minutes, Seconds);
-                hasBeenValidated = true;
-                await OnValidEvent.InvokeAsync(questionFormInput);
-            }
-           else
-                Snackbar.Add("Please add at least one correct answer", MudBlazor.Severity.Error);
-        }
-        else
-            Snackbar.Add("Please add at least two answers", MudBlazor.Severity.Error);
+        
     }
 
     

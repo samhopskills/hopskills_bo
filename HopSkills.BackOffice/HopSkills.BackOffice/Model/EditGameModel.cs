@@ -11,7 +11,7 @@
         public string Theme { get; set; }
         public string Status { get; set; }
         public string PriorGame { get; set; }
-        public TimeOnly TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
         public EditGameImage? Image { get; set; }
         public int TotalXperience { get; set; }
         public List<MultipleQuestionsModel>? multipleQuestions { get; set; }

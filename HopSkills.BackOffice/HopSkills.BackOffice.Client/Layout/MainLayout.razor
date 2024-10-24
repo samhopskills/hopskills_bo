@@ -44,10 +44,10 @@
         <Authorized>
             <MudAppBar Elevation="1" Style="background-color:white">
                                <MudImage Width="200" Src="Images/SVG.svg"></MudImage>
-                <MudIconButton Icon="@Icons.Material.Filled.Notifications"
+                @* <MudIconButton Icon="@Icons.Material.Filled.Notifications"
                                Color="Color.Dark" Edge="Edge.End" />
                 <MudIconButton Icon="@Icons.Material.Filled.AccountCircle"
-                               Color="Color.Dark" Edge="Edge.End" />
+                               Color="Color.Dark" Edge="Edge.End" /> *@
             </MudAppBar>
             <MudDrawer @bind-Open="_drawerOpen" 
             ClipMode="DrawerClipMode.Always" 
@@ -78,7 +78,6 @@ width:100vw;  align-content:center;">
     private MudTheme _theme = new();
     private MudTheme customTheme = new MudTheme()
         {
-
             PaletteLight = new PaletteLight()
             {
                 Primary = "#8a6eae",

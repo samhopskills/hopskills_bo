@@ -16,8 +16,7 @@ namespace HopSkills.BackOffice.Data
         public string? PriorGame { get; set; }
         public string Status { get; set; }
         public int NumberOfQuestion { get; set; }
-        public int Duration { get; set; }
-        public TimeOnly TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
         [AllowNull]
         public string? ImageUri { get; set; }
         public int TotalXp { get; set; }

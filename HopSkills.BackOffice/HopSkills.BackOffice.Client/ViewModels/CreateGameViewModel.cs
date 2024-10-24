@@ -21,11 +21,11 @@ namespace HopSkills.BackOffice.Client.ViewModels
         //[Required]
         public string? PriorGame { get; set; }
         public int NumberOfQuestion { get; set; }
-        //[Required]
-        public TimeSpan TotalDuration { get; set; }
+        [Required]
+        public double TotalDuration { get; set; }
         [AllowNull]
         public CreateGameImageViewModel? Image { get; set; }
-        //[Required]
+        [Required]
         public int TotalXperience { get; set; }
         public List<CreateMultipleQuestionsViewModel> multipleQuestions { get; set; }
     }

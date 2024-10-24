@@ -22,7 +22,8 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string PriorGame { get; set; }
         public int NumberOfQuestion { get; set; }
         //[Required]
-        public TimeOnly TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
+        public TimeSpan TimeDuration { get; set; }
         public EditGameImageViewModel Image { get; set; }
         //[Required]
         public int TotalXperience { get; set; }
@@ -46,7 +47,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string? Status { get; set; }
         public string? DifficultyLevel { get; set; }
         public string? PriorGame { get; set; }
-        public TimeOnly TotalDuration { get; set; }
+        public double TotalDuration { get; set; }
         public EditGameImageViewModel? Image { get; set; }
         public int? TotalXperience { get; set; }
         public List<QuestionChangeModel>? Questions { get; set; }
@@ -57,7 +58,7 @@ namespace HopSkills.BackOffice.Client.ViewModels
         public string? UniqueId { get; set; }
         public int? Id { get; set; }
         public string? Question { get; set; }
-        public TimeSpan? Duration { get; set; }
+        public double? Duration { get; set; }
         public int? Min { get; set; }
         public int? Sec { get; set; }
         public int? Xperience { get; set; }

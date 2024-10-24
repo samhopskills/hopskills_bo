@@ -7,6 +7,6 @@
         public string Theme { get; set; }
         public string Status { get; set; }
         public int NumberOfQuestion { get; set; }
-        public TimeOnly Duration { get; set; }
+        public TimeSpan Duration { get; set; }
     }
 }

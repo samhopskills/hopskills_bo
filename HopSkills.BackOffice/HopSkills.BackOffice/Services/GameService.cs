@@ -40,7 +40,7 @@ namespace HopSkills.BackOffice.Services
                 {
                     var newAppGame = new ApplicationGame
                     {
-                        TotalDuration = TimeOnly.FromTimeSpan(createGameModel.TotalDuration),
+                        TotalDuration = createGameModel.TotalDuration,
                         Status = createGameModel.Status.ToString(),
                         Theme = createGameModel.Theme.ToString(),
                         TotalXp = createGameModel.TotalXperience,
@@ -84,7 +84,7 @@ namespace HopSkills.BackOffice.Services
                             e => new ApplicationMultiQuestion
                             {
                                 CorrectAnswerExplanation = e.CorrectAnswerExplanation,
-                                Duration = TimeOnly.FromTimeSpan(e.Duration),
+                                Duration = e.Duration.HasValue ? e.Duration.Value.TotalSeconds : 0,
                                 PossibleAnswers = e.PossibleAnswers.Select(e => new ApplicationAnswer
                                 {
                                     Answer = e.Answer,
@@ -232,7 +232,7 @@ namespace HopSkills.BackOffice.Services
                 GameId = gameId,
                 Question = questionChange.Question,
                 CorrectAnswerExplanation = questionChange.CorrectAnswerExplanation,
-                Duration = new TimeOnly(0, questionChange.Duration.Value.Minutes, questionChange.Duration.Value.Seconds),
+                Duration = questionChange.Duration.Value,
                 Xperience = questionChange.Xperience.Value,
                 PossibleAnswers = questionChange.Answers.Select(a => new ApplicationAnswer
                 {
@@ -256,7 +256,7 @@ namespace HopSkills.BackOffice.Services
                     && questionChange.Question != existingQuestion.Question) existingQuestion.Question = questionChange.Question;
                 if (!string.IsNullOrEmpty(questionChange.CorrectAnswerExplanation)
                    && questionChange.CorrectAnswerExplanation != existingQuestion.CorrectAnswerExplanation) existingQuestion.CorrectAnswerExplanation = questionChange.CorrectAnswerExplanation;
-                if (questionChange.Duration is not null) existingQuestion.Duration = new TimeOnly(0, questionChange.Duration.Value.Minutes, questionChange.Duration.Value.Seconds);
+                if (questionChange.Duration is not null) existingQuestion.Duration = questionChange.Duration.Value;
                 if (questionChange.Xperience.HasValue 
                     && questionChange.Xperience.Value != existingQuestion.Xperience) existingQuestion.Xperience = questionChange.Xperience.Value;
 
@@ -420,15 +420,25 @@ namespace HopSkills.BackOffice.Services
 
         public async Task<IEnumerable<GameViewModel>> GetAll()
         {
-            return _hopSkillsDb.Games.Select(g => new GameViewModel
+            var returnGames = new List<GameViewModel>();
+            try
             {
-                Id = g.Id,
-                Title = g.Title,
-                Duration = g.TotalDuration,
-                NumberOfQuestion = _hopSkillsDb.MultiQuestions.Where(m => m.GameId == g.Id).Select(m => m).Count(),
-                Status = g.Status,
-                Theme = g.Theme
-            });
+                returnGames = [.. _hopSkillsDb.Games.Select(g => new GameViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Duration = TimeSpan.FromSeconds(g.TotalDuration),
+                    NumberOfQuestion = _hopSkillsDb.MultiQuestions.Where(m => m.GameId == g.Id).Select(m => m).Count(),
+                    Status = g.Status,
+                    Theme = g.Theme
+                })];
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return returnGames;
+            }
+            return returnGames;
         }
 
         public async Task<EditGameModel?> GetGameById(string id)
@@ -474,7 +484,7 @@ namespace HopSkills.BackOffice.Services
                             
                             UniqueId = m.Id.ToString(),
                             CorrectAnswerExplanation = m.CorrectAnswerExplanation,
-                            Duration = m.Duration.ToTimeSpan(),
+                            Duration = TimeSpan.FromSeconds(m.Duration),
                             Question = m.Question,
                             Xperience = m.Xperience,
                             PossibleAnswers = m.PossibleAnswers.Select(
@@ -512,7 +522,7 @@ namespace HopSkills.BackOffice.Services
                     {
                         Id = g.Id,
                         Title = g.Title,
-                        Duration = g.TotalDuration,
+                        Duration = TimeSpan.FromSeconds(g.TotalDuration),
                         NumberOfQuestion = _hopSkillsDb.MultiQuestions.Where(m => m.GameId == g.Id).Select(m => m).Count(),
                         Status = g.Status,
                         Theme = g.Theme
@@ -535,7 +545,7 @@ namespace HopSkills.BackOffice.Services
                 {   
                     Id = g.Id,
                     Title = g.Title,
-                    Duration = g.TotalDuration,
+                    Duration = TimeSpan.FromSeconds(g.TotalDuration),
                     NumberOfQuestion = _hopSkillsDb.MultiQuestions.Where(m => m.GameId == g.Id).Select(m => m).Count(),
                     Status = g.Status,
                     Theme = g.Theme
